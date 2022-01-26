@@ -21,6 +21,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~plugins/toast', mode: 'client' },
+    { src: '~plugins/select', mode: 'client' },
+    { src: '~plugins/vee-validate', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,6 +41,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/firebase'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -50,7 +54,25 @@ export default {
     }
   },
 
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyD3jYW9w1vZdAw4efW1SzamcRZrsVuUxfc',
+      authDomain: 'nuts-ea11b.firebaseapp.com',
+      databaseURL: 'https://nuts-ea11b-default-rtdb.firebaseio.com',
+      projectId: 'nuts-ea11b',
+      storageBucket: 'nuts-ea11b.appspot.com',
+      messagingSenderId: '1039641335607',
+      appId: '1:1039641335607:web:95c8ebd7b8a5c6e803ecb2',
+    },
+    services: {
+      auth: true, // Just as example. Can be any other service.
+      database: true,
+      storage: true
+    }
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+    transiple: ['vee-validate']
+  },
 }

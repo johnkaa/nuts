@@ -19,6 +19,8 @@
     "firebase-admin": "^10.0.0",
     "nuxt": "^2.15.7",
     "swiper": "^5.4.5",
+    "vee-validate": "^3.4.14",
+    "vue-select": "^3.16.0",
     "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
