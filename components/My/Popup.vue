@@ -51,10 +51,8 @@ export default {}
 
 .modal-container {
   width: 700px;
-  margin: 0 auto;
-  background-color: #fff;
+  margin: 30px auto;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(#fff, 0.33);
   transition: all 0.3s ease;
   position: relative;
 }
@@ -111,5 +109,15 @@ export default {}
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+@media (max-width: 800px) {
+  .modal-container {
+    max-width: 500px;
+  }
+}
+@media (max-width: 600px) {
+  .modal-container {
+    max-width: 300px;
+  }
 }
 </style>
