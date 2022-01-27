@@ -12,7 +12,13 @@
           >Восстановление пароля</nuxt-link
         >
       </div>
-      <form class="forgot-password__form" @submit.prevent="submit">
+      <validation-observer
+        v-slot="{ invalid }"
+        class="forgot-password__form"
+        tag="form"
+        name="forgot-password"
+        @submit.prevent="submit"
+      >
         <h2 class="forgot-password__title">Восстановление пароля</h2>
         <div class="forgot-password__post-title">
           <img src="/images/icons/lock.svg" alt="" />
@@ -24,19 +30,18 @@
         </div>
         <validation-provider name="email" rules="required|email">
           <div slot-scope="{ errors }" class="forgot-password__field">
-            <input
+            <my-input
               v-model="email"
-              class="forgot-password__input input"
-              :class="{ error: errors.length !== 0 }"
+              class="forgot-password__input"
+              :errors="errors"
               placeholder="Email*"
             />
-            <span class="forgot-password__field-info input-info">{{
-              errors[0]
-            }}</span>
           </div>
         </validation-provider>
-        <my-button class="forgot-password__btn">Отправить ссылку</my-button>
-      </form>
+        <my-button class="forgot-password__btn" :disabled="invalid"
+          >Отправить ссылку</my-button
+        >
+      </validation-observer>
     </div>
   </div>
 </template>
@@ -55,6 +60,8 @@ export default {
       } catch (e) {
         this.$toasted.error(e)
       }
+      this.$router.push('/auth/login')
+      this.$toasted.success('Проверьте ваш e-mail.')
     },
   },
 }

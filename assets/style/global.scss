@@ -4,7 +4,9 @@
 html {
   box-sizing: border-box;
 }
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -42,34 +44,11 @@ a {
   }
 }
 
-.input {
+.input-info {
+  display: block;
+  color: #d40000;
+  margin-top: 4px;
+  font-size: 12px;
   font-family: 'Montserrat', sans-serif;
-  color: #1A2F3F;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 12px;
-  width: 100%;
-  outline: #1A2F3F;
-  border: 1.5px solid rgba(#000, .15);
-  transition: border-color .3s;
-  &.error {
-    border-color: #d40000;
-  }
-  &-info {
-    display: block;
-    color: #d40000;
-    margin-top: 4px;
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: left;
-  }
-  &::placeholder {
-    font-family: 'Montserrat', sans-serif;
-    color: #1A2F3F;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  &:focus {
-    border-color:#337D5A;
-  }
+  text-align: left;
 }

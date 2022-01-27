@@ -24,6 +24,8 @@ export default {
     { src: '~plugins/toast', mode: 'client' },
     { src: '~plugins/select', mode: 'client' },
     { src: '~plugins/vee-validate', mode: 'client' },
+    { src: '~plugins/uploadImg', mode: 'client' },
+    { src: '~plugins/db', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

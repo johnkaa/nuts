@@ -1,20 +1,47 @@
 <template>
-  <v-select v-model="selected" class="select" :placeholder="placeholder" :options="options" @input="updateSelected"/>
+  <div class="my-select">
+    <v-select
+      v-model="selected"
+      class="select"
+      :class="{ error: errors.length !== 0 }"
+      :placeholder="placeholder"
+      :options="options"
+    />
+    <span v-if="errors.length !== 0" class="input-info">{{ errors[0] }}</span>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['options', 'placeholder'],
+  model: {
+    prop: 'selected',
+    event: 'select',
+  },
+  props: {
+    options: {
+      type: Array,
+      default: () => [],
+    },
+    placeholder: {
+      type: String,
+      default: () => '',
+    },
+    errors: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
-      selected: ''
+      selected: '',
     }
   },
-  methods: {
-    updateSelected() {
-      this.$emit('input', this.selected)
-    }
-  }
+  watch: {
+    selected() {
+      this.$emit('select', this.selected)
+    },
+  },
+  methods: {},
 }
 </script>
 
@@ -38,15 +65,25 @@ export default {
   cursor: pointer;
 }
 
-.select .vs__search, .select.vs--open .vs__search {
+.select .vs__search,
+.select.vs--open .vs__search {
   padding: 10px;
 }
 
 .select .vs__dropdown-toggle:hover {
-  background-color: #EBF2EF;
+  background-color: #ebf2ef;
 }
 
 .select .vs__open-indicator {
   fill: #93b474;
+}
+
+.select.error {
+  .vs__dropdown-toggle {
+    border-color: #d40000;
+  }
+  .vs__open-indicator {
+    fill: #d40000;
+  }
 }
 </style>

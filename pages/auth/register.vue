@@ -7,9 +7,16 @@
         >
         <img src="/images/icons/right-arrow.svg" alt="" />
         <nuxt-link class="register__pos-link position-link" to="/auth/register"
-          >Регистрация</nuxt-link>
+          >Регистрация</nuxt-link
+        >
       </div>
-      <form class="register__form" @submit.prevent>
+      <validation-observer
+        v-slot="{ invalid }"
+        class="register__form"
+        tag="form"
+        name="register"
+        @submit.prevent="submit"
+      >
         <div class="register__person">
           <h2 class="register__title">Регистрация</h2>
           <div class="register__text">1. Контактные данные</div>
@@ -31,108 +38,112 @@
           </div>
           <validation-provider name="name" rules="required">
             <div slot-scope="{ errors }" class="register__field">
-              <input
+              <my-input
                 v-model="name"
-                class="register__input input"
-                :class="{ error: errors.length !== 0 }"
+                class="register__input"
                 placeholder="ФИО*"
+                :errors="errors"
               />
-              <span class="register__field-info input-info">{{
-                errors[0]
-              }}</span>
             </div>
           </validation-provider>
           <validation-provider name="email" rules="required|email">
             <div slot-scope="{ errors }" class="register__field">
-              <input
+              <my-input
                 v-model="email"
-                class="register__input input"
-                :class="{ error: errors.length !== 0 }"
+                class="register__input"
                 placeholder="Email*"
+                :errors="errors"
               />
-              <span class="register__field-info input-info">{{
-                errors[0]
-              }}</span>
             </div>
           </validation-provider>
           <validation-provider name="phone" rules="required">
             <div slot-scope="{ errors }" class="register__field">
-              <input
+              <my-input
                 v-model="phone"
                 type="tel"
-                class="register__input input"
-                :class="{ error: errors.length !== 0 }"
+                class="register__input"
                 placeholder="Телефон*"
+                :errors="errors"
               />
-              <span class="register__field-info input-info">{{
-                errors[0]
-              }}</span>
             </div>
           </validation-provider>
           <div class="register__text address">2. Адрес</div>
-          <my-select
-            class="register__input"
-            :options="['raz', 'dva']"
-            placeholder="Страна*"
-            @input="updateCountry"
-          />
-          <my-select
-            class="register__input"
-            :options="['raz', 'dva']"
-            placeholder="Область*"
-            @input="updateRegion"
-          />
-          <my-select
-            class="register__input"
-            :options="['raz', 'dva']"
-            placeholder="Город*"
-            @input="updateCity"
-          />
-          <input
+          <validation-provider name="country" rules="required">
+            <div slot-scope="{ errors }" class="register__field">
+              <my-select
+                v-model="country"
+                class="register__input"
+                :options="countries"
+                :errors="errors"
+                placeholder="Страна*"
+              />
+            </div>
+          </validation-provider>
+          <validation-provider name="region" rules="required">
+            <div slot-scope="{ errors }" class="register__field">
+              <my-select
+                v-model="region"
+                class="register__input"
+                :options="regions"
+                :errors="errors"
+                placeholder="Область*"
+              />
+            </div>
+          </validation-provider>
+          <validation-provider name="city" rules="required">
+            <div slot-scope="{ errors }" class="register__field">
+              <my-select
+                v-model="city"
+                class="register__input"
+                :options="cities"
+                :errors="errors"
+                placeholder="Город*"
+              />
+            </div>
+          </validation-provider>
+          <my-input
             v-model="address"
-            type="text"
-            class="register__field input"
+            class="register__field"
             placeholder="Адрес"
           />
           <div class="register__text password">3. Пароль</div>
-          <validation-provider name="password" rules="required">
+          <validation-provider name="password" rules="required|min:6">
             <div slot-scope="{ errors }" class="register__field">
-              <input
+              <my-input
                 v-model="password"
                 type="password"
-                class="register__input input"
-                :class="{ error: errors.length !== 0 }"
+                class="register__input"
                 placeholder="Пароль*"
+                :errors="errors"
               />
-              <span class="register__field-info input-info">{{
-                errors[0]
-              }}</span>
             </div>
           </validation-provider>
           <validation-provider
-            name="repeatPassword"
+            name="repeat-password"
             rules="required|confirmed:password"
           >
-            <div slot-scope="{ errors }">
-              <input
+            <div slot-scope="{ errors }" class="register__field">
+              <my-input
                 v-model="repeatPassword"
                 type="password"
-                class="register__input input"
-                :class="{ error: errors.length !== 0 }"
+                class="register__input"
                 placeholder="Повторите пароль*"
+                :errors="errors"
               />
-              <span class="register__field-info input-info">{{
-                errors[0]
-              }}</span>
             </div>
           </validation-provider>
-          <my-checkbox class="register__checkbox" @change="updateAgreement"
-            >Я согласен с
-            <span @click="agree = !agree"
-              >условиями регистрации</span
-            ></my-checkbox
-          >
-          <my-button class="register__btn" @click="submit"
+          <validation-provider name="agree" rules="true">
+            <div slot-scope="{ errors }" class="register__field">
+              <my-checkbox
+                v-model="agree"
+                class="register__checkbox"
+                :errors="errors"
+                >Я согласен с <span>условиями регистрации</span></my-checkbox
+              >
+            </div>
+          </validation-provider>
+
+          <my-button class="register__btn" :disabled="invalid"
             >Продолжить</my-button
           >
         </div>
@@ -151,69 +162,67 @@
           </my-file-input>
           <div v-if="type === 'company'" class="register__company-form">
             <my-radio-select
+              v-model="userType"
               class="register__select"
               :selects="['Юр. лицо', 'ФОП']"
               :select-value="userType"
               name="userType"
-              @input="updateType"
             />
             <div class="register__text requisite">1. Реквизиты</div>
             <my-input
-              class="register__input"
-              placeholder="ОКПО"
-              @input="updateRequisite"
+              v-model="requisite"
+              type="text"
+              class="register__field"
+              placeholder="Реквизиты*"
             />
             <div class="register__text company-address">
               2. Юридический адрес
             </div>
             <my-select
-              class="register__input"
-              :options="['raz', 'dva']"
+              v-model="companyCountry"
+              class="register__field"
+              :options="countries"
               placeholder="Страна*"
-              @input="updateCompanyCountry"
             />
             <my-select
-              class="register__input"
-              :options="['raz', 'dva']"
+              v-model="companyRegion"
+              class="register__field"
+              :options="companyRegions"
               placeholder="Область*"
-              @input="updateCompanyRegion"
             />
             <my-select
-              class="register__input"
-              :options="['raz', 'dva']"
+              v-model="companyCity"
+              class="register__field"
+              :options="companyCities"
               placeholder="Город*"
-              @input="updateCompanyCity"
             />
             <my-input
+              v-model="companyAddress"
               class="register__input"
               placeholder="Адрес"
-              @input="updateCompanyAddress"
             />
           </div>
         </div>
-      </form>
+      </validation-observer>
     </div>
   </div>
 </template>
 
 <script>
+import { Country, State, City } from 'country-state-city'
+
 export default {
-  async asyncData({ $axios }) {
-    // let countries
-    // const KEY = 'b28f16f07ac1d330d1b96615ea5e3132'
-    // const url = `http://battuta.medunes.net/api/country/all/?key=${KEY}`
-    // try {
-    //   countries = await $axios.get(url)
-    // } catch(e) {
-    //   console.log(e);
-    // }
-    // return { countries }
-  },
   data() {
     return {
-      countries: {},
-      regions: {},
-      cities: {},
+      countries: [],
+      regions: [],
+      cities: [],
+      companyRegions: [],
+      companyCities: [],
+      countryCode: '',
+      regionCode: '',
+      CompanyCountryCode: '',
+      CompanyRegionCode: '',
       uid: '',
       name: '',
       email: '',
@@ -224,7 +233,7 @@ export default {
       address: '',
       password: '',
       repeatPassword: '',
-      agree: false,
+      agree: true,
       file: null,
       img: '',
       type: 'person',
@@ -233,32 +242,129 @@ export default {
       companyCountry: '',
       companyRegion: '',
       companyCity: '',
+      companyAddress: '',
     }
+  },
+  watch: {
+    country() {
+      const allCountries = Country.getAllCountries()
+      allCountries.forEach((item) => {
+        if (this.country === item.name) {
+          this.countryCode = item.isoCode
+        }
+      })
+      const regions = State.getStatesOfCountry(this.countryCode)
+      this.regions = []
+      if (regions.length === 0) {
+        this.regions = ['null']
+      }
+      regions.forEach((item) => this.regions.push(item.name))
+    },
+    region() {
+      const allRegions = State.getAllStates()
+      allRegions.forEach((item) => {
+        if (this.region === item.name) {
+          this.regionCode = item.isoCode
+        }
+      })
+      const cities = City.getCitiesOfState(this.countryCode, this.regionCode)
+      this.cities = []
+      if (cities.length === 0) {
+        this.cities = ['null']
+      }
+      cities.forEach((item) => this.cities.push(item.name))
+    },
+    companyCountry() {
+      const allCountries = Country.getAllCountries()
+      allCountries.forEach((item) => {
+        if (this.companyCountry === item.name) {
+          this.companyCountryCode = item.isoCode
+        }
+      })
+      const regions = State.getStatesOfCountry(this.companyCountryCode)
+      this.companyRegions = []
+      if (regions.length === 0) {
+        this.companyRegions = ['null']
+      }
+      regions.forEach((item) => this.companyRegions.push(item.name))
+    },
+    companyRegion() {
+      const allRegions = State.getAllStates()
+      allRegions.forEach((item) => {
+        if (this.companyRegion === item.name) {
+          this.companyRegionCode = item.isoCode
+        }
+      })
+      const cities = City.getCitiesOfState(
+        this.companyCountryCode,
+        this.companyRegionCode
+      )
+      this.companyCities = []
+      if (cities.length === 0) {
+        this.companyCities = ['null']
+      }
+      cities.forEach((item) => this.companyCities.push(item.name))
+    },
+  },
+  mounted() {
+    const allCountries = Country.getAllCountries()
+    this.countries = []
+    allCountries.forEach((item) => this.countries.push(item.name))
   },
   methods: {
     async submit() {
+      const id = +new Date() - (+new Date() % 100)
+      if (this.file) {
+        const format =
+          this.file.name.split('.')[this.file.name.split('.').length - 1]
+        this.img = await this.$uploadImg(
+          this.file,
+          `users/${id}/avatar.${format}`
+        )
+      }
       try {
         await this.$fire.auth
           .createUserWithEmailAndPassword(this.email, this.password)
           .then((userCredential) => {
             this.uid = userCredential.user.uid
           })
-          .then(() => this.$toasted.success('success'))
       } catch (e) {
-        this.$toasted.erorr(e)
+        this.$toasted.error(e)
       }
-    },
-    updateCountry(select) {
-      this.country = select
-    },
-    updateRegion(select) {
-      this.region = select
-    },
-    updateCity(select) {
-      this.city = select
-    },
-    updateAgreement(state) {
-      this.agree = state
+      try {
+        const userInfo = {
+          uid: this.uid,
+          id,
+          img:
+            this.img ||
+            'https://hnflocal5.com/wp-content/uploads/2018/01/user-placeholder.jpg',
+          email: this.email,
+          phone: this.phone,
+          address: {
+            country: this.country,
+            region: this.region,
+            city: this.city,
+          },
+          password: this.password,
+          type: this.type,
+        }
+        if (this.type === 'company') {
+          userInfo.company = {
+            userType: this.userType,
+            requisite: this.requisite,
+            address: {
+              country: this.companyCountry,
+              region: this.companyRegion,
+              city: this.companyCity,
+            },
+          }
+        }
+        await this.$writeData(userInfo, `users/${id}`)
+      } catch (e) {
+        this.$toasted.error(e)
+      }
+      this.$toasted.success('Вы успешно зарегистрировались.')
+      this.$router.push('/auth/login')
     },
     getFileImg(file) {
       this.file = file
@@ -267,18 +373,6 @@ export default {
       reader.onload = (e) => {
         this.img = e.target.result
       }
-    },
-    updateType(select) {
-      this.userType = select
-    },
-    updateCompanyCountry(field) {
-      this.companyCountry = field
-    },
-    updateCompanyRegion(field) {
-      this.companyRegion = field
-    },
-    updateCompanyCity(field) {
-      this.companyCity = field
     },
   },
 }

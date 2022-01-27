@@ -12,15 +12,11 @@
       </div>
       <form class="login__form" @submit.prevent="submit">
         <h2 class="login__title">Войти в личный кабинет</h2>
-        <input
-          v-model="email"
-          class="login__input input"
-          placeholder="Email*"
-        />
-        <input
+        <my-input v-model="email" class="login__input" placeholder="Email*" />
+        <my-input
           v-model="password"
           type="password"
-          class="login__input input"
+          class="login__input"
           placeholder="Password*"
         />
         <nuxt-link
@@ -47,22 +43,23 @@ export default {
   },
   methods: {
     async submit() {
-      if(this.email === '' || this.password === '') {
+      if (this.email === '' || this.password === '') {
         return this.$toasted.error('Все поля должны быть заполнены.')
       }
       try {
-          await this.$fire.auth.signInWithEmailAndPassword(this.email, this.password)
-            .then(() => {
-              this.$router.push('/')
-              this.$toasted.success('Вы успешно вошли в аккаунт.');
-            })
-        } catch (e) {
-          if(e.toString().includes('(auth/invalid-email)')) {
-            this.$toasted.error('Почта не зарегистрирована.');
-          } else if(e.toString().includes('(auth/wrong-password)')) {
-            this.$toasted.error('Неправильный пароль.');
-          }
+        await this.$fire.auth
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            this.$router.push('/')
+            this.$toasted.success('Вы успешно вошли в аккаунт.')
+          })
+      } catch (e) {
+        if (e.toString().includes('(auth/invalid-email)')) {
+          this.$toasted.error('Почта не зарегистрирована.')
+        } else if (e.toString().includes('(auth/wrong-password)')) {
+          this.$toasted.error('Неправильный пароль.')
         }
+      }
     },
   },
 }

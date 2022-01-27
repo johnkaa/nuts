@@ -1,11 +1,17 @@
 <template>
-  <button class="btn" @click="click">
+  <button class="btn" :disabled="disabled" @click="click">
     <slot />
   </button>
 </template>
 
 <script>
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: () => false
+    }
+  },
   methods: {
     click() {
       this.$emit('click')
@@ -28,6 +34,15 @@ export default {
   &:hover {
     background-color: transparent;
     color: #337d5a;
+  }
+  &:disabled {
+    background-color: #8A8A8A;
+    border-color: #8A8A8A;
+    cursor: default;
+    &:hover {
+    background-color: #8A8A8A;
+    color: #fff;
+  }
   }
   &.secondary {
     background-color: transparent;

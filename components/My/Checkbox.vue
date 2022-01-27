@@ -1,34 +1,29 @@
 <template>
-  <label class="checkbox__wrapper">
-    <input
-      v-model="checkbox"
-      class="checkbox"
-      type="checkbox"
-      @change="updateActive"
-    />
-    <span class="checkbox-style"></span>
-    <slot />
-  </label>
+  <div class="my-checkbox">
+    <label class="checkbox__wrapper">
+      <input v-model="checkbox" class="checkbox" type="checkbox" />
+      <span class="checkbox-style"></span>
+      <slot />
+    </label>
+    <span v-if="errors.length !== 0" class="input-info">{{ errors[0] }}</span>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['text', 'active'],
+  model: {
+    prop: 'checkbox',
+    event: 'change',
+  },
+  props: ['text', 'active', 'errors'],
   data() {
     return {
       checkbox: false,
     }
   },
-  mounted() {
-    setTimeout(() => {
-      if (this.active) {
-        this.checkbox = this.active
-      }
-    }, 200)
-  },
-  methods: {
-    updateActive() {
-      setTimeout(() => this.$emit('change', this.checkbox), 10)
+  watch: {
+    checkbox() {
+      this.$emit('change', this.checkbox)
     },
   },
 }

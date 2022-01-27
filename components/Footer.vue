@@ -15,13 +15,13 @@
                 >
               </div>
               <a class="footer__contacts-item" href="#"
-                ><img src="images/icons/viber.svg" alt=""
+                ><img src="/images/icons/viber.svg" alt=""
               /></a>
               <a class="footer__contacts-item" href="#"
-                ><img src="images/icons/telegram.svg" alt=""
+                ><img src="/images/icons/telegram.svg" alt=""
               /></a>
               <a class="footer__contacts-item" href="#"
-                ><img src="images/icons/whatsapp.svg" alt=""
+                ><img src="/images/icons/whatsapp.svg" alt=""
               /></a>
             </div>
             <div class="footer__email">
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="footer__info-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2749.8880943477598!2d30.712512015590093!3d46.43109757912429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c633a7b20ed43b%3A0xfaab4e45d64743a!2z0YPQuy4g0JrQvtGB0LzQvtC90LDQstGC0L7QsiwgMzIsINCe0LTQtdGB0YHQsCwg0J7QtNC10YHRgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwgNjUwMDA!5e0!3m2!1sru!2sua!4v1642955232626!5m2!1sru!2sua" width="740" height="520" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2749.8880943477598!2d30.712512015590093!3d46.43109757912429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c633a7b20ed43b%3A0xfaab4e45d64743a!2z0YPQuy4g0JrQvtGB0LzQvtC90LDQstGC0L7QsiwgMzIsINCe0LTQtdGB0YHQsCwg0J7QtNC10YHRgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwgNjUwMDA!5e0!3m2!1sru!2sua!4v1642955232626!5m2!1sru!2sua" width="100%" height="100%" loading="lazy"></iframe>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <div class="container">
         <div class="footer__menu-inner">
           <nuxt-link class="footer__logo" to="/"
-            ><img src="images/logo.svg" alt=""
+            ><img src="/images/logo.svg" alt=""
           /></nuxt-link>
           <ul class="menu__list">
             <li class="menu__list-item">
@@ -165,7 +165,13 @@ export default {
     &-inner {
       display: flex;
       align-items: center;
-      gap: 240px;
+      justify-content: space-between;
+      gap: 35px;
+    }
+    &-map {
+      max-width: 740px;
+      height: 520px;
+      width: 100%;
     }
   }
   &__title {
@@ -179,6 +185,7 @@ export default {
     padding-left: 30px;
     position: relative;
     margin-bottom: 50px;
+    min-width: 310px;
     &::before {
       content: '';
       width: 14px;
@@ -323,6 +330,31 @@ export default {
         fill: #93b474;
       }
     }
+  }
+}
+@media(max-width: 1220px) {
+  .menu__list {
+    display: none !important;
+  }
+}
+@media(max-width: 800px) {
+  .footer__info {
+    &-inner {
+      justify-content: center;
+    }
+    &-map {
+      display: none;
+    }
+  }
+}
+@media(max-width: 600px) {
+  .footer__by {
+    display: none;
+  }
+}
+@media(max-width: 420px) {
+  .footer__copyright {
+    font-size: 10px;
   }
 }
 </style>
