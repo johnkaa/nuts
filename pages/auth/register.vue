@@ -162,11 +162,11 @@
           </my-file-input>
           <div v-if="type === 'company'" class="register__company-form">
             <my-radio-select
-              v-model="userType"
+              v-model="companyType"
               class="register__select"
               :selects="['Юр. лицо', 'ФОП']"
-              :select-value="userType"
-              name="userType"
+              :select-value="companyType"
+              name="companyType"
             />
             <div class="register__text requisite">1. Реквизиты</div>
             <my-input
@@ -237,7 +237,7 @@ export default {
       file: null,
       img: '',
       type: 'person',
-      userType: 'Юр. лицо',
+      companyType: 'Юр. лицо',
       requisite: '',
       companyCountry: '',
       companyRegion: '',
@@ -313,15 +313,6 @@ export default {
   },
   methods: {
     async submit() {
-      const id = +new Date() - (+new Date() % 100)
-      if (this.file) {
-        const format =
-          this.file.name.split('.')[this.file.name.split('.').length - 1]
-        this.img = await this.$uploadImg(
-          this.file,
-          `users/${id}/avatar.${format}`
-        )
-      }
       try {
         await this.$fire.auth
           .createUserWithEmailAndPassword(this.email, this.password)
@@ -331,9 +322,17 @@ export default {
       } catch (e) {
         this.$toasted.error(e)
       }
+      const id = this.uid
+      if (this.file) {
+        const format =
+          this.file.name.split('.')[this.file.name.split('.').length - 1]
+        this.img = await this.$uploadImg(
+          this.file,
+          `users/${id}/avatar.${format}`
+        )
+      }
       try {
         const userInfo = {
-          uid: this.uid,
           id,
           img:
             this.img ||
@@ -344,13 +343,14 @@ export default {
             country: this.country,
             region: this.region,
             city: this.city,
+            address: this.address || ''
           },
           password: this.password,
           type: this.type,
         }
         if (this.type === 'company') {
           userInfo.company = {
-            userType: this.userType,
+            companyType: this.companyType,
             requisite: this.requisite,
             address: {
               country: this.companyCountry,
