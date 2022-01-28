@@ -41,10 +41,15 @@ export default {
     }
   },
   watch: {
-    field(val) {
-      this.$emit('input', val)
-    },
+    field() {
+      this.$emit('input', this.field)
+    }
   },
+  mounted() {
+    if(this.value) {
+      this.field = this.value
+    }
+  }
 }
 </script>
 
