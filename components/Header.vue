@@ -120,7 +120,7 @@
           <nuxt-link
             v-if="getUser"
             class="header__user"
-            :to="`/cabinet/${getUser.id}/history-orders`"
+            :to="`/cabinet/${getUser.id}/orders`"
             ><img
               class="header__auth-img"
               src="/images/icons/user.svg"
@@ -179,7 +179,7 @@
                   <nuxt-link
                     v-if="getUser"
                     class="burger__user"
-                    :to="`/cabinet/${getUser.id}/history-orders`"
+                    :to="`/cabinet/${getUser.id}/orders`"
                     ><img
                       class="burger__auth-img"
                       src="/images/icons/user.svg"
