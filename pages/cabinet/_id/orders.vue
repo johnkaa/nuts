@@ -1,13 +1,13 @@
 <template>
   <div class="orders">
     <div class="orders__items">
-      <div class="order__item">
+      <div class="orders__item">
         <div
-          class="order__item-num order__item-title"
+          class="orders__item-num orders__item-title"
           @click="filter = 'order'"
         >
           № Заказа<svg
-            class="order__item-title-icon"
+            class="orders__item-title-icon"
             :class="{ active: filter === 'order' }"
             width="10"
             height="8"
@@ -24,11 +24,11 @@
           </svg>
         </div>
         <div
-          class="order__item-date order__item-title"
+          class="orders__item-date orders__item-title"
           @click="filter = 'date'"
         >
           Дата<svg
-            class="order__item-title-icon"
+            class="orders__item-title-icon"
             :class="{ active: filter === 'date' }"
             width="10"
             height="8"
@@ -45,11 +45,11 @@
           </svg>
         </div>
         <div
-          class="order__item-amount order__item-title"
+          class="orders__item-amount orders__item-title"
           @click="filter = 'amount'"
         >
           Кол-во товаров<svg
-            class="order__item-title-icon"
+            class="orders__item-title-icon"
             :class="{ active: filter === 'amount' }"
             width="10"
             height="8"
@@ -66,11 +66,11 @@
           </svg>
         </div>
         <div
-          class="order__item-status order__item-title"
+          class="orders__item-status orders__item-title"
           @click="filter = 'status'"
         >
           Статус<svg
-            class="order__item-title-icon"
+            class="orders__item-title-icon"
             :class="{ active: filter === 'status' }"
             width="10"
             height="8"
@@ -87,11 +87,11 @@
           </svg>
         </div>
         <div
-          class="order__item-price order__item-title"
+          class="orders__item-price orders__item-title"
           @click="filter = 'price'"
         >
           Стоимость<svg
-            class="order__item-title-icon"
+            class="orders__item-title-icon"
             :class="{ active: filter === 'price' }"
             width="10"
             height="8"
@@ -107,51 +107,51 @@
             />
           </svg>
         </div>
-        <div class="order__item-functions order__item-title">Функции</div>
+        <div class="orders__item-functions orders__item-title">Функции</div>
       </div>
-      <div class="order__item">
+      <div class="orders__item">
         <my-popup
           v-if="showInfo"
-          class="order__item-popup"
+          class="orders__item-popup"
           @close="showInfo = false"
         >
-          <div class="order__item-popup__inner">
-            <div class="order__item-popup__title">Информация о заказе</div>
-            <div class="order__item-popup__items">
-              <div class="order__item-popup__item">
-                <span class="order__item-popup__item-title">№ Заказа:</span>
-                <span class="order__item-popup__item-info">0</span>
+          <div class="orders__item-popup__inner">
+            <div class="orders__item-popup__title">Информация о заказе</div>
+            <div class="orders__item-popup__items">
+              <div class="orders__item-popup__item">
+                <span class="orders__item-popup__item-title">№ Заказа:</span>
+                <span class="orders__item-popup__item-info">0</span>
               </div>
-              <div class="order__item-popup__item">
-                <span class="order__item-popup__item-title">Дата:</span>
-                <span class="order__item-popup__item-info">03.04.1607</span>
+              <div class="orders__item-popup__item">
+                <span class="orders__item-popup__item-title">Дата:</span>
+                <span class="orders__item-popup__item-info">03.04.1607</span>
               </div>
-              <div class="order__item-popup__item">
-                <span class="order__item-popup__item-title"
+              <div class="orders__item-popup__item">
+                <span class="orders__item-popup__item-title"
                   >Кол-во товаров:</span
                 >
-                <span class="order__item-popup__item-info">13</span>
+                <span class="orders__item-popup__item-info">13</span>
               </div>
-              <div class="order__item-popup__item">
-                <span class="order__item-popup__item-title">Статус:</span>
-                <span class="order__item-popup__item-info">Отправлено</span>
+              <div class="orders__item-popup__item">
+                <span class="orders__item-popup__item-title">Статус:</span>
+                <span class="orders__item-popup__item-info">Отправлено</span>
               </div>
-              <div class="order__item-popup__item">
-                <span class="order__item-popup__item-title">Стоимость:</span>
-                <span class="order__item-popup__item-info">1000 грн.</span>
+              <div class="orders__item-popup__item">
+                <span class="orders__item-popup__item-title">Стоимость:</span>
+                <span class="orders__item-popup__item-info">1000 грн.</span>
               </div>
             </div>
           </div>
         </my-popup>
-        <div class="order__item-num order__item-info">0</div>
-        <div class="order__item-date order__item-info">03.04.1607</div>
-        <div class="order__item-amount order__item-info">13</div>
-        <div class="order__item-status order__item-info">Отправлено</div>
-        <div class="order__item-price order__item-info">1000 грн.</div>
-        <div class="order__item-functions order__item-info">
+        <div class="orders__item-num orders__item-info">0</div>
+        <div class="orders__item-date orders__item-info">03.04.1607</div>
+        <div class="orders__item-amount orders__item-info">13</div>
+        <div class="orders__item-status orders__item-info">Отправлено</div>
+        <div class="orders__item-price orders__item-info">1000 грн.</div>
+        <div class="orders__item-functions orders__item-info">
           <div class="view-icon__wrapper" @click="showInfo = true">
             <svg
-              class="order__item-functions-icon view-icon"
+              class="orders__item-functions-icon view-icon"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -170,7 +170,7 @@
           </div>
           <div class="copy-icon__wrapper" @click="copy(0)">
             <svg
-              class="order__item-functions-icon copy-icon"
+              class="orders__item-functions-icon copy-icon"
               width="16"
               height="21"
               viewBox="0 0 16 21"
@@ -213,7 +213,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.order {
+.orders {
   &__item {
     display: grid;
     align-items: center;
@@ -244,7 +244,7 @@ export default {
         fill: #337d5a;
       }
       &:hover {
-        .order__item-title-icon path {
+        .orders__item-title-icon path {
           fill: #337d5a;
         }
       }
@@ -341,7 +341,7 @@ export default {
   }
 }
 @media (max-width: 1300px) {
-  .order__item {
+  .orders__item {
     grid-template-columns: repeat(5, 1fr);
     &-title,
     &-info {
@@ -352,7 +352,7 @@ export default {
   }
 }
 @media (max-width: 900px) {
-  .order__item {
+  .orders__item {
     grid-template-columns: repeat(4, 1fr);
     &-title,
     &-info {
@@ -363,7 +363,7 @@ export default {
   }
 }
 @media (max-width: 600px) {
-  .order__item {
+  .orders__item {
     grid-template-columns: repeat(3, 1fr);
     &-title,
     &-info {
