@@ -347,6 +347,7 @@ export default {
           },
           password: this.password,
           type: this.type,
+          sale: 1
         }
         if (this.type === 'company') {
           userInfo.company = {
@@ -359,7 +360,7 @@ export default {
             },
           }
         }
-        await this.$writeData(userInfo, `users/${id}`)
+        await this.$writeData(`users/${id}`, userInfo)
       } catch (e) {
         this.$toasted.error(e)
       }
