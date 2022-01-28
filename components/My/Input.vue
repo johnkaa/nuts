@@ -43,6 +43,9 @@ export default {
   watch: {
     field() {
       this.$emit('input', this.field)
+    },
+    value() {
+      this.field = this.value
     }
   },
   mounted() {

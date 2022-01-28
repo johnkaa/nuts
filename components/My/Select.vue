@@ -18,6 +18,10 @@ export default {
     event: 'select',
   },
   props: {
+    value: {
+      type: String,
+      default: () => '',
+    },
     options: {
       type: Array,
       default: () => [],
@@ -40,8 +44,15 @@ export default {
     selected() {
       this.$emit('select', this.selected)
     },
+    value() {
+      this.selected = this.value
+    }
   },
-  methods: {},
+  mounted() {
+    if(this.value) {
+      this.selected = this.value
+    }
+  }
 }
 </script>
 
