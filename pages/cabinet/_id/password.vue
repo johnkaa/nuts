@@ -1,55 +1,58 @@
 <template>
   <div class="change-password">
     <validation-observer
-        v-slot="{ invalid }"
-        class="change-password__form"
-        tag="form"
-        name="change-password"
-        @submit.prevent="changePassword"
-      >
+      v-slot="{ invalid }"
+      class="change-password__form"
+      tag="form"
+      name="change-password"
+      @submit.prevent="changePassword"
+    >
       <h2 class="change-password__title">Пароль</h2>
-        <validation-provider name="oldPassword" rules="required">
-          <div slot-scope="{ errors }" class="change-password__field">
-            <my-input
-              v-model="oldPassword"
-              class="change-password__input"
-              type="password"
-              placeholder="Текущий пароль*"
-              :errors="errors"
-            />
-          </div>
-        </validation-provider>
-        <validation-provider name="password" rules="required|min:6">
-          <div slot-scope="{ errors }" class="change-password__field">
-            <my-input
-              v-model="password"
-              class="change-password__input"
-              type="password"
-              placeholder="Новый пароль*"
-              :errors="errors"
-            />
-          </div>
-        </validation-provider>
-        <validation-provider name="repeatPassword" rules="required|confirmed:password">
-          <div slot-scope="{ errors }" class="change-password__field">
-            <my-input
-              v-model="repeatPassword"
-              class="change-password__input"
-              type="password"
-              placeholder="Подтвердите пароль*"
-              :errors="errors"
-            />
-          </div>
-        </validation-provider>
-        <my-button class="change-password__btn" :disabled="invalid"
-          >Продолжить</my-button
-        >
-      </validation-observer>
+      <validation-provider name="oldPassword" rules="required">
+        <div slot-scope="{ errors }" class="change-password__field">
+          <my-input
+            v-model="oldPassword"
+            class="change-password__input"
+            type="password"
+            placeholder="Текущий пароль*"
+            :errors="errors"
+          />
+        </div>
+      </validation-provider>
+      <validation-provider name="password" rules="required|min:6">
+        <div slot-scope="{ errors }" class="change-password__field">
+          <my-input
+            v-model="password"
+            class="change-password__input"
+            type="password"
+            placeholder="Новый пароль*"
+            :errors="errors"
+          />
+        </div>
+      </validation-provider>
+      <validation-provider
+        name="repeatPassword"
+        rules="required|confirmed:password"
+      >
+        <div slot-scope="{ errors }" class="change-password__field">
+          <my-input
+            v-model="repeatPassword"
+            class="change-password__input"
+            type="password"
+            placeholder="Подтвердите пароль*"
+            :errors="errors"
+          />
+        </div>
+      </validation-provider>
+      <my-button class="change-password__btn" :disabled="invalid"
+        >Продолжить</my-button
+      >
+    </validation-observer>
   </div>
 </template>
 
 <script>
-import { getAuth, updatePassword  } from "firebase/auth";
+import { getAuth, updatePassword } from 'firebase/auth'
 
 export default {
   async asyncData({ $readData, route }) {
@@ -65,21 +68,24 @@ export default {
   },
   methods: {
     changePassword() {
-      if(this.userPassword !== this.oldPassword) {
+      if (this.userPassword !== this.oldPassword) {
         return this.$toasted.error('Вы ввели неверный текущий пароль.')
       }
       const id = this.$route.params.id
       const auth = getAuth()
-        updatePassword(auth.currentUser, this.password).then(() => {
+      updatePassword(auth.currentUser, this.password)
+        .then(() => {
           this.$writeData(`users/${id}/password`, this.password)
-        }).then(() => {
+        })
+        .then(() => {
           this.$router.push(`/cabinet/${id}/orders`)
           this.$toasted.success('Вы изменили пароль.')
-        }).catch((error) => {
+        })
+        .catch((error) => {
           return this.$toasted.error(error)
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
