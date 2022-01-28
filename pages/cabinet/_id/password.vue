@@ -72,11 +72,12 @@ export default {
       const auth = getAuth()
         updatePassword(auth.currentUser, this.password).then(() => {
           this.$writeData(`users/${id}/password`, this.password)
+        }).then(() => {
+          this.$router.push(`/cabinet/${id}/orders`)
+          this.$toasted.success('Вы изменили пароль.')
         }).catch((error) => {
           return this.$toasted.error(error)
-        });
-        this.$router.push(`/cabinet/${id}/orders`)
-        this.$toasted.success('Вы изменили пароль.')
+        })
     }
   }
 }
