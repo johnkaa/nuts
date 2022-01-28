@@ -337,6 +337,7 @@ export default {
           img:
             this.img ||
             'https://hnflocal5.com/wp-content/uploads/2018/01/user-placeholder.jpg',
+          name: this.name,
           email: this.email,
           phone: this.phone,
           address: {
