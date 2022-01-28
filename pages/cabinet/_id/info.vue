@@ -83,30 +83,36 @@ export default {
     }
   },
   methods: {
-    async changeInfo() {
+    changeInfo() {
       const id = this.$route.params.id
       const auth = getAuth()
-      updateEmail(auth.currentUser, this.email).catch((error) => {
-        return this.$toasted.error(error)
-      })
-      if (this.file) {
-        const format =
-          this.file.name.split('.')[this.file.name.split('.').length - 1]
-        this.img = await this.$uploadImg(
-          this.file,
-          `users/${id}/avatar.${format}`
-        )
-      }
-      try {
-        await this.$writeData(`users/${id}/name`, this.name)
-        await this.$writeData(`users/${id}/email`, this.email)
-        await this.$writeData(`users/${id}/phone`, this.phone)
-        await this.$writeData(`users/${id}/img`, this.img)
-      } catch (e) {
-        this.$toasted.error(e)
-      }
-      this.$toasted.success('Вы изменили свои данные.')
-      this.$router.push(`/cabinet/${id}/orders`)
+      updateEmail(auth.currentUser, this.email)
+        .then(async () => {
+          if (this.file) {
+            const format =
+              this.file.name.split('.')[this.file.name.split('.').length - 1]
+            this.img = await this.$uploadImg(
+              this.file,
+              `users/${id}/avatar.${format}`
+            )
+          }
+        })
+        .then(async () => {
+          await this.$writeData(`users/${id}/name`, this.name)
+          await this.$writeData(`users/${id}/email`, this.email)
+          await this.$writeData(`users/${id}/phone`, this.phone)
+          await this.$writeData(`users/${id}/img`, this.img)
+        })
+        .then(() => {
+          this.$store.dispatch('getUserAction', id)
+        })
+        .then(() => {
+          this.$toasted.success('Вы изменили свои данные.')
+          this.$router.push(`/cabinet/${id}/orders`)
+        })
+        .catch((error) => {
+          return this.$toasted.error(error)
+        })
     },
     getFileImg(file) {
       this.file = file
