@@ -119,21 +119,18 @@ export default {
 <style lang="scss" scoped>
 .change-address {
   &__form {
-    width: 410px;
+    max-width: 410px;
+    margin: 0 auto;
   }
   &__title {
     font-size: 32px;
     line-height: 32px;
     font-weight: 800;
     margin-bottom: 40px;
+    text-align: center;
   }
   &__field {
     margin-bottom: 10px;
-  }
-}
-@media(max-width: 600px) {
-  .change-password__form {
-    width: 300px;
   }
 }
 </style>

@@ -86,7 +86,8 @@ export default {
 <style lang="scss" scoped>
 .change-password {
   &__form {
-    width: 410px;
+    max-width: 410px;
+    margin: 0 auto;
   }
   &__title {
     font-size: 32px;
@@ -96,11 +97,6 @@ export default {
   }
   &__field {
     margin-bottom: 10px;
-  }
-}
-@media(max-width: 600px) {
-  .change-password__form {
-    width: 300px;
   }
 }
 </style>
