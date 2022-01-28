@@ -114,13 +114,13 @@
               v-if="getUser.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
               class="header__admin-btn"
             >
-              <nuxt-link :to="`/admin`">Админка</nuxt-link>
+              <nuxt-link to="/admin/stats">Админка</nuxt-link>
             </my-button>
           </div>
           <nuxt-link
             v-if="getUser"
             class="header__user"
-            :to="`/cabinet/${getUser.id}`"
+            :to="`/cabinet/${getUser.id}/history-orders`"
             ><img
               class="header__auth-img"
               src="/images/icons/user.svg"
@@ -307,12 +307,12 @@
               Ждем Вашего звонка ежедевно с 9 до 18
             </div>
           </div>
-          <nuxt-link class="header__basket">
+          <div class="header__basket">
             <img src="/images/icons/basket.svg" alt="" /><span
               class="header__basket-num"
               >0</span
             >
-          </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -321,28 +321,28 @@
         <div class="header__sale mobile">Ваша персональная скидка - 5%</div>
         <ul class="menu__list">
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/">Магазин</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/">О производстве</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/about">О производстве</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/"
+            <nuxt-link class="menu__list-link" to="/delivery"
               >Оплата и доставка</nuxt-link
             >
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/"
+            <nuxt-link class="menu__list-link" to="/corporate"
               >Оптовым и корпоративным клиетам</nuxt-link
             >
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/"
+            <nuxt-link class="menu__list-link" to="/news"
               >Новости и статьи</nuxt-link
             >
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/">Галерея</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/gallery">Галерея</nuxt-link>
           </li>
         </ul>
       </div>
