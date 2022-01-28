@@ -1,5 +1,5 @@
 export default (context, inject) => {
-  inject('writeData', async (data, path) => {
+  inject('writeData', async (path, data) => {
     try {
       const ref = context.$fire.database.ref(path)
       await ref.set(data)

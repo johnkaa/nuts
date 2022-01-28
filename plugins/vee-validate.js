@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required, email, min, confirmed } from 'vee-validate/dist/rules'
+import { required, email, min, confirmed, regex } from 'vee-validate/dist/rules'
 
 // Add the required rule
 extend('required', {
@@ -28,11 +28,17 @@ extend('confirmed', {
   message: 'Пароли не совпадают',
 })
 
+extend('regex', {
+  ...regex,
+  message: 'regex'
+})
+
 extend('true', {
   validate: value => !!value,
   // message: 'This field must be a valid email',
   message: 'Обязательное поле',
 })
+
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
