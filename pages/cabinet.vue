@@ -71,7 +71,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  middleware: 'cabinet'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -126,7 +128,6 @@ export default {}
       &-link {
         border-bottom: 2px solid transparent;
         transition: all 0.3s;
-        border-bottom: none;
         &:hover,
         &.nuxt-link-exact-active.nuxt-link-active {
           color: #337d5a;
