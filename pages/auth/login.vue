@@ -49,7 +49,8 @@ export default {
       try {
         await this.$fire.auth
           .signInWithEmailAndPassword(this.email, this.password)
-          .then(() => {
+          .then((res) => {
+            this.$store.dispatch('getUserAction', res.user.uid)
             this.$router.push('/')
             this.$toasted.success('Вы успешно вошли в аккаунт.')
           })
