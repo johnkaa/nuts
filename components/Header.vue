@@ -1,5 +1,33 @@
 <template>
   <header class="header">
+    <my-popup
+      v-if="showCallbackModal"
+      class="callback-modal"
+      @close="showCallbackModal = false"
+    >
+      <validation-observer
+        v-slot="{ invalid }"
+        class="callback-modal__form"
+        tag="form"
+        name="callback"
+        @submit.prevent="callbackSubmit"
+      >
+        <h2 class="callback-modal__title">Введите ваш номер телефона</h2>
+        <validation-provider name="phone" rules="required">
+          <div slot-scope="{ errors }" class="callback-modal__field">
+            <my-input
+              v-model="callbackPhone"
+              class="callback-modal__input"
+              placeholder="Телефон*"
+              :errors="errors"
+            />
+          </div>
+        </validation-provider>
+        <my-button class="callback-modal__btn" :disabled="invalid"
+          >Подтвердить</my-button
+        >
+      </validation-observer>
+    </my-popup>
     <div class="header__top">
       <div class="container">
         <div class="header__top-inner">
@@ -63,10 +91,13 @@
               <span class="header__top-phone_green">+38 (044)</span> 750-50-11
             </p></a
           >
-          <div class="header__top-callback">Заказать звонок</div>
-
-          <div class="header__sale">Ваша персональная скидка - 5%</div>
-          <div class="header__auth">
+          <div class="header__top-callback" @click="showCallbackModal = true">
+            Заказать звонок
+          </div>
+          <div class="header__sale" :class="{ auth: getUser }">
+            Ваша персональная скидка - 5%
+          </div>
+          <div v-if="!$fire.auth.currentUser" class="header__auth">
             <nuxt-link class="header__auth-link" to="/auth/login"
               ><img
                 class="header__auth-img"
@@ -78,6 +109,25 @@
               >Регистрация</nuxt-link
             >
           </div>
+          <div v-if="getUser" class="header__admin">
+            <my-button
+              v-if="getUser.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
+              class="header__admin-btn"
+            >
+              <nuxt-link :to="`/admin`">Админка</nuxt-link>
+            </my-button>
+          </div>
+          <nuxt-link
+            v-if="getUser"
+            class="header__user"
+            :to="`/cabinet/${getUser.id}`"
+            ><img
+              class="header__auth-img"
+              src="/images/icons/user.svg"
+              alt=""
+            />{{ getUser.name }}</nuxt-link
+          >
+          <my-button v-if="getUser" class="header__logout" @click="logout">Выйти</my-button>
           <div class="header__lang">
             Ru<img src="/images/icons/arrow-down.svg" alt="" />
             <div class="header__lang-select">
@@ -105,7 +155,7 @@
                 /></nuxt-link>
               </div>
               <div class="burger__menu-middle">
-                <div class="burger__auth">
+                <div v-if="!$fire.auth.currentUser" class="burger__auth">
                   <nuxt-link class="header__auth-link" to="/auth/login"
                     ><img
                       class="header__auth-img"
@@ -115,6 +165,29 @@
                   >
                   <nuxt-link class="header__auth-link" to="/auth/register"
                     >Регистрация</nuxt-link
+                  >
+                </div>
+                <div class="burger__user-panel">
+                  <div v-if="getUser" class="burger__admin">
+                    <my-button
+                      v-if="getUser.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
+                      class="burger__admin-btn"
+                    >
+                      <nuxt-link to="/admin/stats">Админка</nuxt-link>
+                    </my-button>
+                  </div>
+                  <nuxt-link
+                    v-if="getUser"
+                    class="burger__user"
+                    :to="`/cabinet/${getUser.id}/history-orders`"
+                    ><img
+                      class="burger__auth-img"
+                      src="/images/icons/user.svg"
+                      alt=""
+                    />{{ getUser.name }}</nuxt-link
+                  >
+                  <my-button class="burger__logout" @click="logout"
+                    >Выйти</my-button
                   >
                 </div>
                 <div class="burger__sm">
@@ -170,32 +243,32 @@
               </div>
               <ul class="burger__menu-list">
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/shop"
                     >Магазин</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/about"
                     >О производстве</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/delivery"
                     >Оплата и доставка</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/corporate"
                     >Оптовым и корпоративным клиетам</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/news"
                     >Новости и статьи</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/"
+                  <nuxt-link class="burger__menu-list-link" to="/gallery"
                     >Галерея</nuxt-link
                   >
                 </li>
@@ -225,12 +298,16 @@
             </div>
           </div>
           <div class="header__callback">
-            <my-button class="header__callback-btn">Заказать звонок</my-button>
+            <my-button
+              class="header__callback-btn"
+              @click="showCallbackModal = true"
+              >Заказать звонок</my-button
+            >
             <div class="header__callback-text">
               Ждем Вашего звонка ежедевно с 9 до 18
             </div>
           </div>
-          <nuxt-link class="header__basket" to="/">
+          <nuxt-link class="header__basket">
             <img src="/images/icons/basket.svg" alt="" /><span
               class="header__basket-num"
               >0</span
@@ -274,21 +351,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
       showBurger: false,
+      callbackPhone: '',
+      showCallbackModal: false,
     }
   },
+  computed: mapGetters(['getUser']),
   watch: {
-    '$route'() {
+    $route() {
       this.showBurger = false
-    }
-  }
+    },
+  },
+  methods: {
+    async logout() {
+      await this.$fire.auth.signOut()
+      this.$router.push('/auth/login')
+      this.$store.dispatch('getUserAction', null)
+    },
+    callbackSubmit() {
+      this.$writeData(`callbackPhones/${+new Date()}`, this.callbackPhone)
+      this.showCallbackModal = false
+      this.$toasted.success('Ваша заявка отправлена на обработку.')
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .header {
   &__top {
     background-color: #f5f5f5;
@@ -321,6 +415,9 @@ export default {
     font-size: 14px;
     font-weight: 600;
     margin-left: auto;
+    &.auth {
+      margin-right: auto;
+    }
     &.mobile {
       display: none;
     }
@@ -344,6 +441,28 @@ export default {
         border-color: #93b474;
       }
     }
+  }
+  &__admin {
+    margin-right: 15px;
+    &-btn {
+      padding: 5px 10px !important;
+    }
+  }
+  &__user {
+    border-bottom: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+    &:hover {
+      border-color: #337d5a;
+      color: #337d5a;
+    }
+  }
+  &__logout {
+    max-width: 100px;
+    margin-left: 40px;
+    padding: 5px 10px !important;
   }
   &__lang {
     display: flex;
@@ -469,6 +588,21 @@ export default {
     }
   }
 }
+.callback-modal {
+  &__title {
+    font-size: 32px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  &__form {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 100px;
+  }
+  &__field {
+    margin-bottom: 30px;
+  }
+}
 @media (max-width: 1170px) {
   .menu {
     padding: 10px 0;
@@ -511,6 +645,11 @@ export default {
     &__callback {
       display: none;
     }
+    &__user,
+    &__admin,
+    &__logout {
+      display: none;
+    }
   }
   .burger {
     display: block;
@@ -545,6 +684,32 @@ export default {
           width: 13px;
         }
       }
+    }
+    &__user-panel {
+      display: flex;
+    }
+    &__admin {
+      margin-right: 10px;
+      &-btn {
+        padding: 5px 10px !important;
+      }
+    }
+    &__user {
+      border-bottom: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+      width: 230px;
+      &:hover {
+        border-color: #337d5a;
+        color: #337d5a;
+      }
+    }
+    &__logout {
+      max-width: 100px;
+      margin-left: 10px;
+      padding: 5px 10px !important;
     }
     &__menu {
       display: none;
@@ -670,8 +835,24 @@ export default {
   .header__sm {
     display: none;
   }
-  .burger__sm {
-    display: flex;
+  .burger {
+    &__sm {
+      display: flex;
+    }
+    &__user-panel {
+      flex-direction: column;
+      gap: 10px;
+    }
+    &__admin {
+      margin: 0;
+      max-width: 100px;
+    }
+    &__user {
+      width: 100%;
+    }
+    &__logout {
+      margin: 0;
+    }
   }
 }
 </style>
