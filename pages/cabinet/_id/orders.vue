@@ -377,4 +377,9 @@ export default {
     }
   }
 }
+@media (max-width: 400px) {
+  .orders__item-title {
+    font-size: 14px;
+  }
+}
 </style>

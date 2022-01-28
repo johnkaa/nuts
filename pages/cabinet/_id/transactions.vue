@@ -295,7 +295,7 @@ export default {
 }
 @media (max-width: 500px) {
   .transactions__item {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     &-title,
     &-info {
       &:nth-child(2) {
