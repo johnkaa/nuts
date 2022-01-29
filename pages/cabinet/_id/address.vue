@@ -12,6 +12,7 @@
         <div slot-scope="{ errors }" class="change-address__field">
           <my-select
             v-model="country"
+            :value="country"
             class="change-address__input"
             :options="countries"
             :errors="errors"
@@ -23,6 +24,7 @@
         <div slot-scope="{ errors }" class="change-address__field">
           <my-select
             v-model="region"
+            :value="region"
             class="change-address__input"
             :options="regions"
             :errors="errors"
@@ -34,6 +36,7 @@
         <div slot-scope="{ errors }" class="change-address__field">
           <my-select
             v-model="city"
+            :value="city"
             class="change-address__input"
             :options="cities"
             :errors="errors"
@@ -41,7 +44,12 @@
           />
         </div>
       </validation-provider>
-      <my-input v-model="address" class="change-address__field" placeholder="Адрес" />
+      <my-input
+        v-model="address"
+        :value="address"
+        class="change-address__field"
+        placeholder="Адрес"
+      />
       <my-button class="change-address__btn" :disabled="invalid"
         >Продолжить</my-button
       >
@@ -53,51 +61,37 @@
 import { Country, State, City } from 'country-state-city'
 
 export default {
+  async asyncData({ $readData, route }) {
+    const userAddress = await $readData(`users/${route.params.id}/address`)
+    const { country, region, city, address } = userAddress
+    return { country, region, city, address }
+  },
   data() {
     return {
+      allCountries: {},
       countries: [],
       regions: [],
       cities: [],
       country: '',
       region: '',
       city: '',
-      address: ''
+      address: '',
     }
   },
   watch: {
     country() {
-      const allCountries = Country.getAllCountries()
-      allCountries.forEach((item) => {
-        if (this.country === item.name) {
-          this.countryCode = item.isoCode
-        }
-      })
-      const regions = State.getStatesOfCountry(this.countryCode)
-      this.regions = []
-      if (regions.length === 0) {
-        this.regions = ['null']
-      }
-      regions.forEach((item) => this.regions.push(item.name))
+      this.setRegions()
     },
     region() {
-      const allRegions = State.getAllStates()
-      allRegions.forEach((item) => {
-        if (this.region === item.name) {
-          this.regionCode = item.isoCode
-        }
-      })
-      const cities = City.getCitiesOfState(this.countryCode, this.regionCode)
-      this.cities = []
-      if (cities.length === 0) {
-        this.cities = ['null']
-      }
-      cities.forEach((item) => this.cities.push(item.name))
+      this.setCities()
     },
   },
   mounted() {
-    const allCountries = Country.getAllCountries()
+    this.allCountries = Country.getAllCountries()
     this.countries = []
-    allCountries.forEach((item) => this.countries.push(item.name))
+    this.allCountries.forEach((item) => this.countries.push(item.name))
+    this.setRegions()
+    this.setCities()
   },
   methods: {
     changeAddress() {
@@ -112,6 +106,38 @@ export default {
       this.$router.push(`/cabinet/${id}/orders`)
       this.$toasted.success('Вы изменили свой адрес')
     },
+    setRegions() {
+      this.allCountries.forEach((item) => {
+        if(this.country === item.name) {
+          this.countryCode = item.isoCode
+        }
+      })
+      const regions = State.getStatesOfCountry(this.countryCode)
+      this.regions = []
+      if (regions.length === 0) {
+        this.regions = ['null']
+      }
+      regions.forEach((item) => this.regions.push(item.name))
+      this.region = ''
+      this.city = ''
+      this.address = ''
+    },
+    setCities() {
+      const allRegions = State.getAllStates()
+      allRegions.forEach((item) => {
+        if (this.region === item.name) {
+          this.regionCode = item.isoCode
+        }
+      })
+      const cities = City.getCitiesOfState(this.countryCode, this.regionCode)
+      this.cities = []
+      if (cities.length === 0) {
+        this.cities = ['null']
+      }
+      cities.forEach((item) => this.cities.push(item.name))
+      this.city = ''
+      this.address = ''
+    }
   },
 }
 </script>
