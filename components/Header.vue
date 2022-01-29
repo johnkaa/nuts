@@ -186,7 +186,7 @@
                       alt=""
                     />{{ getUser.name }}</nuxt-link
                   >
-                  <my-button class="burger__logout" @click="logout"
+                  <my-button v-if="getUser" class="burger__logout" @click="logout"
                     >Выйти</my-button
                   >
                 </div>
