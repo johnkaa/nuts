@@ -30,37 +30,10 @@ export default {
     },
     onFilePicked(event) {
       const file = event.target.files[0]
-      this.$emit('getFile', file)
+      if(file) {
+        this.$emit('getFile', file)
+      }
     },
-    // async onFilePicked(event) {
-    //   const files = event.target.files
-    //   const fileReader = new FileReader()
-    //   this.file = files[0]
-    //   this.filename = files[0].name
-    //   if (this.filename.indexOf(".") <= 0) {
-    //     return alert("Please add a valid file");
-    //   }
-    //   fileReader.onload = (e) => {
-    //     this.fileurl = e.target.result
-    //   }
-    //   fileReader.readAsDataURL(files[0])
-    //   try {
-    //     this.loading = 'https://i.pinimg.com/originals/4f/43/2d/4f432d9234988a5f33b26e0ba06bc6fe.gif'
-    //     const snapshot = await this.$fire.storage
-    //       .ref()
-    //       .child(this.path)
-    //       .put(this.file)
-    //     if(this.index !== undefined) {
-    //       this.$emit('uploadFile', await snapshot.ref.getDownloadURL(), this.index)
-    //     } else {
-    //       this.$emit('uploadFile', await snapshot.ref.getDownloadURL())
-    //     }
-    //     this.loading = ''
-    //     this.$toasted.success('File uploaded')
-    //   } catch (e) {
-    //     this.$toast.error(e)
-    //   }
-    // },
   }
 }
 </script>
