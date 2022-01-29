@@ -14,6 +14,7 @@ export default {
 
 <style lang="scss" scoped>
   .play-icon {
+    margin: 0 auto;
     width: 61px;
     height: 61px;
     border: 2px solid #fff;
