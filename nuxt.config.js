@@ -37,6 +37,10 @@ export default {
     '@nuxtjs/eslint-module',
   ],
 
+  // router: {
+  //   middleware: ['auth']
+  // },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -66,6 +70,11 @@ export default {
       messagingSenderId: '1039641335607',
       appId: '1:1039641335607:web:95c8ebd7b8a5c6e803ecb2',
     },
+    initialize: {
+      onAuthStateActions: 'onAuthStateChangedAction',
+      subcribeManually: false
+    },
+    ssr: true,
     services: {
       auth: true, // Just as example. Can be any other service.
       database: true,
