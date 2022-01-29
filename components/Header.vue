@@ -534,7 +534,7 @@ export default {
     gap: 15px;
     margin-left: auto;
     &-btn {
-      max-width: 160px;
+      max-width: 165px;
     }
     &-text {
       max-width: 178px;
@@ -591,6 +591,7 @@ export default {
 .callback-modal {
   &__title {
     font-size: 32px;
+    font-weight: 600;
     margin-bottom: 50px;
     text-align: center;
   }
@@ -830,6 +831,19 @@ export default {
       display: none;
     }
   }
+}
+@media (max-width: 600px) {
+  .callback-modal {
+  &__title {
+    font-size: 20px;
+  }
+  &__form {
+    padding: 50px 40px;
+  }
+  &__field {
+    margin-bottom: 20px;
+  }
+}
 }
 @media (max-width: 500px) {
   .header__sm {
