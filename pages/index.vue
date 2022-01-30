@@ -1,28 +1,6 @@
 <template>
   <div class="main-page">
-    <my-popup v-if="topBannerShow" @close="showVideo">
-      <iframe
-        width="100%"
-        height="450"
-        src="https://www.youtube.com/embed/lVCxWs8OpjE"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </my-popup>
-    <div
-      class="top-banner"
-      style="background: url(/images/main-page-banner.jpg) no-repeat center / cover;"
-    >
-      <div class="top-banner__title">Орех Причерноморья</div>
-      <p class="top-banner__text">
-        Единственный в Украине сад совместного выращивание фундука и грецкого
-        ореха
-      </p>
-      <my-play-btn @play="showVideo" />
-    </div>
-
+    <banners-top class="top-banner" />
     <div class="products">
       <div class="container">
         <h2 class="products__title">Продукция</h2>
@@ -41,47 +19,82 @@
         </nuxt-link>
       </div>
     </div>
+    <div class="about">
+      <div class="container">
+        <div class="about__inner">
+          <div class="about__info">
+            <h2 class="about__title">О производителе</h2>
+            <p class="about__text">
+              Сельскохозяйственный обслуживающий кооператив “Орех Причерноморья”
+              выращивает смешанные сады ореха грецкого с фундуком, а также ореха
+              грецкого с шиповником, на площади более 150 гектаров. Помимо этого
+              кооператив занимается выращиванием посадочного материала, саженцов
+              привитого и непривитого грецкого ореха, фундука и шиповника.
+            </p>
+            <nuxt-link class="about__link" to="/about">
+              <my-button class="about__btn secondary">Подробнее</my-button>
+            </nuxt-link>
+          </div>
+          <div class="about__slider">
+            <img src="/images/about-slider-img.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <banners-area class="area" />
+    <banners-factory class="factory" />
+    <div class="benefits">
+      <div class="container">
+        <h2 class="benefits__title">О пользе продукта</h2>
+        <p class="benefits__text">
+          Каждый вид ореха содержит свой неповторимый уникальный баланс
+          витаминов, и микроэлементов
+        </p>
+        <div class="benefits__items">
+          <div class="benefits__item">
+            <img class="benefits__item-icon" src="/images/icons/walnut.svg" />
+            <div class="benefits__item-title">Грецкий орех</div>
+            <p class="benefits__item-text">
+              Дерево жизни - так часто величают грецкий орех, поскольку с давних
+              пор он кормил, восстанавливал силы и лечил человека. Даже
+              небольшая горсть грецких орехов - это кладезь витаминов и хорошая
+              профилактика многих заболеваний.
+            </p>
+            <div class="benefits__item-filter"></div>
+          </div>
+          <div class="benefits__item">
+            <img class="benefits__item-icon" src="/images/icons/hazelnut.svg" />
+            <div class="benefits__item-title">Фундук</div>
+            <p class="benefits__item-text">
+              Витамин А улучшает зрение и повышает иммунитет. Комплекс витаминов
+              группы В нормализует работу ЦНС, улучшает состав крови, укрепляет
+              иммунную и кровеносную системы, систему обмена веществ.
+            </p>
+            <div class="benefits__item-filter"></div>
+          </div>
+          <div class="benefits__item">
+            <img class="benefits__item-icon" src="/images/icons/rose.svg" />
+            <div class="benefits__item-title">Шиповник</div>
+            <p class="benefits__item-text">
+              В народной медицине отвары из шиповника применялись при
+              скарлатине, тифе, туберкулезе, воспалении почек, болезнях
+              кишечника, печени, желудка.
+            </p>
+            <div class="benefits__item-filter"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <banners-eco class="eco-banner" />
+    <news-latest class="news"/>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      topBannerShow: false,
-    }
-  },
-  methods: {
-    showVideo() {
-      this.topBannerShow = !this.topBannerShow
-    },
-  },
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
-.top-banner {
-  background-size: cover;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding-top: 190px;
-  padding-bottom: 140px;
-  &__title {
-    font-size: 62px;
-    font-weight: 800;
-    margin-bottom: 50px;
-  }
-  &__text {
-    font-size: 25px;
-    font-weight: 600;
-    max-width: 555px;
-    margin-bottom: 40px;
-  }
-}
 .products {
   padding: 90px 0;
   color: #1a2f3f;
@@ -115,14 +128,143 @@ export default {
     transform: translateX(-50%);
   }
 }
-@media (max-width: 700px) {
-  .top-banner {
-    &__title {
-      font-size: 30px;
-      margin-bottom: 15px;
+.about {
+  padding: 90px 0;
+  background-color: #fbfbfb;
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__title {
+    font-size: 45px;
+    font-weight: 800;
+    margin-bottom: 40px;
+  }
+  &__text {
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+  &__btn {
+    max-width: 170px;
+  }
+  &__slider {
+    max-width: 700px;
+    img {
+      width: 100%;
     }
-    &__text {
+  }
+}
+.benefits {
+  text-align: center;
+  padding: 90px 0;
+  &__title {
+    font-size: 45px;
+    font-weight: 800;
+    margin-bottom: 45px;
+  }
+  &__text {
+    font-size: 18px;
+    line-height: 22px;
+    max-width: 555px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+  &__items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  &__item {
+    max-width: 410px;
+    height: 525px;
+    padding: 0 30px;
+    padding-top: 200px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    &-icon,
+    &-title,
+    &-text {
+      position: relative;
+      z-index: 10;
+      margin-bottom: 30px;
+      transition: all 0.5s;
+    }
+    &-title {
+      font-size: 40px;
+      font-weight: 800;
+    }
+    &-text {
       font-size: 18px;
+      font-weight: 600;
+      line-height: 23px;
+      opacity: 0;
+    }
+    &-filter {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(#337d5a, 0);
+      left: 0;
+      top: 0;
+      z-index: 9;
+      transition: background-color 0.5s;
+    }
+    &:first-child {
+      background-image: url(/images/benefits-1.jpg);
+      .benefits__item-icon {
+        margin-bottom: 17px;
+      }
+    }
+    &:nth-child(2) {
+      background-image: url(/images/benefits-2.jpg);
+    }
+    &:nth-child(3) {
+      background-image: url(/images/benefits-3.jpg);
+    }
+    &:hover {
+      .benefits__item {
+        &-icon,
+        &-title,
+        &-text {
+          transform: translateY(-100px);
+        }
+        &-text {
+          opacity: 1;
+        }
+        &-filter {
+          background-color: rgba(#337d5a, 0.95);
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1300px) {
+  .about {
+    &__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+      gap: 50px;
+    }
+    &__btn {
+      max-width: 300px;
+    }
+  }
+}
+@media (max-width: 440px) {
+  .about__title {
+    font-size: 38px;
+  }
+  .benefits {
+    &__title {
+      font-size: 34px;
+    }
+    &__item-title {
+      font-size: 36px;
     }
   }
 }

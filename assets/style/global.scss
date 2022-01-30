@@ -17,10 +17,28 @@ body {
   color: #1A2F3F;
 }
 
+::-webkit-scrollbar {
+  width: 10px; /* ширина для вертикального скролла */
+  height: 8px; /* высота для горизонтального скролла */
+  background-color: rgba(#000, .1);
+  border-radius: 50px;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: #337D5A;
+  border-radius: 50px;
+  box-shadow: inset 1px 1px 10px #337D5A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #253861;
+}
+
 .container {
-  max-width: 1330px;
+  max-width: 1330px !important;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 15px !important;
 }
 
 a {
