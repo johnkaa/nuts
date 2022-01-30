@@ -39,6 +39,7 @@ body {
   max-width: 1330px !important;
   margin: 0 auto;
   padding: 0 15px !important;
+  position: relative;
 }
 
 a {
@@ -60,6 +61,14 @@ a {
     &:hover {
       border-color: #8a8a8a;
     }
+  }
+}
+.position.secondary {
+  color: #fff;
+  position: absolute;
+  top: 40px;
+  .position-link:hover {
+    border-color: #fff;
   }
 }
 
