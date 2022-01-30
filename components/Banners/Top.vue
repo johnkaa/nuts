@@ -60,6 +60,7 @@ export default {
     font-size: 25px;
     font-weight: 600;
     max-width: 555px;
+    margin: 0 auto;
     margin-bottom: 40px;
   }
 }
