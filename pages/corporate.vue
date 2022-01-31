@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="corporate__top">
-      <banners-top class="corporate__top-banner" />
+      <banners-top class="corporate__top-banner" :banner="topBanner"/>
       <div class="container">
         <div class="corporate__top-info">
           <h2 class="corporate__top-title">Оптовым и корпоративным клиентам</h2>
@@ -490,12 +490,17 @@
       </div>
     </div>
     <banners-area class="corporate__area-banner" />
-    <banners-eco class="corporate__eco-banner" />
+    <banners-eco class="corporate__eco-banner" :banner="ecoBanner"/>
   </div>
 </template>
 
 <script>
 export default {
+  async asyncData({ $readData }) {
+    const topBanner = await $readData('banners/top')
+    const ecoBanner = await $readData('banners/eco')
+    return { topBanner, ecoBanner }
+  },
   data() {
     return {
       selectedCorporate: 'supermarket',

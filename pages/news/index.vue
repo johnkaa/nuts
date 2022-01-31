@@ -24,20 +24,19 @@
       <h2 class="news__title">Новости и статьи</h2>
       <p class="news__text">Свежие новости и полезная информация</p>
       <div class="news__items">
-        <news-card v-for="item in amount" :key="item" class="news__item" :class="{big: item === 1}"/>
+        <news-card v-for="(item, index) in news" :key="index" class="news__item" :class="{big: index === 1}" :news="item"/>
       </div>
-      <my-button class="news__btn secondary" @click="amount = 10">Посмотреть ещё</my-button>
+      <my-button class="news__btn secondary">Посмотреть ещё</my-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      amount: 7
-    }
-  }
+  async asyncData({ $readData }) {
+    const news = await $readData('news')
+    return { news }
+  },
 }
 </script>
 

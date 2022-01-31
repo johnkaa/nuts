@@ -102,9 +102,9 @@
           </div>
         </div>
         <div class="shop__items">
-          <Product v-for="item in 6" :key="item" class="shop__item" />
+          <Product v-for="(item, index) in products" :key="index" class="shop__item" :product="item" />
         </div>
-        <my-button class="shop__btn secondary">Загрузить ещё</my-button>
+        <my-button v-if="products.length > 6" class="shop__btn secondary">Загрузить ещё</my-button>
       </div>
     </div>
     <div class="shop__info">
@@ -159,6 +159,10 @@
 
 <script>
 export default {
+  async asyncData({ $readData }) {
+    const products = await $readData('/products')
+    return { products }
+  },
   data() {
     return {
       type: '',

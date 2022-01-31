@@ -28,15 +28,25 @@
     </div>
     <div class="container">
       <div class="gallery__items">
-        <gallery-card v-for="item in 6" :key="item" class="gallery__item" />
+        <gallery-card v-for="(item, index) in gallery" :key="index" class="gallery__item" :gallery-card="item"/>
       </div>
-      <my-button class="gallery__btn">Посмотреть ещё</my-button>
+      <my-button v-if="gallery.length > 6" class="gallery__btn">Посмотреть ещё</my-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+   async asyncData({ $readData }) {
+    const gallery = await $readData('gallery')
+    let latestGallery = []
+    Object.keys(gallery).forEach(item => {
+      latestGallery.push(gallery[item])
+    })
+    latestGallery = latestGallery.slice(0, 6)
+    return { gallery, latestGallery }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

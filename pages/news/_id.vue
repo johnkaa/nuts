@@ -23,35 +23,19 @@
       </div>
       <div class="news__inner">
         <div class="news__content">
-          <h2 class="news__title">
-            Центр поддержки экспорта, в студии Павел Тулба
-          </h2>
-          <div class="news__date">12.04.2019</div>
-          <img class="news__img" src="/images/news-2.jpg" />
-          <p class="news__text">
-            Сельскохозяйственный обслуживающий кооператив “Орех Причерноморья”
-            предлагает своим клиентам выгодные условия сотрудничества. Ореховый
-            бизнес – один из наиболее перспективных в Украине. Ежегодная
-            нехватка продукта в Европе составляет 100 000 тонн. У Вас есть
-            возможность зарабатывать десятки тысяч долларов в год всего на
-            нескольких гектарах земли. Предприятие основано в 2012 году для
-            закладки смешанного сада грецкого ореха и фундука в Одесской
-            области. На сегодня уже заложено более 200 гектаров сада и этот
-            процесс продолжается. Кооператив предоставляет полный цикл
-            сопровождения: от выращивания до сбыта. Кроме выращивания грецкого
-            ореха и фундука, компания занимается выращиванием саженцев,
-            разведением и выращиванием овец, а также является первой в Украине
-            компанией, приступившей к промышленному выращиванию трюфелей на
-            корнях фундука.
-          </p>
+          <h2 class="news__title">{{ news.title }}</h2>
+          <div class="news__date">{{ news.date }}</div>
+          <img class="news__img" :src="news.img" />
+          <p class="news__text">{{ news.text }}</p>
         </div>
         <div class="news__latest">
           <div class="news__latest-title">Последние публикации</div>
           <div class="news__latest-items">
             <news-card
-              v-for="item in 3"
-              :key="item"
+              v-for="(item, index) in latestNews"
+              :key="index"
               class="news__latest-item mini-card"
+              :news="item"
             />
             <div class="news__latest-sm">
               <div class="news__latest-sm-title">ОРЕХ ПРИЧЕРНОМОРЬЯ</div>
@@ -120,6 +104,16 @@
 
 <script>
 export default {
+  async asyncData({ $readData, route }) {
+    const allNews = await $readData('news')
+    const news = await $readData(`news${route.params.id}`)
+    let latestNews = []
+    Object.keys(allNews).forEach(item => {
+      latestNews.push(allNews[item])
+    })
+    latestNews = latestNews.slice(0, 3)
+    return { news, latestNews }
+  },
   data() {
     return {
       id: '',
