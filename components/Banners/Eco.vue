@@ -1,21 +1,20 @@
 <template>
   <div
     class="eco"
-    style="background: url(/images/eco-banner-bg.jpg) no-repeat center / cover"
+    :style="`background: url(${banner.img}) no-repeat center / cover`"
   >
     <div class="container">
       <img class="eco__icon" src="/images/icons/eco-icon.svg" />
-      <h2 class="eco__title">Эко продукция</h2>
-      <p class="eco__text">
-        Выращиваем каждое деревцо с любовью, на экологически чистой земле, без
-        использования пестицидов и химии
-      </p>
+      <h2 class="eco__title">{{ banner.title }}</h2>
+      <p class="eco__text">{{ banner.text }}</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['banner']
+}
 </script>
 
 <style lang="scss" scoped>

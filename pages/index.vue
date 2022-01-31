@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <banners-top class="top-banner" />
+    <banners-top class="top-banner" :banner="topBanner"/>
     <div class="products">
       <div class="container">
         <h2 class="products__title">Продукция</h2>
@@ -10,18 +10,16 @@
           объема
         </p>
         <div class="products__items">
-          <product v-for="i in 6" :key="i" />
+          <product v-for="item in products" :key="item.id" :product="item"/>
         </div>
-        <nuxt-link to="/shop">
-          <my-button class="products__btn secondary"
+        <my-button class="products__btn secondary" @click="$router.push('/shop')"
             >Перейти в магазин</my-button
           >
-        </nuxt-link>
       </div>
     </div>
-    <About class="about"/>
+    <About class="about" :about="about"/>
     <banners-area class="area" />
-    <banners-factory class="factory" />
+    <banners-factory class="factory" :banner="factoryBanner"/>
     <div class="benefits">
       <div class="container">
         <h2 class="benefits__title">О пользе продукта</h2>
@@ -64,13 +62,26 @@
         </div>
       </div>
     </div>
-    <banners-eco class="eco-banner" />
-    <news-latest class="news"/>
+    <banners-eco class="eco-banner" :banner="ecoBanner"/>
+    <news-latest class="news" :news="latestNews"/>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData({ $readData }) {
+    const topBanner = await $readData('banners/top')
+    const products = await $readData('products')
+    const about = await $readData('pages/about')
+    const factoryBanner = await $readData('banners/factory')
+    const ecoBanner = await $readData('banners/eco')
+    const news = await $readData('news')
+    let latestNews = []
+    Object.keys(news).forEach(item => latestNews.push(news[item]))
+    latestNews = latestNews.slice(0, 3)
+    return { topBanner, products, about, factoryBanner, ecoBanner, latestNews }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

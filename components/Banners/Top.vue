@@ -1,25 +1,22 @@
 <template>
   <div
     class="top-banner"
-    style="background: url(/images/main-page-banner.jpg) no-repeat center / cover;"
+    :style="`background: url(${banner.img}) no-repeat center / cover;`"
   >
     <div class="container">
       <my-popup v-if="topBannerShow" @close="showVideo">
       <iframe
         width="100%"
         height="450"
-        src="https://www.youtube.com/embed/lVCxWs8OpjE"
+        :src="`https://www.youtube.com/embed/${video}`"
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
     </my-popup>
-    <div class="top-banner__title">Орех Причерноморья</div>
-    <p class="top-banner__text">
-      Единственный в Украине сад совместного выращивание фундука и грецкого
-      ореха
-    </p>
+    <div class="top-banner__title">{{ banner.title }}</div>
+    <p class="top-banner__text">{{ banner.text }}</p>
     <my-play-btn @play="showVideo" />
     </div>
   </div>
@@ -27,16 +24,21 @@
 
 <script>
 export default {
+  props: ['banner'],
   data() {
     return {
       topBannerShow: false,
+      video: ''
     }
+  },
+  mounted() {
+    this.video = this.banner.video.split('/')[this.banner.video.split('/').length - 1]
   },
   methods: {
     showVideo() {
       this.topBannerShow = !this.topBannerShow
     },
-  },
+  }
 }
 </script>
 

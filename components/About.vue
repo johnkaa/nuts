@@ -4,19 +4,13 @@
         <div class="about__inner">
           <div class="about__info">
             <h2 class="about__title">О производителе</h2>
-            <p class="about__text">
-              Сельскохозяйственный обслуживающий кооператив “Орех Причерноморья”
-              выращивает смешанные сады ореха грецкого с фундуком, а также ореха
-              грецкого с шиповником, на площади более 150 гектаров. Помимо этого
-              кооператив занимается выращиванием посадочного материала, саженцов
-              привитого и непривитого грецкого ореха, фундука и шиповника.
-            </p>
-            <nuxt-link class="about__link" to="/about">
-              <my-button class="about__btn secondary">Подробнее</my-button>
-            </nuxt-link>
+            <p class="about__text">{{ about.text }}</p>
+            <my-button class="about__btn secondary" @click="$router.push('/about')">Подробнее</my-button>
           </div>
           <div class="about__slider">
-            <img src="/images/about-slider-img.jpg" alt="" />
+            <div v-for="(item, index) in about.gallery" :key="index" class="about__slider-item">
+              <img class="about__slider-item-img" :src="item.img" alt="" />
+            </div>
           </div>
         </div>
       </div>
@@ -25,7 +19,7 @@
 
 <script>
 export default {
-
+  props: ['about']
 }
 </script>
 

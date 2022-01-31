@@ -5,73 +5,99 @@
       class="product__popup"
       @close="showPreview = false"
     >
-      <img class="product__popup-img" src="/images/product-1.png" alt="" />
+      <img class="product__popup-img" :src="product.img" alt="" />
     </my-popup>
-    <nuxt-link to="/shop/1">
-    <div class="product__img" :class="{ sale: true, new: true }">
-      <img src="/images/product-1.png" alt="" />
-      <svg
-        class="product__img-zoom"
-        width="55"
-        height="55"
-        viewBox="0 0 55 55"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        @click.prevent="showPreview = true"
+    <nuxt-link :to="`/shop/${product.id}`">
+      <div
+        class="product__img"
+        :class="{ sale: product.sale, new: product.new }"
       >
-        <circle cx="27.5" cy="27.5" r="27.5" fill="white" fill-opacity="0.15" />
-        <circle
-          class="product__img-zoom-circle"
-          cx="27.5"
-          cy="27.5"
-          r="22.5"
-          fill="#93B474"
-        />
-        <path
-          class="product__img-zoom-loupe"
-          d="M36.3691 35.3004L31.9977 30.9289C33.0813 29.6078 33.7344 27.9156 33.7344 26.0713C33.7344 21.8408 30.3018 18.4082 26.0713 18.4082C21.8371 18.4082 18.4082 21.8408 18.4082 26.0713C18.4082 30.3018 21.8371 33.7344 26.0713 33.7344C27.9156 33.7344 29.6041 33.085 30.9252 32.0014L35.2967 36.3691C35.5936 36.666 36.0723 36.666 36.3691 36.3691C36.666 36.076 36.666 35.5936 36.3691 35.3004ZM26.0713 32.2092C22.6832 32.2092 19.9297 29.4557 19.9297 26.0713C19.9297 22.6869 22.6832 19.9297 26.0713 19.9297C29.4557 19.9297 32.2129 22.6869 32.2129 26.0713C32.2129 29.4557 29.4557 32.2092 26.0713 32.2092Z"
-          fill="white"
-        />
-      </svg>
-    </div>
-    <div class="product__type">Грецкий орех</div>
-    <div class="product__art">Арт: 0091</div>
-    <div class="product__name">Орех сладкий, классический, очищенный</div>
-    <div class="product__info">
-      <div class="product__weight product__info-item">
-        <div class="product__weight-title product__info-title">Масса:</div>
-        <div class="product__weight-text product__info-text">40г</div>
+        <img :src="product.img" alt="" />
+        <svg
+          class="product__img-zoom"
+          width="55"
+          height="55"
+          viewBox="0 0 55 55"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          @click.prevent="showPreview = true"
+        >
+          <circle
+            cx="27.5"
+            cy="27.5"
+            r="27.5"
+            fill="white"
+            fill-opacity="0.15"
+          />
+          <circle
+            class="product__img-zoom-circle"
+            cx="27.5"
+            cy="27.5"
+            r="22.5"
+            fill="#93B474"
+          />
+          <path
+            class="product__img-zoom-loupe"
+            d="M36.3691 35.3004L31.9977 30.9289C33.0813 29.6078 33.7344 27.9156 33.7344 26.0713C33.7344 21.8408 30.3018 18.4082 26.0713 18.4082C21.8371 18.4082 18.4082 21.8408 18.4082 26.0713C18.4082 30.3018 21.8371 33.7344 26.0713 33.7344C27.9156 33.7344 29.6041 33.085 30.9252 32.0014L35.2967 36.3691C35.5936 36.666 36.0723 36.666 36.3691 36.3691C36.666 36.076 36.666 35.5936 36.3691 35.3004ZM26.0713 32.2092C22.6832 32.2092 19.9297 29.4557 19.9297 26.0713C19.9297 22.6869 22.6832 19.9297 26.0713 19.9297C29.4557 19.9297 32.2129 22.6869 32.2129 26.0713C32.2129 29.4557 29.4557 32.2092 26.0713 32.2092Z"
+            fill="white"
+          />
+        </svg>
       </div>
-      <div class="product__package product__info-item">
-        <div class="product__package-title product__info-title">Упаковка</div>
-        <div class="product__package-text product__info-text">вакуумная</div>
-      </div>
-    </div>
-    <div class="product__bottom">
-      <div class="product__bottom-inner">
-        <div class="product__price">
-          Цена: <span class="product__price-num">19 грн.</span>
-          <span class="product__price-old">21 грн.</span>
+      <div class="product__type">{{ product.type }}</div>
+      <div class="product__art">Арт: 0091</div>
+      <div class="product__name">{{ product.title }}</div>
+      <div class="product__info">
+        <div class="product__weight product__info-item">
+          <div class="product__weight-title product__info-title">Масса:</div>
+          <div class="product__weight-text product__info-text">
+            {{ product.weight }}г
+          </div>
         </div>
-        <my-button class="product__btn" @click="addToBasket">Купить</my-button>
+        <div class="product__package product__info-item">
+          <div class="product__package-title product__info-title">Упаковка</div>
+          <div class="product__package-text product__info-text">вакуумная</div>
+        </div>
       </div>
-    </div></nuxt-link>
-    
+      <div class="product__bottom">
+        <div class="product__bottom-inner">
+          <template v-if="product.sale"
+            ><div class="product__price">
+              Цена:
+              <span class="product__price-num"
+                >{{ product.salePrice }} грн.</span
+              >
+              <span class="product__price-old">{{ product.price }} грн.</span>
+            </div></template
+          >
+
+          <template v-else>
+            <div class="product__price">
+              Цена:
+              <span class="product__price-num"
+                >{{ product.price }} грн.</span
+              >
+            </div>
+          </template>
+          <my-button class="product__btn" @click="addToBasket"
+            >Купить</my-button
+          >
+        </div>
+      </div></nuxt-link
+    >
   </div>
 </template>
 
 <script>
 export default {
+  props: ['product'],
   data() {
     return {
       showPreview: false,
     }
   },
   methods: {
-    addToBasket() {
-
-    }
-  }
+    addToBasket() {},
+  },
 }
 </script>
 

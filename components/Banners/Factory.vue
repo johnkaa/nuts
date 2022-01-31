@@ -1,35 +1,38 @@
 <template>
   <div
     class="factory"
-    style="background: url(/images/factory-banner-bg.jpg) no-repeat center / cover;"
+    :style="`background: url(${banner.img}) no-repeat center / cover;`"
   >
     <div class="container">
       <my-popup v-if="factoryVideoShow" @close="showVideo">
       <iframe
         width="100%"
         height="450"
-        src="https://www.youtube.com/embed/hT4O8VI__XE"
+        :src="`https://www.youtube.com/embed/${video}`"
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
     </my-popup>
-    <div class="factory__title">Наша главная цель - получить максимальную прибыль с одного гектара</div>
+    <div class="factory__title">{{ banner.title }}</div>
     <my-play-btn @play="showVideo" />
-    <p class="factory__text">
-      Cмотреть видео о производстве
-    </p>
+    <p class="factory__text">{{ banner.text }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['banner'],
   data() {
     return {
       factoryVideoShow: false,
+      video: ''
     }
+  },
+  mounted() {
+    this.video = this.banner.video.split('/')[this.banner.video.split('/').length - 1]
   },
   methods: {
     showVideo() {

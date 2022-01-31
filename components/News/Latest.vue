@@ -4,17 +4,19 @@
       <h2 class="news__title">Новости</h2>
       <p class="news__text">Свежие новости и полезная информация</p>
       <div class="news__items">
-        <news-card v-for="item in 3" :key="item" />
+        <div v-for="item in news" :key="item.id" class="news__item">
+          <news-card :news="item"/>
+        </div>
       </div>
-      <nuxt-link class="news__link" to="/news">
-        <my-button class="news__btn secondary">Смотреть все новости</my-button>
-      </nuxt-link>
+      <my-button class="news__btn secondary" @click="$router.push('/news')">Смотреть все новости</my-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['news'],
+}
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +39,7 @@ export default {}
     gap: 35px;
     flex-wrap: wrap;
   }
-  &__link {
+  &__btn {
     display: block;
     max-width: 225px;
     margin: 0 auto;

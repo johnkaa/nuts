@@ -1,17 +1,16 @@
 <template>
   <div class="news-card">
-    <img class="news-card__img" src="/images/news-1.jpg" />
+    <img class="news-card__img" :src="news.img" />
     <div class="news-card__inner">
-      <div class="news-card__date">12.04.2019</div>
+      <div class="news-card__date">{{ news.date }}</div>
       <div class="news-card__title">
-        Центр поддержки экспорта, в студии Павел Тулба
+        {{ news.title }}
       </div>
       <div class="news-card__text">
-        Как уже упоминал Павел Тулба, шиповник цветёт. Эта культура очень
-        недооценена среди наших садоводов, не смотря на большой спрос в Европе и
-        отличную...
+        {{ news.text.slice(0, 150) }}
+        <template v-if="news.text.length > 150">...</template>
       </div>
-      <nuxt-link class="news-card__link" to="/news/1">
+      <nuxt-link class="news-card__link" :to="`/news/${news.id}`">
         Читать
         <svg
           width="14"
@@ -32,7 +31,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['news']
+}
 </script>
 
 <style lang="scss" scoped>
