@@ -581,7 +581,7 @@ export default {
       border-bottom: 3px solid transparent;
       padding-bottom: 10px;
       transition: all 0.3s;
-      &:hover {
+      &:hover, &.nuxt-link-exact-active.nuxt-link-active {
         color: #337d5a;
         border-color: #337d5a;
       }
