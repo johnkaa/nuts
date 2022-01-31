@@ -697,14 +697,14 @@ export default {
     }
     &__user {
       border-bottom: 1px solid transparent;
-      display: flex;
+      display: inline-flex;
+      white-space: nowrap;
       align-items: center;
       gap: 5px;
       transition: all 0.3s;
-      width: 230px;
       &:hover {
-        border-color: #337d5a;
         color: #337d5a;
+        border-color: #337d5a;
       }
     }
     &__logout {
@@ -744,6 +744,7 @@ export default {
           padding: 10px;
           display: block;
           transition: all 0.3s;
+          background-color: #fff;
           &:hover {
             background-color: #337d5a;
             color: #fff;
