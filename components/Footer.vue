@@ -54,30 +54,30 @@
           /></nuxt-link>
           <ul class="menu__list">
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/">Магазин</nuxt-link>
+              <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/"
+              <nuxt-link class="menu__list-link" to="/about"
                 >О производстве</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/"
+              <nuxt-link class="menu__list-link" to="/delivery"
                 >Оплата и доставка</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/"
+              <nuxt-link class="menu__list-link" to="/corporate"
                 >Оптовым и корпоративным клиетам</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/"
+              <nuxt-link class="menu__list-link" to="/news"
                 >Новости и статьи</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/">Галерея</nuxt-link>
+              <nuxt-link class="menu__list-link" to="/gallery">Галерея</nuxt-link>
             </li>
           </ul>
         </div>
