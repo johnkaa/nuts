@@ -17,7 +17,7 @@
             fill="#8a8a8a"
           />
         </svg>
-        <nuxt-link class="news__pos-link position-link" :to="$route.path"
+        <nuxt-link class="news__pos-link position-link" to="/news"
           >Новости и статьи</nuxt-link
         >
       </div>
