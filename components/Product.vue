@@ -1,15 +1,38 @@
 <template>
   <div class="product">
-    <my-popup v-if="showPreview" class="product__popup" @close="showPreview = false">
+    <my-popup
+      v-if="showPreview"
+      class="product__popup"
+      @close="showPreview = false"
+    >
       <img class="product__popup-img" src="/images/product-1.png" alt="" />
     </my-popup>
-    <div class="product__img" :class="{sale: true, new: true}">
+    <nuxt-link to="/shop/1">
+    <div class="product__img" :class="{ sale: true, new: true }">
       <img src="/images/product-1.png" alt="" />
-      <svg class="product__img-zoom" width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg" @click="showPreview = true">
-<circle cx="27.5" cy="27.5" r="27.5" fill="white" fill-opacity="0.15"/>
-<circle class="product__img-zoom-circle" cx="27.5" cy="27.5" r="22.5" fill="#93B474"/>
-<path class="product__img-zoom-loupe" d="M36.3691 35.3004L31.9977 30.9289C33.0813 29.6078 33.7344 27.9156 33.7344 26.0713C33.7344 21.8408 30.3018 18.4082 26.0713 18.4082C21.8371 18.4082 18.4082 21.8408 18.4082 26.0713C18.4082 30.3018 21.8371 33.7344 26.0713 33.7344C27.9156 33.7344 29.6041 33.085 30.9252 32.0014L35.2967 36.3691C35.5936 36.666 36.0723 36.666 36.3691 36.3691C36.666 36.076 36.666 35.5936 36.3691 35.3004ZM26.0713 32.2092C22.6832 32.2092 19.9297 29.4557 19.9297 26.0713C19.9297 22.6869 22.6832 19.9297 26.0713 19.9297C29.4557 19.9297 32.2129 22.6869 32.2129 26.0713C32.2129 29.4557 29.4557 32.2092 26.0713 32.2092Z" fill="white"/>
-</svg>
+      <svg
+        class="product__img-zoom"
+        width="55"
+        height="55"
+        viewBox="0 0 55 55"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        @click.prevent="showPreview = true"
+      >
+        <circle cx="27.5" cy="27.5" r="27.5" fill="white" fill-opacity="0.15" />
+        <circle
+          class="product__img-zoom-circle"
+          cx="27.5"
+          cy="27.5"
+          r="22.5"
+          fill="#93B474"
+        />
+        <path
+          class="product__img-zoom-loupe"
+          d="M36.3691 35.3004L31.9977 30.9289C33.0813 29.6078 33.7344 27.9156 33.7344 26.0713C33.7344 21.8408 30.3018 18.4082 26.0713 18.4082C21.8371 18.4082 18.4082 21.8408 18.4082 26.0713C18.4082 30.3018 21.8371 33.7344 26.0713 33.7344C27.9156 33.7344 29.6041 33.085 30.9252 32.0014L35.2967 36.3691C35.5936 36.666 36.0723 36.666 36.3691 36.3691C36.666 36.076 36.666 35.5936 36.3691 35.3004ZM26.0713 32.2092C22.6832 32.2092 19.9297 29.4557 19.9297 26.0713C19.9297 22.6869 22.6832 19.9297 26.0713 19.9297C29.4557 19.9297 32.2129 22.6869 32.2129 26.0713C32.2129 29.4557 29.4557 32.2092 26.0713 32.2092Z"
+          fill="white"
+        />
+      </svg>
     </div>
     <div class="product__type">Грецкий орех</div>
     <div class="product__art">Арт: 0091</div>
@@ -27,12 +50,13 @@
     <div class="product__bottom">
       <div class="product__bottom-inner">
         <div class="product__price">
-        Цена: <span class="product__price-num">19 грн.</span>
-        <span class="product__price-old">21 грн.</span>
+          Цена: <span class="product__price-num">19 грн.</span>
+          <span class="product__price-old">21 грн.</span>
+        </div>
+        <my-button class="product__btn" @click="addToBasket">Купить</my-button>
       </div>
-      <my-button class="product__btn">Купить</my-button>
-      </div>
-    </div>
+    </div></nuxt-link>
+    
   </div>
 </template>
 
@@ -40,7 +64,12 @@
 export default {
   data() {
     return {
-      showPreview: false
+      showPreview: false,
+    }
+  },
+  methods: {
+    addToBasket() {
+
     }
   }
 }
@@ -120,15 +149,15 @@ export default {
       left: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
-      transition: opacity .3s;
+      transition: opacity 0.3s;
       &:hover {
         .product__img-zoom-circle {
           fill: #fff;
-          transition: fill .3s;
+          transition: fill 0.3s;
         }
         .product__img-zoom-loupe {
-          fill: #93B474;
-          transition: fill .3s;
+          fill: #93b474;
+          transition: fill 0.3s;
         }
       }
     }
@@ -200,7 +229,7 @@ export default {
     }
   }
   &__bottom {
-    border-top: 1px solid rgba(#000, .08);
+    border-top: 1px solid rgba(#000, 0.08);
     padding: 15px 0;
     &-inner {
       padding: 0 20px;
@@ -215,7 +244,7 @@ export default {
     font-weight: 600;
     &-num {
       font-size: 18px;
-      color: #337D5A;
+      color: #337d5a;
     }
     &-old {
       color: #8a8a8a;
@@ -225,7 +254,7 @@ export default {
         content: '';
         width: 105%;
         height: 1px;
-        background-color: #8A8A8A;
+        background-color: #8a8a8a;
         position: absolute;
         left: 0;
         top: 50%;
@@ -241,7 +270,6 @@ export default {
     .modal-container {
       background-color: #fff;
       padding: 50px 0;
-
     }
   }
 }
