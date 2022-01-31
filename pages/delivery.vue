@@ -226,12 +226,16 @@
       </div>
     </div>
     <banners-area class="delivery__area-banner" />
-    <banners-factory class="delivery__factory-banner" />
+    <banners-factory class="delivery__factory-banner" :banner="factoryBanner"/>
   </div>
 </template>
 
 <script>
 export default {
+  async asyncData({ $readData }) {
+    const factoryBanner = await $readData('banners/factory')
+    return { factoryBanner }
+  },
   data() {
     return {
       selectedInfo: 'payment',

@@ -22,8 +22,8 @@
         >
       </div>
     </div>
-    <banners-top class="about__banner-top" />
-    <About class="about__about" />
+    <banners-top class="about__banner-top" :banner="topBanner"/>
+    <About class="about__about" :about="about"/>
     <div class="about__info">
       <div class="container">
         <my-popup
@@ -121,20 +121,32 @@
         <h2 class="about__gallery-title">Галерея</h2>
         <p class="about__gallery-text">Кадры социальной активности компании</p>
         <div class="about__gallery-items">
-        <gallery-card v-for="item in 6" :key="item" class="about__gallery-item" />
+        <gallery-card v-for="(item, index) in latestGallery" :key="index" class="about__gallery-item" :gallery-card="item"/>
         </div>
-        <nuxt-link class="about__gallery-link" to="/gallery">
-          <my-button class="about__gallery-btn secondary">Смотреть всю галерею</my-button>
-        </nuxt-link>
+          <my-button class="about__gallery-btn secondary" @click="$router.push('/gallery')">Смотреть всю галерею</my-button>
       </div>
     </div>
-    <banners-eco class="about__eco" />
-    <news-latest class="about__news" />
+    <banners-eco class="about__eco" :banner="ecoBanner"/>
+    <news-latest class="about__news" :news="latestNews"/>
   </div>
 </template>
 
 <script>
 export default {
+  async asyncData({ $readData }) {
+    const topBanner = await $readData('banners/top')
+    const about = await $readData('pages/about')
+    const gallery = await $readData('gallery')
+    const ecoBanner = await $readData('banners/eco')
+    const news = await $readData('news')
+    let latestNews = []
+    let latestGallery = []
+    Object.keys(news).forEach((item) => latestNews.push(news[item]))
+    Object.keys(gallery).forEach((item) => latestGallery.push(gallery[item]))
+    latestNews = latestNews.slice(0, 3)
+    latestGallery = latestGallery.slice(0, 6)
+    return { topBanner, about, latestGallery, ecoBanner, latestNews }
+  },
   data() {
     return {
       showWriteModal: false,
@@ -245,7 +257,7 @@ export default {
   }
   &__gallery {
     padding: 90px 0;
-    background-color: #FBFBFB;
+    background-color: #fbfbfb;
     text-align: center;
     &-title {
       font-size: 45px;
@@ -262,7 +274,7 @@ export default {
       flex-wrap: wrap;
       gap: 6px;
     }
-    &-link {
+    &-btn {
       display: block;
       max-width: 235px;
       margin: 0 auto;
