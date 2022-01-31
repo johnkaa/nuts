@@ -187,6 +187,9 @@ export default {
         }
       }
     }
+    img {
+      max-height: 230px;
+    }
   }
   &__type {
     font-size: 18px;

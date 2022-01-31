@@ -30,11 +30,11 @@
           >
             <img
               class="product__popup-img"
-              src="/images/product-2.png"
+              :src="product.img"
               alt=""
             />
           </my-popup>
-          <img src="/images/product-2.png" alt="" />
+          <img :src="product.img" alt="" />
           <svg
             class="shop__img-zoom"
             width="55"
@@ -60,43 +60,43 @@
         </div>
         <div class="shop__info">
           <div class="shop__info-top">
-            <div class="shop__info-type">Грецкий Орех</div>
+            <div class="shop__info-type">{{ product.type }}</div>
             <div class="shop__info-art">Арт: 0091</div>
           </div>
           <div class="shop__info-title">
-            Орех соленый кондитерский очищенный
+            {{ product.title }}
           </div>
           <div class="shop__info-item">
             <div class="shop__info-item-title">Состав:</div>
             <div class="shop__info-item-text">
-              Ядро грецкого ореха, вымытого очищенного от кожуры, соль экстра
-              (растров 7%)
+              {{ product.composition }}
             </div>
           </div>
           <div class="shop__info-item">
             <div class="shop__info-item-title">Масса нетто:</div>
-            <div class="shop__info-item-text">40г.</div>
+            <div class="shop__info-item-text">{{ product.weight }}г.</div>
           </div>
           <div class="shop__info-item">
             <div class="shop__info-item-title">Энергетическая ценность:</div>
-            <div class="shop__info-item-text">654 Ккал.</div>
+            <div class="shop__info-item-text">{{ product.calories }} Ккал.</div>
           </div>
           <div class="shop__info-item">
             <div class="shop__info-item-title">Срок годности:</div>
-            <div class="shop__info-item-text">
-              12 месяцев, с даты расфасовки (указана на упаковке)
-            </div>
+            <div class="shop__info-item-text">{{ product.experation }}</div>
           </div>
-          <div class="shop__info-conditions">
-            Хранить в помещениях, защищенных от попадания прямых, солнечных
-            лучей, при температуре от +3 °C до +20 °C, и относительной влажности
-            воздуха не более 75 %
-          </div>
+          <div class="shop__info-conditions">{{ product.conditions }}</div>
           <div class="shop__info-bottom">
-            <div class="shop__info-price">
-              Ваша цена: <span class="shop__info-price-new">19 грн.</span
-              ><span class="shop__info-price-old">21 грн.</span>
+            <template v-if="product.sale">
+              <div class="shop__info-price">
+              Ваша цена: <span class="shop__info-price-new">{{ product.salePrice }} грн.</span
+              ><span class="shop__info-price-old">{{ product.price }} грн.</span>
             </div>
+            </template>
+            <template v-else>
+              <div class="shop__info-price">
+              Ваша цена: <span class="shop__info-price-new">{{ product.price }} грн.</span
+              ></div>
+            </template>
             <my-button class="shop__info-btn">Заказать</my-button>
           </div>
         </div>
@@ -137,7 +137,7 @@
             v-if="selectedBottom === 'description'"
             class="shop__bottom-item"
           >
-            <div class="shop__bottom-walnut">
+            <div v-if="product.type === 'Грецкий орех'" class="shop__bottom-walnut">
               <img class="shop__bottom-walnut-img" src="/images/walnut.jpg" />
               <div class="shop__bottom-walnut-info">
                 <p class="shop__bottom-walnut-text">
@@ -192,8 +192,8 @@
                 </ul>
               </div>
             </div>
-            <div class="shop__bottom-hazelnut">Фундук очень полезен</div>
-            <div class="shop__bottom-rose">Шиповник очень полезен</div>
+            <div v-if="product.type === 'Фундук'" class="shop__bottom-hazelnut">Фундук очень полезен</div>
+            <div v-if="product.type === 'Шиповник'" class="shop__bottom-rose">Шиповник очень полезен</div>
           </div>
           <div v-if="selectedBottom === 'package'" class="shop__bottom-item">
             Хорошо упакуем
@@ -212,6 +212,10 @@
 
 <script>
 export default {
+  async asyncData({ $readData, route }) {
+    const product = await $readData(`/products/${route.params.id}`)
+    return { product }
+  },
   data() {
     return {
       showPreview: false,
