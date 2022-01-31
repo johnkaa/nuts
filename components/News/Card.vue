@@ -98,6 +98,32 @@ export default {}
       }
     }
   }
+  &.mini-card {
+    .news-card {
+      max-width: 220px;
+      &__date,
+      &__title,
+      &__text,
+      &__link {
+        padding-left: 0;
+      }
+      &__img {
+        max-width: 220px;
+        margin-bottom: 13px;
+      }
+      &__date {
+        margin-bottom: 10px;
+      }
+      &__title {
+        max-width: 220px;
+        font-size: 15px;
+        margin-bottom: 15px;
+      }
+      &__text {
+        display: none;
+      }
+    }
+  }
 }
 @media (max-width: 1335px) {
   .news-card.big {
