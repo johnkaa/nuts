@@ -188,7 +188,7 @@ export default {
       }
     }
     img {
-      max-height: 230px;
+      height: 230px;
     }
   }
   &__type {
