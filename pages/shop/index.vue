@@ -105,14 +105,23 @@
         </div>
         <div class="shop__items">
           <Product
-            v-for="(item, index) in filteredProducts"
+            v-for="(item, index) in productsToShow"
             :key="index"
             class="shop__item"
             :product="item"
           />
         </div>
-        <my-button v-if="products.length > 6" class="shop__btn secondary"
-          >Загрузить ещё</my-button
+        <my-button
+          v-if="!showAll && filteredProducts.length > 6"
+          class="shop__btn secondary"
+          @click="setShow"
+          >Посмотреть ещё</my-button
+        >
+        <my-button
+          v-if="showAll && filteredProducts.length > 6"
+          class="shop__btn secondary"
+          @click="setShow"
+          >Скрыть</my-button
         >
       </div>
     </div>
@@ -179,6 +188,7 @@ export default {
       price: '',
       filterWeight: [],
       filtered: false,
+      showAll: false,
     }
   },
   computed: {
@@ -206,13 +216,21 @@ export default {
       }
       return products
     },
+    productsToShow() {
+      if (!this.showAll) {
+        return this.filteredProducts.slice(0, 6)
+      } else {
+        return this.filteredProducts
+      }
+    },
+  },
+  watch: {
+    type() {
+      this.setWeight(this.productsToShow)
+    },
   },
   mounted() {
-    Object.keys(this.products).forEach((item) => {
-      if (!this.filterWeight.includes(this.products[item].weight + 'г')) {
-        this.filterWeight.push(this.products[item].weight + 'г')
-      }
-    })
+    this.setWeight(this.productsToShow)
   },
   methods: {
     setPriceFilter() {
@@ -225,6 +243,21 @@ export default {
       } else {
         this.price = 'lower'
       }
+    },
+    setWeight(products) {
+      let weights = []
+      products.forEach(product => {
+        if(!weights.includes(product.weight)) {
+          weights.push(product.weight)
+        }
+      })
+      weights = weights.sort((a, b) => a - b)
+      this.filterWeight = []
+      weights.forEach((item) => this.filterWeight.push(item + 'г'))
+    },
+    setShow() {
+      this.showAll = !this.showAll
+      this.setWeight(this.productsToShow)
     },
     reset() {
       this.type = ''
