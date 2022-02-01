@@ -43,6 +43,8 @@ export default {
   padding-bottom: 30px;
   &__img {
     margin-bottom: 20px;
+    height: 270px;
+    object-fit: cover;
     width: 100%;
   }
   &__date,
@@ -62,6 +64,7 @@ export default {
     font-weight: 700;
     line-height: 20px;
     margin-bottom: 20px;
+    min-height: 40px;
   }
   &__text {
     max-width: 350px;

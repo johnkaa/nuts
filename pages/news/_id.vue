@@ -43,7 +43,7 @@
                 Присоединяйтесь к нам в соц. сетях
               </div>
               <div class="news__latest-sm-items">
-                <a class="news__latest-sm-item" href="https://facebook.com"
+                <a class="news__latest-sm-item" :href="sm.facebook"
                   ><svg
                     width="13"
                     height="13"
@@ -57,7 +57,7 @@
                     />
                   </svg>
                 </a>
-                <a class="news__latest-sm-item" href="https://instagram.com"
+                <a class="news__latest-sm-item" :href="sm.instagram"
                   ><svg
                     width="13"
                     height="13"
@@ -79,7 +79,7 @@
                     />
                   </svg>
                 </a>
-                <a class="news__latest-sm-item" href="https://youtube.com"
+                <a class="news__latest-sm-item" :href="sm.youtube"
                   ><svg
                     width="16"
                     height="16"
@@ -107,12 +107,13 @@ export default {
   async asyncData({ $readData, params }) {
     const allNews = await $readData('news')
     const news = await $readData(`news/${params.id}`)
+    const sm = await $readData('contacts/sm')
     let latestNews = []
     Object.keys(allNews).forEach(item => {
       latestNews.push(allNews[item])
     })
     latestNews = latestNews.slice(0, 3)
-    return { news, latestNews }
+    return { news, latestNews, sm }
   },
   data() {
     return {
@@ -149,8 +150,10 @@ export default {
   }
   &__img {
     max-width: 990px;
-    margin-bottom: 30px;
     width: 100%;
+    object-fit: cover;
+    margin-bottom: 30px;
+    max-height: 500px;
   }
   &__text {
     max-width: 990px;
