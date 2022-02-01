@@ -232,11 +232,14 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 80px;
+    img {
+      max-height: 470px;
+    }
   }
   &__img {
     max-width: 553px;
     width: 100%;
-    min-height: 570px;
+    height: 570px;
     border: 1.5px solid #93b474;
     display: flex;
     align-items: center;

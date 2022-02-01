@@ -188,8 +188,11 @@ export default {
       }
     }
     img {
-      max-height: 230px;
+      height: 230px;
     }
+  }
+  &__popup-img {
+    height: 400px;
   }
   &__type {
     font-size: 18px;
