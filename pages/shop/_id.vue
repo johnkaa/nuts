@@ -88,7 +88,7 @@
           <div class="shop__info-bottom">
             <template v-if="product.sale">
               <div class="shop__info-price">
-              Ваша цена: <span class="shop__info-price-new">{{ product.salePrice }} грн.</span
+              Ваша цена: <span class="shop__info-price-new">{{ product.price - ((product.price / 100) * product.discount) }} грн.</span
               ><span class="shop__info-price-old">{{ product.price }} грн.</span>
             </div>
             </template>

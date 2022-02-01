@@ -64,7 +64,7 @@
             ><div class="product__price">
               Цена:
               <span class="product__price-num"
-                >{{ product.salePrice }} грн.</span
+                >{{ product.price - ((product.price / 100) * product.discount) }} грн.</span
               >
               <span class="product__price-old">{{ product.price }} грн.</span>
             </div></template
