@@ -42,7 +42,7 @@
                 v-model="weight"
                 :value="weight"
                 class="shop__filter-select"
-                :options="['1', '2', '3']"
+                :options="filterWeight"
                 placeholder="Масса"
               />
             </div>
@@ -82,8 +82,10 @@
             </div>
           </div>
           <div class="shop__filter-actions">
-            <my-button class="shop__filter-btn">Применить</my-button>
-            <div class="shop__filter-reset" @click="reset">
+            <my-button class="shop__filter-btn" @click="filtered = true"
+              >Применить</my-button
+            >
+            <div v-if="filtered" class="shop__filter-reset" @click="reset">
               <svg
                 width="12"
                 height="12"
@@ -102,9 +104,16 @@
           </div>
         </div>
         <div class="shop__items">
-          <Product v-for="(item, index) in products" :key="index" class="shop__item" :product="item" />
+          <Product
+            v-for="(item, index) in filteredProducts"
+            :key="index"
+            class="shop__item"
+            :product="item"
+          />
         </div>
-        <my-button v-if="products.length > 6" class="shop__btn secondary">Загрузить ещё</my-button>
+        <my-button v-if="products.length > 6" class="shop__btn secondary"
+          >Загрузить ещё</my-button
+        >
       </div>
     </div>
     <div class="shop__info">
@@ -168,7 +177,42 @@ export default {
       type: '',
       weight: '',
       price: '',
+      filterWeight: [],
+      filtered: false,
     }
+  },
+  computed: {
+    filteredProducts() {
+      let products = []
+      Object.keys(this.products).forEach((item) =>
+        products.push(this.products[item])
+      )
+      if (this.filtered) {
+        if (this.type) {
+          products = products.filter((product) => product.type === this.type)
+        }
+        if (this.weight) {
+          products = products.filter(
+            (product) => product.weight + 'г' === this.weight
+          )
+        }
+        if (this.price) {
+          if (this.price === 'lower') {
+            products.sort((a, b) => a.price - b.price)
+          } else {
+            products.sort((a, b) => b.price - a.price)
+          }
+        }
+      }
+      return products
+    },
+  },
+  mounted() {
+    Object.keys(this.products).forEach((item) => {
+      if (!this.filterWeight.includes(this.products[item].weight + 'г')) {
+        this.filterWeight.push(this.products[item].weight + 'г')
+      }
+    })
   },
   methods: {
     setPriceFilter() {
@@ -176,7 +220,7 @@ export default {
         if (this.price === 'lower') {
           this.price = 'upper'
         } else {
-          this.price = 'lower'
+          this.price = ''
         }
       } else {
         this.price = 'lower'
@@ -186,6 +230,7 @@ export default {
       this.type = ''
       this.weight = ''
       this.price = ''
+      this.filtered = false
     },
   },
 }
