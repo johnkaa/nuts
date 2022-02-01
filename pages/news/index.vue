@@ -24,9 +24,10 @@
       <h2 class="news__title">Новости и статьи</h2>
       <p class="news__text">Свежие новости и полезная информация</p>
       <div class="news__items">
-        <news-card v-for="(item, index) in news" :key="index" class="news__item" :class="{big: index === 1}" :news="item"/>
+        <news-card v-for="(item, index) in newsToShow" :key="index" class="news__item" :class="{big: index === 0}" :news="item"/>
       </div>
-      <my-button class="news__btn secondary">Посмотреть ещё</my-button>
+      <my-button v-if="!showAll" class="news__btn secondary" @click="showAll = true">Посмотреть ещё</my-button>
+      <my-button v-if="showAll" class="news__btn secondary" @click="showAll = false">Скрыть</my-button>
     </div>
   </div>
 </template>
@@ -37,6 +38,21 @@ export default {
     const news = await $readData('news')
     return { news }
   },
+  data() {
+    return {
+      showAll: false
+    }
+  },
+  computed: {
+    newsToShow() {
+      let news = []
+      Object.keys(this.news).forEach(item => news.push(this.news[item]))
+      if(!this.showAll) {
+        news = news.slice(0, 4)
+      }
+      return news
+    }
+  }
 }
 </script>
 
@@ -59,7 +75,7 @@ export default {
     margin-bottom: 60px;
     display: flex;
     justify-content: center;
-    gap: 35px;
+    gap: 45px;
     flex-wrap: wrap;
   }
   &__btn {

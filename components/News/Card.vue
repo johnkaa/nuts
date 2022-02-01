@@ -89,19 +89,6 @@ export default {
       }
     }
   }
-  &.big {
-    display: flex;
-    gap: 50px;
-    max-width: 100%;
-    .news-card {
-      &__img {
-        max-width: 850px;
-      }
-      &__text {
-        max-width: 400px;
-      }
-    }
-  }
   &.mini-card {
     .news-card {
       max-width: 220px;
@@ -125,6 +112,23 @@ export default {
       }
       &__text {
         display: none;
+      }
+    }
+  }
+  &.big {
+    display: flex;
+    gap: 50px;
+    max-width: 100%;
+    .news-card {
+      &__img {
+        max-width: 750px;
+        max-height: 100%;
+        height: 100%;
+        width: 100%;
+      }
+      &__text {
+        max-width: 400px;
+        width: 100%;
       }
     }
   }
