@@ -13,10 +13,9 @@
         <span v-if="error.statusCode === 404">Страница не найдена</span>
         <span v-else>{{ error.message }}</span>
       </div>
-      <nuxt-link class="error__back" to="/">
-      <my-button class="error__btn secondary">
+      <my-button class="error__btn secondary" @click="$router.push('/')">
         <svg
-        class="error__btn-arrow"
+          class="error__btn-arrow"
           width="14"
           height="12"
           viewBox="0 0 14 12"
@@ -27,11 +26,8 @@
             d="M5.83332 11.8335L6.65 11.0168L2.21665 6.5835H14V5.41685H2.21665L6.65 0.983497L5.83332 0.166849L0 6.00017L5.83332 11.8335Z"
           />
         </svg>
-
         <span>Вернуться на главную страницу</span>
       </my-button>
-      </nuxt-link>
-      
     </div>
   </div>
 </template>
@@ -46,44 +42,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .error {
-    text-align: center;
-    padding: 100px 0;
-    color: #1A2F3F;
-    &__code {
-      font-size: 244px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      margin-bottom: 40px;
+.error {
+  text-align: center;
+  padding: 100px 0;
+  color: #1a2f3f;
+  &__code {
+    font-size: 244px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    margin-bottom: 40px;
+  }
+  &__text {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  &__btn {
+    max-width: 330px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    &-arrow {
+      transition: fill 0.3s;
     }
-    &__text {
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
-    &__btn {
-      max-width: 330px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      &-arrow {
-        transition: fill .3s;
-      }
-      &:hover {
-        .error__btn-arrow {
-          fill: #fff;
-        }
+    &:hover {
+      .error__btn-arrow {
+        fill: #fff;
       }
     }
   }
-  @media(max-width: 700px) {
-    .error__code {
-      font-size: 130px;
-      img {
-        max-width: 100%;
-      }
+}
+@media (max-width: 700px) {
+  .error__code {
+    font-size: 130px;
+    img {
+      max-width: 100%;
     }
   }
+}
 </style>
