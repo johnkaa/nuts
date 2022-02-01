@@ -104,9 +104,9 @@
 
 <script>
 export default {
-  async asyncData({ $readData, route }) {
+  async asyncData({ $readData, params }) {
     const allNews = await $readData('news')
-    const news = await $readData(`news/${route.params.id}`)
+    const news = await $readData(`news/${params.id}`)
     let latestNews = []
     Object.keys(allNews).forEach(item => {
       latestNews.push(allNews[item])
