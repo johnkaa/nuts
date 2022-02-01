@@ -226,7 +226,10 @@ export default {
   },
   watch: {
     type() {
-      this.setWeight(this.productsToShow)
+      this.weight = ''
+      let products = this.productsToShow
+      products = products.filter((product) => product.type === this.type)
+      this.setWeight(products)
     },
   },
   mounted() {
@@ -246,8 +249,11 @@ export default {
     },
     setWeight(products) {
       let weights = []
-      products.forEach(product => {
-        if(!weights.includes(product.weight)) {
+      if (this.type) {
+        products = products.filter((product) => product.type === this.type)
+      }
+      products.forEach((product) => {
+        if (!weights.includes(product.weight)) {
           weights.push(product.weight)
         }
       })
