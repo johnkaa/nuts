@@ -369,12 +369,7 @@
                         fill="#8A8A8A"
                       />
                     </svg>
-                    <my-input
-                      class="header__basket-item-num-input"
-                      :value="item.value.toString()"
-                      :disabled="true"
-                      type="number"
-                    />
+                    <div class="header__basket-item-num-input">{{ item.value }}</div>
                     <svg
                       class="header__basket-increment header__basket-arrow"
                       width="10"
@@ -763,6 +758,7 @@ export default {
       white-space: nowrap;
       padding: 16px 0;
       border-bottom: 1px solid rgba(#000, 0.08);
+      user-select: none;
       &-title {
         min-width: 250px;
         max-width: 250px;
@@ -772,11 +768,10 @@ export default {
         padding: 0 20px;
         position: relative;
         &-input {
-          width: 44px;
-          height: 28px;
-          input {
-            padding: 5px !important;
-          }
+          text-align: center;
+          padding: 5px 15px;
+          border: 1px solid rgba(#000, .15);
+          cursor: default;
         }
       }
       &-price {
