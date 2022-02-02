@@ -7,11 +7,11 @@
             <h2 class="footer__title">Контакты</h2>
             <div class="footer__contacts">
               <div class="footer__contacts-item">
-                <a class="footer__contacts-phone" href="tel:380447505011"
-                  >+38 (044) 750-50-11</a
+                <a class="footer__contacts-phone" :href="`tel:${mainPhone}`"
+                  >+{{ mainPhone.slice(0, 2) }} ({{ mainPhone.slice(2, 5) }}) {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{ mainPhone.slice(10, 12) }}</a
                 >
-                <a class="footer__contacts-phone" href="tel:380977755051"
-                  >+38 (097) 775-50-51</a
+                <a class="footer__contacts-phone" :href="`tel:${secondaryPhone}`"
+                  >+{{ secondaryPhone.slice(0, 2) }} ({{ secondaryPhone.slice(2, 5) }}) {{ secondaryPhone.slice(5, 8) }}-{{ secondaryPhone.slice(8, 10) }}-{{ secondaryPhone.slice(10, 12) }}</a
                 >
               </div>
               <a class="footer__contacts-item" href="#"
@@ -25,18 +25,18 @@
               /></a>
             </div>
             <div class="footer__email">
-              <a href="mailto:nuts@nbsc.com.ua">nuts@nbsc.com.ua</a>
+              <a :href="`mailto:${contacts.email}`">{{ contacts.email }}</a>
             </div>
             <div class="footer__office">
               <div class="footer__office-title">Офис и отдел продаж</div>
               <p class="footer__office-text">
-                Украина, г. Одесса, ул. Космонавтов, 32
+                {{ contacts.office }}
               </p>
             </div>
             <div class="footer__farm">
               <div class="footer__farm-title">Производство</div>
               <p class="footer__farm-text">
-                Украина, Одесская обл, с. Яськи, ул. Центральная, 232
+                {{ contacts.factory }}
               </p>
             </div>
           </div>
@@ -94,8 +94,8 @@
           <div class="footer__copyright">
             Copyright © 2019. Все права защищены
           </div>
-          <div class="footer__sm">
-            <a class="footer__sm-item" href="https://facebook.com">
+          <div v-if="contacts.sm" class="footer__sm">
+            <a class="footer__sm-item" :href="contacts.sm.facebook">
               <svg
                 class="footer__sm-item-img"
                 width="7"
@@ -109,7 +109,7 @@
                 />
               </svg>
             </a>
-            <a class="footer__sm-item" href="https://instagram.com">
+            <a class="footer__sm-item" :href="contacts.sm.instagram">
               <svg
                 class="footer__sm-item-img"
                 width="13"
@@ -129,7 +129,7 @@
                 />
               </svg>
             </a>
-            <a class="footer__sm-item" href="https://youtube.com">
+            <a class="footer__sm-item" :href="contacts.sm.youtube">
               <svg
                 class="footer__sm-item-img"
                 width="16"
@@ -152,7 +152,18 @@
 
 <script>
 export default {
-  
+  data() {
+    return {
+      contacts: {},
+      mainPhone: '',
+      secondaryPhone: '',
+    }
+  },
+  async mounted() {
+    this.contacts = await this.$readData('/contacts') 
+    this.mainPhone = this.contacts.phones.mainPhone
+    this.secondaryPhone = this.contacts.phones.secondaryPhone
+  },
 }
 </script>
 
