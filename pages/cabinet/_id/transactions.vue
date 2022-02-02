@@ -46,11 +46,11 @@
         </div>
         <div
           class="transactions__item-sum transactions__item-title"
-          @click="filter = 'sum'"
+          @click="filter = 'price'"
         >
           Сумма<svg
             class="transactions__item-title-icon"
-            :class="{ active: filter === 'sum' }"
+            :class="{ active: filter === 'price' }"
             width="10"
             height="8"
             viewBox="0 0 8 6"
@@ -66,11 +66,11 @@
           </svg>
         </div>
       </div>
-      <div class="transactions__item">
+      <div v-for="order in sortedOrders" :key="order.id" class="transactions__item">
         <my-popup
-          v-if="showInfo"
+          v-if="showId === order.id"
           class="transactions__item-popup"
-          @close="showInfo = false"
+          @close="showDetails(null)"
         >
           <div class="transactions__item-popup__inner">
             <div class="transactions__item-popup__title">
@@ -81,26 +81,26 @@
                 <span class="transactions__item-popup__item-title"
                   >№ Заказа:</span
                 >
-                <span class="transactions__item-popup__item-info">0</span>
+                <span class="transactions__item-popup__item-info">{{ order.id }}</span>
               </div>
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title">Дата:</span>
                 <span class="transactions__item-popup__item-info"
-                  >03.04.1607</span
+                  >{{ order.date }}</span
                 >
               </div>
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title"
                   >Кол-во товаров:</span
                 >
-                <span class="transactions__item-popup__item-info">13</span>
+                <span class="transactions__item-popup__item-info">{{ order.amount }}</span>
               </div>
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title"
                   >Статус:</span
                 >
                 <span class="transactions__item-popup__item-info"
-                  >Отправлено</span
+                  >{{ order.status }}</span
                 >
               </div>
               <div class="transactions__item-popup__item">
@@ -108,20 +108,20 @@
                   >Стоимость:</span
                 >
                 <span class="transactions__item-popup__item-info"
-                  >1000 грн.</span
+                  >{{ order.price }} грн.</span
                 >
               </div>
             </div>
           </div>
         </my-popup>
         <div class="transactions__item-date transactions__item-info">
-          03.04.1607
+          {{ order.date }}
         </div>
         <div class="transactions__item-status transactions__item-info">
           Платеж принят
         </div>
         <div class="transactions__item-sum transactions__item-info">
-          2500 грн.
+          {{ order.price }} грн.
           <div class="view-icon__wrapper">
             <svg
               class="transactions__item-functions-icon view-icon"
@@ -130,7 +130,7 @@
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              @click="showInfo = true"
+              @click="showDetails(order.id)"
             >
               <path
                 d="M23.8475 12.4668C23.6331 12.7601 18.5245 19.6483 11.9999 19.6483C5.47529 19.6483 0.36647 12.7601 0.152297 12.4671C-0.0507657 12.1888 -0.0507657 11.8114 0.152297 11.5332C0.36647 11.2399 5.47529 4.35165 11.9999 4.35165C18.5245 4.35165 23.6331 11.2399 23.8475 11.533C24.0508 11.8112 24.0508 12.1888 23.8475 12.4668ZM11.9999 5.93406C7.19383 5.93406 3.03127 10.5059 1.79907 12.0005C3.02968 13.4965 7.18352 18.0659 11.9999 18.0659C16.8057 18.0659 20.968 13.4949 22.2007 11.9995C20.9701 10.5036 16.8163 5.93406 11.9999 5.93406Z"
@@ -153,7 +153,30 @@ export default {
   data() {
     return {
       filter: 'added',
-      showInfo: false,
+      showId: ''
+    }
+  },
+  computed: {
+    orders() {
+      const orders = []
+      if(this.$store.state.user) {
+        const orderObj = this.$store.state.user.orders
+        Object.keys(orderObj).forEach(item => orders.push(orderObj[item]))
+      }
+      return orders
+    },
+    sortedOrders() {
+      let orders = this.orders
+      if(this.filter === 'date') {
+        orders = orders.sort((a, b) => a.id - b.id)
+      }
+      if(this.filter === 'status') {
+        orders = orders.sort((a,b) => a.status.localeCompare(b.status))
+      }
+      if(this.filter === 'price') {
+        orders = orders.sort((a, b) => a.price - b.price)
+      }
+      return orders
     }
   },
   methods: {
@@ -167,6 +190,9 @@ export default {
           this.$toasted.error(e)
         })
     },
+    showDetails(id) {
+      this.showId = id
+    }
   },
 }
 </script>
@@ -266,8 +292,7 @@ export default {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.3s;
+      display: none;
     }
     &::before {
       content: 'Посмотреть заказ';
@@ -288,7 +313,7 @@ export default {
     &:hover {
       &::before,
       &::after {
-        opacity: 1;
+        display: block;
       }
     }
   }

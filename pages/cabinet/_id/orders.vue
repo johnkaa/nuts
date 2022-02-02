@@ -4,11 +4,11 @@
       <div class="orders__item">
         <div
           class="orders__item-num orders__item-title"
-          @click="filter = 'order'"
+          @click="filter = 'id'"
         >
           № Заказа<svg
             class="orders__item-title-icon"
-            :class="{ active: filter === 'order' }"
+            :class="{ active: filter === 'id' }"
             width="10"
             height="8"
             viewBox="0 0 8 6"
@@ -109,47 +109,47 @@
         </div>
         <div class="orders__item-functions orders__item-title">Функции</div>
       </div>
-      <div class="orders__item">
+      <div v-for="order in sortedOrders" :key="order.id" class="orders__item">
         <my-popup
-          v-if="showInfo"
+          v-if="showId === order.id"
           class="orders__item-popup"
-          @close="showInfo = false"
+          @close="showDetails(null)"
         >
           <div class="orders__item-popup__inner">
             <div class="orders__item-popup__title">Информация о заказе</div>
             <div class="orders__item-popup__items">
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title">№ Заказа:</span>
-                <span class="orders__item-popup__item-info">0</span>
+                <span class="orders__item-popup__item-info">{{ order.id }}</span>
               </div>
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title">Дата:</span>
-                <span class="orders__item-popup__item-info">03.04.1607</span>
+                <span class="orders__item-popup__item-info">{{ order.date }}</span>
               </div>
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title"
                   >Кол-во товаров:</span
                 >
-                <span class="orders__item-popup__item-info">13</span>
+                <span class="orders__item-popup__item-info">{{ order.amount }}</span>
               </div>
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title">Статус:</span>
-                <span class="orders__item-popup__item-info">Отправлено</span>
+                <span class="orders__item-popup__item-info">{{ order.status }}</span>
               </div>
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title">Стоимость:</span>
-                <span class="orders__item-popup__item-info">1000 грн.</span>
+                <span class="orders__item-popup__item-info">{{ order.price }} грн.</span>
               </div>
             </div>
           </div>
         </my-popup>
-        <div class="orders__item-num orders__item-info">0</div>
-        <div class="orders__item-date orders__item-info">03.04.1607</div>
-        <div class="orders__item-amount orders__item-info">13</div>
-        <div class="orders__item-status orders__item-info">Отправлено</div>
-        <div class="orders__item-price orders__item-info">1000 грн.</div>
+        <div class="orders__item-num orders__item-info">{{ order.id }}</div>
+        <div class="orders__item-date orders__item-info">{{ order.date }}</div>
+        <div class="orders__item-amount orders__item-info">{{ order.amount }}</div>
+        <div class="orders__item-status orders__item-info">{{ order.status }}</div>
+        <div class="orders__item-price orders__item-info">{{ order.price }} грн.</div>
         <div class="orders__item-functions orders__item-info">
-          <div class="view-icon__wrapper" @click="showInfo = true">
+          <div class="view-icon__wrapper" @click="showDetails(order.id)">
             <svg
               class="orders__item-functions-icon view-icon"
               width="24"
@@ -194,7 +194,33 @@ export default {
   data() {
     return {
       filter: 'order',
-      showInfo: false,
+      showId: '',
+    }
+  },
+  computed: {
+    orders() {
+      const orders = []
+      if(this.$store.state.user) {
+        const orderObj = this.$store.state.user.orders
+        Object.keys(orderObj).forEach(item => orders.push(orderObj[item]))
+      }
+      return orders
+    },
+    sortedOrders() {
+      let orders = this.orders
+      if(this.filter === 'id' || this.filter === 'date') {
+        orders = orders.sort((a, b) => a.id - b.id)
+      }
+      if(this.filter === 'amount') {
+        orders = orders.sort((a, b) => a.amount - b.amount)
+      }
+      if(this.filter === 'status') {
+        orders = orders.sort((a,b) => a.status.localeCompare(b.status))
+      }
+      if(this.filter === 'price') {
+        orders = orders.sort((a, b) => a.price - b.price)
+      }
+      return orders
     }
   },
   methods: {
@@ -208,6 +234,9 @@ export default {
           this.$toasted.error(e)
         })
     },
+    showDetails(id) {
+      this.showId = id
+    }
   },
 }
 </script>
@@ -308,8 +337,7 @@ export default {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.3s;
+      display: none;
     }
     &::before {
       content: 'Посмотреть заказ';
@@ -330,7 +358,7 @@ export default {
     &:hover {
       &::before,
       &::after {
-        opacity: 1;
+        display: block;
       }
     }
   }
