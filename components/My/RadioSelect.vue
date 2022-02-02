@@ -10,6 +10,10 @@
 
 <script>
 export default {
+  model: {
+    prop: 'selected',
+    event: 'change',
+  },
   props: ['selects', 'name', 'selectValue'],
   data() {
     return {
