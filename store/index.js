@@ -10,14 +10,17 @@ const actions = {
   addToBasketAction(context, item) {
     context.commit('addToBasket', item)
   },
-  deleteBasketItemAction(context, index) {
-    context.commit('deleteBasketItem', index)
-  },
   incrementBasketItemValueAction(context, index) {
     context.commit('incrementBasketItemValue', index)
   },
   decrementBasketItemValueAction(context, index) {
     context.commit('decrementBasketItemValue', index)
+  },
+  deleteBasketItemAction(context, index) {
+    context.commit('deleteBasketItem', index)
+  },
+  deleteBasketAction(context) {
+    context.commit('deleteBasket')
   },
   setShowBasketAction(context, value) {
     context.commit('setShowBasket', value)
@@ -43,9 +46,6 @@ const mutations = {
       state.basket.push(item)
     }
   },
-  deleteBasketItem(state, index) {
-    state.basket.splice(index, 1)
-  },
   incrementBasketItemValue(state, index) {
     if(state.basket[index].value === 20) {
       return
@@ -62,9 +62,15 @@ const mutations = {
     state.basket[state.basket.length] = {}
     state.basket.splice(state.basket.length - 1, 1)
   },
+  deleteBasketItem(state, index) {
+    state.basket.splice(index, 1)
+  },
+  deleteBasket(state) {
+    state.basket = []
+  },
   setShowBasket(state, value) {
     state.showBasket = value
-  },
+  }
 }
 
 const state = () => ({
