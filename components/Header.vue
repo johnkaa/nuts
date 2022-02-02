@@ -728,7 +728,7 @@ export default {
     }
     &-inner {
       position: absolute;
-      top: 106px;
+      top: 57px;
       left: -550px;
       right: 0;
       min-width: 100%;
