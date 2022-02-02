@@ -231,6 +231,9 @@ export default {
       products = products.filter((product) => product.type === this.type)
       this.setWeight(products)
     },
+    filtered() {
+      this.setWeight(this.productsToShow)
+    }
   },
   mounted() {
     this.setWeight(this.productsToShow)

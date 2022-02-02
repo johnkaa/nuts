@@ -58,32 +58,31 @@
           <div class="product__package-text product__info-text">вакуумная</div>
         </div>
       </div>
-      <div class="product__bottom">
-        <div class="product__bottom-inner">
-          <template v-if="product.sale"
-            ><div class="product__price">
-              Цена:
-              <span class="product__price-num"
-                >{{ product.price - ((product.price / 100) * product.discount) }} грн.</span
-              >
-              <span class="product__price-old">{{ product.price }} грн.</span>
-            </div></template
-          >
+    </nuxt-link>
+    <div class="product__bottom">
+      <div class="product__bottom-inner">
+        <template v-if="product.sale"
+          ><div class="product__price">
+            Цена:
+            <span class="product__price-num"
+              >{{
+                product.price - (product.price / 100) * product.discount
+              }}
+              грн.</span
+            >
+            <span class="product__price-old">{{ product.price }} грн.</span>
+          </div></template
+        >
 
-          <template v-else>
-            <div class="product__price">
-              Цена:
-              <span class="product__price-num"
-                >{{ product.price }} грн.</span
-              >
-            </div>
-          </template>
-          <my-button class="product__btn" @click="addToBasket"
-            >Купить</my-button
-          >
-        </div>
-      </div></nuxt-link
-    >
+        <template v-else>
+          <div class="product__price">
+            Цена:
+            <span class="product__price-num">{{ product.price }} грн.</span>
+          </div>
+        </template>
+        <my-button class="product__btn" @click="addToBasket">Купить</my-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -96,7 +95,10 @@ export default {
     }
   },
   methods: {
-    addToBasket() {},
+    addToBasket() {
+      this.$router.push(`${this.$route.path}`)
+      this.$store.dispatch('addToBasketAction', this.product)
+    },
   },
 }
 </script>
@@ -296,6 +298,8 @@ export default {
   }
   &__btn {
     max-width: 125px;
+    position: relative;
+    z-index: 10;
   }
   &__popup {
     text-align: center;

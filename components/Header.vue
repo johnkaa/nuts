@@ -88,16 +88,27 @@
               alt=""
             />
             <p>
-              <span class="header__top-phone_green">+{{ mainPhone.slice(0, 2) }} ({{ mainPhone.slice(2, 5) }})</span> {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{ mainPhone.slice(10, 12) }}
+              <span class="header__top-phone_green"
+                >+{{ mainPhone.slice(0, 2) }} ({{
+                  mainPhone.slice(2, 5)
+                }})</span
+              >
+              {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{
+                mainPhone.slice(10, 12)
+              }}
             </p></a
           >
           <div class="header__top-callback" @click="showCallbackModal = true">
             Заказать звонок
           </div>
-          <div v-if="getUser && getUser.sale" class="header__sale" :class="{ auth: getUser }">
-            Ваша персональная скидка - {{ getUser.sale }}%
+          <div
+            v-if="user && user.sale"
+            class="header__sale"
+            :class="{ auth: user }"
+          >
+            Ваша персональная скидка - {{ user.sale }}%
           </div>
-          <div v-if="!$fire.auth.currentUser" class="header__auth">
+          <div v-if="!user" class="header__auth">
             <nuxt-link class="header__auth-link" to="/auth/login"
               ><img
                 class="header__auth-img"
@@ -109,25 +120,27 @@
               >Регистрация</nuxt-link
             >
           </div>
-          <div v-if="getUser" class="header__admin">
+          <div v-if="user" class="header__admin">
             <my-button
-              v-if="getUser.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
+              v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
               class="header__admin-btn"
             >
               <nuxt-link to="/admin/stats">Админка</nuxt-link>
             </my-button>
           </div>
           <nuxt-link
-            v-if="getUser"
+            v-if="user"
             class="header__user"
-            :to="`/cabinet/${getUser.id}/orders`"
+            :to="`/cabinet/${user.id}/orders`"
             ><img
               class="header__auth-img"
               src="/images/icons/user.svg"
               alt=""
-            />{{ getUser.name }}</nuxt-link
+            />{{ user.name }}</nuxt-link
           >
-          <my-button v-if="getUser" class="header__logout" @click="logout">Выйти</my-button>
+          <my-button v-if="user" class="header__logout" @click="logout"
+            >Выйти</my-button
+          >
           <div class="header__lang">
             Ru<img src="/images/icons/arrow-down.svg" alt="" />
             <div class="header__lang-select">
@@ -155,7 +168,7 @@
                 /></nuxt-link>
               </div>
               <div class="burger__menu-middle">
-                <div v-if="!$fire.auth.currentUser" class="burger__auth">
+                <div v-if="!user" class="burger__auth">
                   <nuxt-link class="header__auth-link" to="/auth/login"
                     ><img
                       class="header__auth-img"
@@ -168,25 +181,28 @@
                   >
                 </div>
                 <div class="burger__user-panel">
-                  <div v-if="getUser" class="burger__admin">
+                  <div v-if="user" class="burger__admin">
                     <my-button
-                      v-if="getUser.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
+                      v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
                       class="burger__admin-btn"
                     >
                       <nuxt-link to="/admin/stats">Админка</nuxt-link>
                     </my-button>
                   </div>
                   <nuxt-link
-                    v-if="getUser"
+                    v-if="user"
                     class="burger__user"
-                    :to="`/cabinet/${getUser.id}/orders`"
+                    :to="`/cabinet/${user.id}/orders`"
                     ><img
                       class="burger__auth-img"
                       src="/images/icons/user.svg"
                       alt=""
-                    />{{ getUser.name }}</nuxt-link
+                    />{{ user.name }}</nuxt-link
                   >
-                  <my-button v-if="getUser" class="burger__logout" @click="logout"
+                  <my-button
+                    v-if="user"
+                    class="burger__logout"
+                    @click="logout"
                     >Выйти</my-button
                   >
                 </div>
@@ -282,7 +298,9 @@
             <a class="header__contacts-item" href="#"
               ><img src="/images/icons/viber.svg" alt=""
             /></a>
-            <a class="header__contacts-item" :href="contacts.messengers.telegram"
+            <a
+              class="header__contacts-item"
+              :href="contacts.messengers.telegram"
               ><img src="/images/icons/telegram.svg" alt=""
             /></a>
             <a class="header__contacts-item" href="#"
@@ -290,10 +308,24 @@
             /></a>
             <div class="header__contacts-item">
               <a class="header__contacts-phone" :href="`tel:${mainPhone}`"
-                ><span>+{{ mainPhone.slice(0, 2) }} ({{ mainPhone.slice(2, 5) }})</span> {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{ mainPhone.slice(10, 12) }}</a
+                ><span
+                  >+{{ mainPhone.slice(0, 2) }} ({{
+                    mainPhone.slice(2, 5)
+                  }})</span
+                >
+                {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{
+                  mainPhone.slice(10, 12)
+                }}</a
               >
               <a class="header__contacts-phone" :href="`tel:${secondaryPhone}`"
-                ><span>+{{ secondaryPhone.slice(0, 2) }} ({{ secondaryPhone.slice(2, 5) }})</span> {{ secondaryPhone.slice(5, 8) }}-{{ secondaryPhone.slice(8, 10) }}-{{ secondaryPhone.slice(10, 12) }}</a
+                ><span
+                  >+{{ secondaryPhone.slice(0, 2) }} ({{
+                    secondaryPhone.slice(2, 5)
+                  }})</span
+                >
+                {{ secondaryPhone.slice(5, 8) }}-{{
+                  secondaryPhone.slice(8, 10)
+                }}-{{ secondaryPhone.slice(10, 12) }}</a
               >
             </div>
           </div>
@@ -308,23 +340,111 @@
             </div>
           </div>
           <div class="header__basket">
-            <img src="/images/icons/basket.svg" alt="" /><span
-              class="header__basket-num"
-              >0</span
-            >
+            <div class="header__basket-img" @click="setShowBasket">
+              <img src="/images/icons/basket.svg" alt="" /><span
+                class="header__basket-num"
+                >{{ basket.length }}</span
+              >
+            </div>
+            <div v-if="showBasket" class="header__basket-inner" :class="{ 'empty': basket.length === 0 }">
+              <template v-if="basket.length > 0">
+                <div v-for="(item, index) in basket" :key="index" class="header__basket-item">
+                  <div class="header__basket-item-title">
+                    {{ item.title }}
+                  </div>
+                  <div class="header__basket-item-num">
+                    <svg
+                      class="header__basket-decrement header__basket-arrow"
+                      width="10"
+                      height="7"
+                      viewBox="0 0 8 6"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      @click="decrementBasketItemValue(index)"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M3.99485 4.07389L0.978121 1.2L0 2.20892L3.99485 6L8 2.20892L7.02188 1.2L3.99485 4.07389Z"
+                        fill="#8A8A8A"
+                      />
+                    </svg>
+                    <my-input
+                      class="header__basket-item-num-input"
+                      :value="item.value.toString()"
+                      :disabled="true"
+                      type="number"
+                    />
+                    <svg
+                      class="header__basket-increment header__basket-arrow"
+                      width="10"
+                      height="7"
+                      viewBox="0 0 8 6"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      @click="incrementBasketItemValue(index)"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M3.99485 4.07389L0.978121 1.2L0 2.20892L3.99485 6L8 2.20892L7.02188 1.2L3.99485 4.07389Z"
+                        fill="#8A8A8A"
+                      />
+                    </svg>
+                  </div>
+                  <div v-if="item.sale" class="header__basket-item-price">{{ (item.price - ((item.price / 100) * item.discount)) * item.value }} грн.</div>
+                  <div v-else class="header__basket-item-price">{{ item.price * item.value }} грн.</div>
+                  <div class="header__basket-item-delete" @click="deleteBasketItem(index)">
+                    <svg
+                      class="header__basket-delete"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 1.2L10.8 0L6 4.8L1.2 0L0 1.2L4.8 6L0 10.8L1.2 12L6 7.2L10.8 12L12 10.8L7.2 6L12 1.2Z"
+                        fill="#C4C4C4"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div class="header__basket-bottom">
+                  <p class="header__basket-price">
+                    Всего <span class="header__basket-price-num">{{ price }} грн.</span>
+                  </p>
+                  <nuxt-link class="header__basket-link" to="/basket">
+                    <my-button class="header__basket-btn"
+                      >Перейти в корзину</my-button
+                    >
+                  </nuxt-link>
+                </div>
+              </template>
+              <template v-else>
+                <p class="header__basket-error">Ничего не добавлено.</p>
+                <nuxt-link class="header__basket-link" to="/shop">
+                  <my-button class="header__basket-btn">Перейти в каталог</my-button>
+                </nuxt-link>
+              </template>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <nav class="menu">
       <div class="container">
-        <div v-if="getUser && getUser.sale" class="header__sale mobile">Ваша персональная скидка - {{ getUser.sale }}%</div>
+        <div v-if="user && user.sale" class="header__sale mobile">
+          Ваша персональная скидка - {{ user.sale }}%
+        </div>
         <ul class="menu__list">
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/about">О производстве</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/about"
+              >О производстве</nuxt-link
+            >
           </li>
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/delivery"
@@ -351,8 +471,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   data() {
     return {
@@ -362,16 +480,41 @@ export default {
       contacts: {},
       mainPhone: '',
       secondaryPhone: '',
+      price: 0
     }
   },
-  computed: mapGetters(['getUser']),
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+    basket() {
+      return this.$store.state.basket
+    },
+    showBasket() {
+      return this.$store.state.showBasket
+    }
+  },
   watch: {
     $route() {
       this.showBurger = false
+      this.$store.dispatch('setShowBasketAction', false)
+    },
+    basket() {
+      if(this.basket.length === 0) {
+        this.$store.dispatch('setShowBasketAction', false)
+      }
+      this.price = 0
+      this.basket.forEach(item => {
+        if(item.sale) {
+          this.price += (item.price - ((item.price / 100) * item.discount)) * item.value
+        } else {
+          this.price += item.price * item.value
+        }
+      })
     },
   },
   async mounted() {
-    this.contacts = await this.$readData('/contacts') 
+    this.contacts = await this.$readData('/contacts')
     this.mainPhone = this.contacts.phones.mainPhone
     this.secondaryPhone = this.contacts.phones.secondaryPhone
   },
@@ -385,6 +528,18 @@ export default {
       this.$writeData(`callbackPhones/${+new Date()}`, this.callbackPhone)
       this.showCallbackModal = false
       this.$toasted.success('Ваша заявка отправлена на обработку.')
+    },
+    setShowBasket() {
+      this.$store.dispatch('setShowBasketAction', !this.showBasket)
+    },
+    deleteBasketItem(index) {
+      this.$store.dispatch('deleteBasketItemAction', index)
+    },
+    incrementBasketItemValue(index) {
+      this.$store.dispatch('incrementBasketItemValueAction', index)
+    },
+    decrementBasketItemValue(index) {
+      this.$store.dispatch('decrementBasketItemValueAction', index)
     },
   },
 }
@@ -428,6 +583,7 @@ export default {
     }
     &.mobile {
       display: none;
+      padding: 10px 0;
     }
   }
   &__auth {
@@ -556,6 +712,10 @@ export default {
   }
   &__basket {
     position: relative;
+    &-img {
+      cursor: pointer;
+      position: relative;
+    }
     &-num {
       position: absolute;
       right: -10px;
@@ -571,12 +731,117 @@ export default {
       align-items: center;
       justify-content: center;
     }
+    &-inner {
+      position: absolute;
+      top: 106px;
+      left: -550px;
+      right: 0;
+      min-width: 100%;
+      background-color: #fff;
+      border: 1.5px solid #337d5a;
+      padding: 25px 30px;
+      z-index: 10;
+      &.empty {
+        right: 0;
+        left: -300px;
+        color: red;
+        font-weight: 600;
+        text-align: center;
+        .header__basket-link {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+      }
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      gap: 30px;
+      white-space: nowrap;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(#000, 0.08);
+      &-title {
+        min-width: 250px;
+        max-width: 250px;
+        white-space: normal;
+      }
+      &-num {
+        padding: 0 20px;
+        position: relative;
+        &-input {
+          width: 44px;
+          height: 28px;
+          input {
+            padding: 5px !important;
+          }
+        }
+      }
+      &-price {
+        min-width: 90px;
+        text-align: center;
+      }
+    }
+    &-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding-top: 20px;
+    }
+    &-price {
+      font-size: 18px;
+      font-weight: 700;
+      &-num {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: #337d5a;
+      }
+    }
+    &-btn {
+      max-width: 190px;
+    }
+    &-increment {
+      transform: rotate(270deg);
+      right: 0;
+    }
+    &-decrement {
+      transform: rotate(90deg);
+      left: 0;
+    }
+    &-arrow {
+      position: absolute;
+      top: 45%;
+      cursor: pointer;
+      path {
+        transition: fill 0.3s;
+      }
+      &:hover {
+        path {
+          fill: #337d5a;
+        }
+      }
+    }
+    &-delete {
+      cursor: pointer;
+      path {
+        transition: fill 0.3s;
+      }
+      &:hover {
+        path {
+          fill: #337d5a;
+        }
+      }
+    }
   }
   &__burger {
     display: none;
   }
 }
-.menu {  
+.menu {
   &__list {
     display: flex;
     align-items: center;
@@ -591,7 +856,9 @@ export default {
       border-bottom: 3px solid transparent;
       padding-bottom: 10px;
       transition: all 0.3s;
-      &:hover, &.nuxt-link-exact-active.nuxt-link-active, &.nuxt-link-active {
+      &:hover,
+      &.nuxt-link-exact-active.nuxt-link-active,
+      &.nuxt-link-active {
         color: #337d5a;
         border-color: #337d5a;
       }
@@ -844,16 +1111,30 @@ export default {
 }
 @media (max-width: 600px) {
   .callback-modal {
-  &__title {
-    font-size: 20px;
+    &__title {
+      font-size: 20px;
+    }
+    &__form {
+      padding: 50px 40px;
+    }
+    &__field {
+      margin-bottom: 20px;
+    }
   }
-  &__form {
-    padding: 50px 40px;
+  .header__basket {
+    &-inner {
+      left: -220px;
+    }
+    &-item {
+      display: none;
+    }
+    &-bottom {
+      padding: 0;
+    }
+    &-price {
+      display: none;
+    }
   }
-  &__field {
-    margin-bottom: 20px;
-  }
-}
 }
 @media (max-width: 500px) {
   .header__sm {

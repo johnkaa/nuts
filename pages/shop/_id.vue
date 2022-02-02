@@ -97,7 +97,7 @@
               Ваша цена: <span class="shop__info-price-new">{{ product.price }} грн.</span
               ></div>
             </template>
-            <my-button class="shop__info-btn">Заказать</my-button>
+            <my-button class="shop__info-btn" @click="addToBasket">Заказать</my-button>
           </div>
         </div>
       </div>
@@ -222,6 +222,11 @@ export default {
       selectedBottom: 'description',
     }
   },
+  methods: {
+    addToBasket() {
+      this.$store.dispatch('addToBasketAction', this.product)
+    }
+  }
 }
 </script>
 
