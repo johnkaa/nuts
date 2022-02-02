@@ -344,11 +344,11 @@ export default {
             country: this.country,
             region: this.region,
             city: this.city,
-            address: this.address || ''
+            address: this.address || '',
           },
           password: this.password,
           type: this.type,
-          sale: 1
+          sale: 1,
         }
         if (this.type === 'company') {
           userInfo.company = {

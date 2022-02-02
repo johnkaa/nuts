@@ -10,10 +10,7 @@
 export default {
   mounted() {
     setTimeout(() => {
-      if (this.$fire.auth.currentUser) {
-        const uid = this.$fire.auth.currentUser.uid
-        this.$store.dispatch('getUserAction', uid)
-      }
+      this.$store.dispatch('getUserAction')
     }, 500)
   },
 }

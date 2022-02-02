@@ -1,7 +1,7 @@
 const actions = {
-  async getUserAction(context, uid) {
-    if(uid) {
-      const user = await this.$readData(`users/${uid}`)
+  async getUserAction(context) {
+    if(this.$fire.auth.currentUser) {
+      const user = await this.$readData(`users/${this.$fire.auth.currentUser.uid}`)
       context.commit('setUser', user)
     } else {
       context.commit('setUser', null)
