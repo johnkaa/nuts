@@ -5,6 +5,7 @@
       class="input"
       :class="{ error: errors.length !== 0 }"
       :type="type"
+      :disabled="disabled"
       :placeholder="placeholder"
     />
     <span v-if="errors.length !== 0" class="input-info">{{ errors[0] }}</span>
@@ -19,7 +20,7 @@ export default {
   },
   props: {
     value: {
-      type: String || Number,
+      type: String,
       default: () => ''
     },
     errors: {
@@ -33,6 +34,10 @@ export default {
     type: {
       type: String,
       default: () => 'text'
+    },
+    disabled: {
+      type: Boolean,
+      default: () => false
     },
   },
   data() {
