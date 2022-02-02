@@ -11,7 +11,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$store.dispatch('getUserAction')
-    }, 500)
+    }, 1000)
   },
 }
 </script>
