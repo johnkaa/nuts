@@ -31,8 +31,8 @@
     <div class="header__top">
       <div class="container">
         <div class="header__top-inner">
-          <div class="header__sm">
-            <a class="header__sm-item" href="https://facebook.com">
+          <div v-if="contacts.sm" class="header__sm">
+            <a class="header__sm-item" :href="contacts.sm.facebook">
               <svg
                 class="header__sm-item-img"
                 width="7"
@@ -46,7 +46,7 @@
                 />
               </svg>
             </a>
-            <a class="header__sm-item" href="https://instagram.com">
+            <a class="header__sm-item" :href="contacts.sm.instagram">
               <svg
                 class="header__sm-item-img"
                 width="13"
@@ -66,7 +66,7 @@
                 />
               </svg>
             </a>
-            <a class="header__sm-item" href="https://youtube.com">
+            <a class="header__sm-item" :href="contacts.sm.youtube">
               <svg
                 class="header__sm-item-img"
                 width="16"
@@ -88,14 +88,14 @@
               alt=""
             />
             <p>
-              <span class="header__top-phone_green">+38 (044)</span> 750-50-11
+              <span class="header__top-phone_green">+{{ mainPhone.slice(0, 2) }} ({{ mainPhone.slice(2, 5) }})</span> {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{ mainPhone.slice(10, 12) }}
             </p></a
           >
           <div class="header__top-callback" @click="showCallbackModal = true">
             Заказать звонок
           </div>
-          <div class="header__sale" :class="{ auth: getUser }">
-            Ваша персональная скидка - 5%
+          <div v-if="getUser && getUser.sale" class="header__sale" :class="{ auth: getUser }">
+            Ваша персональная скидка - {{ getUser.sale }}%
           </div>
           <div v-if="!$fire.auth.currentUser" class="header__auth">
             <nuxt-link class="header__auth-link" to="/auth/login"
@@ -190,8 +190,8 @@
                     >Выйти</my-button
                   >
                 </div>
-                <div class="burger__sm">
-                  <a class="header__sm-item" href="https://facebook.com">
+                <div v-if="contacts.sm" class="burger__sm">
+                  <a class="header__sm-item" :href="contacts.sm.facebook">
                     <svg
                       class="header__sm-item-img"
                       width="7"
@@ -205,7 +205,7 @@
                       />
                     </svg>
                   </a>
-                  <a class="header__sm-item" href="https://instagram.com">
+                  <a class="header__sm-item" :href="contacts.sm.facebook">
                     <svg
                       class="header__sm-item-img"
                       width="13"
@@ -225,7 +225,7 @@
                       />
                     </svg>
                   </a>
-                  <a class="header__sm-item" href="https://youtube.com">
+                  <a class="header__sm-item" :href="contacts.sm.facebook">
                     <svg
                       class="header__sm-item-img"
                       width="16"
@@ -278,22 +278,22 @@
           <nuxt-link class="logo" to="/"
             ><img src="/images/logo.svg" alt=""
           /></nuxt-link>
-          <div class="header__contacts">
+          <div v-if="contacts.messengers" class="header__contacts">
             <a class="header__contacts-item" href="#"
               ><img src="/images/icons/viber.svg" alt=""
             /></a>
-            <a class="header__contacts-item" href="#"
+            <a class="header__contacts-item" :href="contacts.messengers.telegram"
               ><img src="/images/icons/telegram.svg" alt=""
             /></a>
             <a class="header__contacts-item" href="#"
               ><img src="/images/icons/whatsapp.svg" alt=""
             /></a>
             <div class="header__contacts-item">
-              <a class="header__contacts-phone" href="tel:380447505011"
-                ><span>+38 (044)</span> 750-50-11</a
+              <a class="header__contacts-phone" :href="`tel:${mainPhone}`"
+                ><span>+{{ mainPhone.slice(0, 2) }} ({{ mainPhone.slice(2, 5) }})</span> {{ mainPhone.slice(5, 8) }}-{{ mainPhone.slice(8, 10) }}-{{ mainPhone.slice(10, 12) }}</a
               >
-              <a class="header__contacts-phone" href="tel:380977755051"
-                ><span>+38 (097)</span> 775-50-51</a
+              <a class="header__contacts-phone" :href="`tel:${secondaryPhone}`"
+                ><span>+{{ secondaryPhone.slice(0, 2) }} ({{ secondaryPhone.slice(2, 5) }})</span> {{ secondaryPhone.slice(5, 8) }}-{{ secondaryPhone.slice(8, 10) }}-{{ secondaryPhone.slice(10, 12) }}</a
               >
             </div>
           </div>
@@ -318,7 +318,7 @@
     </div>
     <nav class="menu">
       <div class="container">
-        <div class="header__sale mobile">Ваша персональная скидка - 5%</div>
+        <div v-if="getUser && getUser.sale" class="header__sale mobile">Ваша персональная скидка - {{ getUser.sale }}%</div>
         <ul class="menu__list">
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
@@ -359,6 +359,9 @@ export default {
       showBurger: false,
       callbackPhone: '',
       showCallbackModal: false,
+      contacts: {},
+      mainPhone: '',
+      secondaryPhone: '',
     }
   },
   computed: mapGetters(['getUser']),
@@ -366,6 +369,11 @@ export default {
     $route() {
       this.showBurger = false
     },
+  },
+  async mounted() {
+    this.contacts = await this.$readData('/contacts') 
+    this.mainPhone = this.contacts.phones.mainPhone
+    this.secondaryPhone = this.contacts.phones.secondaryPhone
   },
   methods: {
     async logout() {
@@ -501,6 +509,9 @@ export default {
       }
     }
   }
+  &__main {
+    border-bottom: 1px solid rgba(#000, 0.06);
+  }
   &__inner {
     display: flex;
     align-items: center;
@@ -565,14 +576,13 @@ export default {
     display: none;
   }
 }
-.menu {
-  padding-top: 20px;
-  border-top: 1px solid rgba(#000, 0.06);
+.menu {  
   &__list {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 68px;
+    padding-top: 20px;
     &-link {
       color: #1a2f3f;
       display: block;
@@ -606,7 +616,6 @@ export default {
 }
 @media (max-width: 1170px) {
   .menu {
-    padding: 10px 0;
     &__list {
       display: none;
     }
