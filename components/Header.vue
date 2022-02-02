@@ -414,7 +414,7 @@
                   <p class="header__basket-price">
                     Всего <span class="header__basket-price-num">{{ price }} грн.</span>
                   </p>
-                  <nuxt-link class="header__basket-link" to="/basket">
+                  <nuxt-link class="header__basket-link" to="/order">
                     <my-button class="header__basket-btn"
                       >Перейти в корзину</my-button
                     >
@@ -424,7 +424,7 @@
               <template v-else>
                 <p class="header__basket-error">Ничего не добавлено.</p>
                 <nuxt-link class="header__basket-link" to="/shop">
-                  <my-button class="header__basket-btn">Перейти в каталог</my-button>
+                  <my-button class="header__basket-btn" @click="setShowBasket">Перейти в каталог</my-button>
                 </nuxt-link>
               </template>
             </div>
