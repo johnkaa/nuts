@@ -158,7 +158,7 @@
               viewBox="0 0 8 6"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              @click="decrementBasketItemValue(index)"
+              @click="decrementBasketItemValue(item.index)"
             >
               <path
                 fill-rule="evenodd"
@@ -175,7 +175,7 @@
               viewBox="0 0 8 6"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              @click="incrementBasketItemValue(index)"
+              @click="incrementBasketItemValue(item.index)"
             >
               <path
                 fill-rule="evenodd"
@@ -213,7 +213,7 @@
           </nuxt-link>
           <template v-if="user">
             <div v-if="user.sale" class="order__basket-price">
-              Цена с учетом персональной скидки
+              Цена <span class="order__basket-price-num">(-{{ user.sale }}%):</span>
               <span class="order__basket-price-num"
                 >{{ (price - (price / 100) * user.sale).toFixed(2) }} грн.</span
               >
@@ -399,7 +399,25 @@ export default {
   },
   computed: {
     sortedBasket() {
-      return this.basket
+      let basket = []
+      Object.keys(this.basket).forEach((item, index) => {
+        const nut = this.basket[item]
+        nut.index = index
+        basket.push(nut)
+      })
+      if(this.sort === 'title') {
+        basket = basket.sort((a,b) => a.title.localeCompare(b.title))
+      }
+      if(this.sort === 'value') {
+        basket = basket.sort((a, b) => a.value - b.value)
+      }
+      if(this.sort === 'price') {
+        basket = basket.sort((a, b) => a.price - b.price)
+      }
+      if(this.sort === 'totalPrice') {
+        basket = basket.sort((a, b) => (a.price * a.value) - (b.price * b.value))
+      }
+      return basket
     },
     basket() {
       return this.$store.state.basket
@@ -766,4 +784,52 @@ export default {
   font-size: 14px;
   user-select: none;
 }
+@media (max-width: 900px) {
+  .order__basket-item {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .item-title, .item-info {
+    &:nth-child(4) {
+      display: none;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .order {
+    &__top {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    &__manager-phone {
+      justify-content: center;
+    }
+    &__basket {
+      &-item {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &-bottom {
+    flex-direction: column;
+    gap: 10px;
+    
+  }
+  &-price {
+      order: 0;
+    }
+    &-link {
+      order: 1;
+    }
+    }
+  }
+  .item-title, .item-info {
+    &:nth-child(3) {
+      display: none;
+    }
+  }
+}
+@media (max-width: 500px) {
+  .item-info {
+    font-size: 12px;
+  }
+} 
 </style>
