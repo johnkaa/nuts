@@ -20,6 +20,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~node_modules/swiper/swiper-bundle.css',
+    '~node_modules/vuesax/dist/vuesax.css',
     '~assets/style/global'
   ],
 
@@ -31,6 +32,7 @@ export default {
     { src: '~plugins/vee-validate', mode: 'client' },
     { src: '~plugins/uploadImg' },
     { src: '~plugins/db' },
+    { src: '~plugins/vuesax', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
