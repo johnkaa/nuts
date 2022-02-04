@@ -10,8 +10,9 @@
           объема
         </p>
         <div class="products__items">
-          <product v-for="item in products" :key="item.id" :product="item"/>
+          <Product v-for="item in products" :key="item.id" :product="item"/>
         </div>
+        <slider-mobile class="products__slider" :items="products" />
         <my-button class="products__btn secondary" @click="$router.push('/shop')"
             >Перейти в магазин</my-button
           >
@@ -63,7 +64,7 @@
       </div>
     </div>
     <banners-eco class="eco-banner" :banner="ecoBanner"/>
-    <news-latest class="news" :news="latestNews"/>
+    <news-latest class="news" :news="news"/>
   </div>
 </template>
 
@@ -71,15 +72,15 @@
 export default {
   async asyncData({ $readData }) {
     const topBanner = await $readData('banners/top')
-    const products = await $readData('products')
+    const productsObj = await $readData('products')
     const about = await $readData('pages/about')
     const factoryBanner = await $readData('banners/factory')
     const ecoBanner = await $readData('banners/eco')
     const news = await $readData('news')
-    let latestNews = []
-    Object.keys(news).forEach(item => latestNews.push(news[item]))
-    latestNews = latestNews.slice(0, 3)
-    return { topBanner, products, about, factoryBanner, ecoBanner, latestNews }
+    let products = []
+    Object.keys(productsObj).forEach(item => products.push(productsObj[item]))
+    products = products.slice(0, 6)
+    return { topBanner, products, about, factoryBanner, ecoBanner, news }
   },
 }
 </script>
@@ -108,11 +109,13 @@ export default {
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 70px;
+  }
+  &__slider {
+    display: none;
   }
   &__btn {
     max-width: 200px;
-    margin: 0 auto;
+    margin: 70px auto 0;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -202,6 +205,16 @@ export default {
           background-color: rgba(#337d5a, 0.95);
         }
       }
+    }
+  }
+}
+@media (max-width: 900px) {
+  .products {
+    &__items {
+      display: none;
+    }
+    &__slider {
+      display: block;
     }
   }
 }

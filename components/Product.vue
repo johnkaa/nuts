@@ -15,6 +15,7 @@
         <img :src="product.img" alt="" />
         <svg
           class="product__img-zoom"
+          :class="{ hidden: slide }"
           width="55"
           height="55"
           viewBox="0 0 55 55"
@@ -70,7 +71,7 @@
               }}
               грн.</span
             >
-            <span class="product__price-old">{{ product.price }} грн.</span>
+            <span class="product__price-old" :class="{ hidden: slide }">{{ product.price }} грн.</span>
           </div></template
         >
 
@@ -88,7 +89,7 @@
 
 <script>
 export default {
-  props: ['product'],
+  props: ['product', 'slide'],
   data() {
     return {
       showPreview: false,
@@ -106,7 +107,9 @@ export default {
 <style lang="scss">
 .product {
   cursor: pointer;
-  width: 410px;
+  max-width: 410px;
+  width: 100%;
+  min-width: 330px;
   border: 1px solid rgba(#000, 0.08);
   transition: border-color 0.3s;
   color: #1a2f3f;
@@ -307,6 +310,14 @@ export default {
       background-color: #fff;
       padding: 50px 0;
     }
+  }
+}
+.hidden {
+  display: none;
+}
+@media (max-width: 450px) {
+  .product__price-old {
+    display: none;
   }
 }
 </style>

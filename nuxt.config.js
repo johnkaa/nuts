@@ -19,17 +19,18 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/node_modules/swiper/css/swiper.css',
-    '@/assets/style/global'
+    '~node_modules/swiper/swiper-bundle.css',
+    '~assets/style/global'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~plugins/toast', mode: 'client' },
     { src: '~plugins/select' },
+    { src: '~/plugins/swiper', mode: 'client', ssr: false },
     { src: '~plugins/vee-validate', mode: 'client' },
     { src: '~plugins/uploadImg' },
-    '~plugins/db'
+    { src: '~plugins/db' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,7 +52,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/firebase'
+    '@nuxtjs/firebase',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
