@@ -56,7 +56,7 @@
               />
             </div>
           </validation-provider>
-          <validation-provider name="phone" rules="required">
+          <validation-provider name="phone" rules="required|numeric">
             <div slot-scope="{ errors }" class="register__field">
               <my-input
                 v-model="phone"
@@ -169,35 +169,59 @@
               name="companyType"
             />
             <div class="register__text requisite">1. Реквизиты</div>
-            <my-input
-              v-model="requisite"
-              type="text"
-              class="register__field"
-              placeholder="Реквизиты*"
-            />
+            <validation-provider name="requisite" rules="required">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-input
+                  v-model="requisite"
+                  :value="requisite"
+                  class="register__input"
+                  placeholder="Реквизиты*"
+                  :errors="errors"
+                />
+              </div>
+            </validation-provider>
             <div class="register__text company-address">
               2. Юридический адрес
             </div>
-            <my-select
-              v-model="companyCountry"
-              class="register__field"
-              :options="countries"
-              placeholder="Страна*"
-            />
-            <my-select
-              v-model="companyRegion"
-              class="register__field"
-              :options="companyRegions"
-              placeholder="Область*"
-            />
-            <my-select
-              v-model="companyCity"
-              class="register__field"
-              :options="companyCities"
-              placeholder="Город*"
-            />
+            <validation-provider name="companyCountry" rules="required">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-select
+                  v-model="companyCountry"
+                  :value="companyCountry"
+                  class="register__input"
+                  :options="countries"
+                  :errors="errors"
+                  placeholder="Страна*"
+                />
+              </div>
+            </validation-provider>
+            <validation-provider name="companyRegion" rules="required">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-select
+                  v-model="companyRegion"
+                  :value="companyRegion"
+                  class="register__input"
+                  :options="companyRegions"
+                  :errors="errors"
+                  placeholder="Область*"
+                />
+              </div>
+            </validation-provider>
+            <validation-provider name="companyCity" rules="required">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-select
+                  v-model="companyCity"
+                  :value="companyCity"
+                  class="register__input"
+                  :options="companyCities"
+                  :errors="errors"
+                  placeholder="Город*"
+                />
+              </div>
+            </validation-provider>
             <my-input
               v-model="companyAddress"
+              :value="companyAddress"
               class="register__input"
               placeholder="Адрес"
             />
