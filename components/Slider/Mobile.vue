@@ -38,6 +38,7 @@ export default {
   &-pagination {
     bottom: 0;
     left: 50%;
+    transform: translateX(-50%);
     &-bullet {
       margin: 0 5px;
       background-color: #337d5a !important;
