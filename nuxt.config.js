@@ -21,6 +21,7 @@ export default {
   css: [
     '~node_modules/swiper/swiper-bundle.css',
     '~node_modules/vuesax/dist/vuesax.css',
+    '~node_modules/material-icons/iconfont/material-icons.css',
     '~assets/style/global'
   ],
 
