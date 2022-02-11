@@ -19,6 +19,7 @@ export default {
 }
 .admin__container {
   padding-left: 300px;
+  padding-right: 50px;
   padding-top: 100px;
 }
 </style>
