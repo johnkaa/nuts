@@ -73,9 +73,6 @@
               <span class="orders-popup__item-info">{{ order.user.address }}</span>
             </div>
           </template>
-          <template v-else>
-
-          </template>
         </div>
       </div>
     </vs-popup>
