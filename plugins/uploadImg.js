@@ -10,4 +10,14 @@ export default (context, inject) => {
       return 'error'
     }
   })
+  inject('deleteImg', async (path) => {
+    try {
+      await context.$fire.storage
+        .ref()
+        .child(path)
+        .delete()
+    } catch (e) {
+      return 'error'
+    }
+  }) 
 }
