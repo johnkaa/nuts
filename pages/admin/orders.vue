@@ -150,8 +150,9 @@
 export default {
   async asyncData({ $readData }) {
     const ordersObj = await $readData('/orders')
-    const orders = []
+    let orders = []
     Object.keys(ordersObj).forEach(order => orders.push(ordersObj[order]))
+    orders = orders.reverse()
     return { orders }
   },
   data() {
