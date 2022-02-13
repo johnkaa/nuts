@@ -10,7 +10,7 @@
     <nuxt-link :to="`/shop/${product.id}`">
       <div
         class="product__img"
-        :class="{ sale: product.sale, new: product.new }"
+        :class="{ sale: product.sale, new: product.newProduct }"
       >
         <img :src="product.img" alt="" />
         <svg
