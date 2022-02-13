@@ -32,7 +32,7 @@
         <vs-th class="products__item-title"> Скидка </vs-th>
       </template>
       <template slot-scope="{ data }">
-        <vs-tr v-for="product in data" :key="product.id">
+        <vs-tr v-for="(product, index) in data" :key="product.id">
           <vs-td :data="product.id">
             {{ product.id }}
           </vs-td>
@@ -60,7 +60,7 @@
             </span>
             <span
               class="products__item-action"
-              @click=";(popupActivo = true), (productId = product.id)"
+              @click="(popupActivo = true), (productId = product.id), (productIndex = index)"
             >
               <vs-icon icon="delete"></vs-icon>
             </span>
@@ -91,12 +91,14 @@ export default {
   data() {
     return {
       popupActivo: false,
-      productId: 0
+      productId: 0,
+      productIndex: 0
     }
   },
   methods: {
     deleteProduct() {
       this.$writeData(`products/${this.productId}`, null)
+      this.products.splice(this.productIndex, 1)
       this.popupActivo = false
       this.$vs.notify({
         color: 'success',
