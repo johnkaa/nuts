@@ -121,12 +121,13 @@
             >
           </div>
           <div v-if="user" class="header__admin">
-            <my-button
-              v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
-              class="header__admin-btn"
+            <nuxt-link to="/admin/stats"
+              ><my-button
+                v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
+                class="header__admin-btn"
+                >Админка
+              </my-button></nuxt-link
             >
-              <nuxt-link to="/admin/stats">Админка</nuxt-link>
-            </my-button>
           </div>
           <nuxt-link
             v-if="user"
@@ -199,10 +200,7 @@
                       alt=""
                     />{{ user.name }}</nuxt-link
                   >
-                  <my-button
-                    v-if="user"
-                    class="burger__logout"
-                    @click="logout"
+                  <my-button v-if="user" class="burger__logout" @click="logout"
                     >Выйти</my-button
                   >
                 </div>
@@ -346,9 +344,17 @@
                 >{{ basket.length }}</span
               >
             </div>
-            <div v-if="showBasket" class="header__basket-inner" :class="{ 'empty': basket.length === 0 }">
+            <div
+              v-if="showBasket"
+              class="header__basket-inner"
+              :class="{ empty: basket.length === 0 }"
+            >
               <template v-if="basket.length > 0">
-                <div v-for="(item, index) in basket" :key="index" class="header__basket-item">
+                <div
+                  v-for="(item, index) in basket"
+                  :key="index"
+                  class="header__basket-item"
+                >
                   <div class="header__basket-item-title">
                     {{ item.title }}
                   </div>
@@ -369,7 +375,9 @@
                         fill="#8A8A8A"
                       />
                     </svg>
-                    <div class="header__basket-item-num-input">{{ item.value }}</div>
+                    <div class="header__basket-item-num-input">
+                      {{ item.value }}
+                    </div>
                     <svg
                       class="header__basket-increment header__basket-arrow"
                       width="10"
@@ -387,9 +395,20 @@
                       />
                     </svg>
                   </div>
-                  <div v-if="item.sale" class="header__basket-item-price">{{ (item.price - ((item.price / 100) * item.discount)) * item.value }} грн.</div>
-                  <div v-else class="header__basket-item-price">{{ item.price * item.value }} грн.</div>
-                  <div class="header__basket-item-delete" @click="deleteBasketItem(index)">
+                  <div v-if="item.sale" class="header__basket-item-price">
+                    {{
+                      (item.price - (item.price / 100) * item.discount) *
+                      item.value
+                    }}
+                    грн.
+                  </div>
+                  <div v-else class="header__basket-item-price">
+                    {{ item.price * item.value }} грн.
+                  </div>
+                  <div
+                    class="header__basket-item-delete"
+                    @click="deleteBasketItem(index)"
+                  >
                     <svg
                       class="header__basket-delete"
                       width="12"
@@ -407,7 +426,10 @@
                 </div>
                 <div class="header__basket-bottom">
                   <p class="header__basket-price">
-                    Всего <span class="header__basket-price-num">{{ price }} грн.</span>
+                    Всего
+                    <span class="header__basket-price-num"
+                      >{{ price }} грн.</span
+                    >
                   </p>
                   <nuxt-link class="header__basket-link" to="/order">
                     <my-button class="header__basket-btn"
@@ -419,7 +441,9 @@
               <template v-else>
                 <p class="header__basket-error">Ничего не добавлено.</p>
                 <nuxt-link class="header__basket-link" to="/shop">
-                  <my-button class="header__basket-btn" @click="setShowBasket">Перейти в каталог</my-button>
+                  <my-button class="header__basket-btn" @click="setShowBasket"
+                    >Перейти в каталог</my-button
+                  >
                 </nuxt-link>
               </template>
             </div>
@@ -475,7 +499,7 @@ export default {
       contacts: {},
       mainPhone: '',
       secondaryPhone: '',
-      price: 0
+      price: 0,
     }
   },
   computed: {
@@ -487,7 +511,7 @@ export default {
     },
     showBasket() {
       return this.$store.state.showBasket
-    }
+    },
   },
   watch: {
     $route() {
@@ -495,13 +519,14 @@ export default {
       this.$store.dispatch('setShowBasketAction', false)
     },
     basket() {
-      if(this.basket.length === 0) {
+      if (this.basket.length === 0) {
         this.$store.dispatch('setShowBasketAction', false)
       }
       this.price = 0
-      this.basket.forEach(item => {
-        if(item.sale) {
-          this.price += (item.price - ((item.price / 100) * item.discount)) * item.value
+      this.basket.forEach((item) => {
+        if (item.sale) {
+          this.price +=
+            (item.price - (item.price / 100) * item.discount) * item.value
         } else {
           this.price += item.price * item.value
         }
@@ -770,7 +795,7 @@ export default {
         &-input {
           text-align: center;
           padding: 5px 15px;
-          border: 1px solid rgba(#000, .15);
+          border: 1px solid rgba(#000, 0.15);
           cursor: default;
         }
       }
