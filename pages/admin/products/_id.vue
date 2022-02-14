@@ -148,21 +148,6 @@ export default {
   methods: {
     async submit() {
       const id = this.$route.params.id
-      const product = {
-        id,
-        calories: this.calories,
-        composition: this.composition,
-        conditions: this.conditions,
-        discount: this.sale ? this.discount : null,
-        experation: this.experation,
-        img: this.img,
-        newProduct: this.newProduct,
-        price: this.price,
-        sale: this.sale,
-        title: this.title,
-        type: this.type,
-        weight: this.weight,
-      }
       if (
         !this.title ||
         !this.composition ||
@@ -178,6 +163,21 @@ export default {
         const format =
           this.file.name.split('.')[this.file.name.split('.').length - 1]
         this.img = await this.$uploadImg(this.file, `products/${id}.${format}`)
+      }
+      const product = {
+        id,
+        calories: this.calories,
+        composition: this.composition,
+        conditions: this.conditions,
+        discount: this.sale ? this.discount : null,
+        experation: this.experation,
+        img: this.img,
+        newProduct: this.newProduct,
+        price: this.price,
+        sale: this.sale,
+        title: this.title,
+        type: this.type,
+        weight: this.weight,
       }
       this.$writeData(`products/${id}`, product)
       this.$vs.notify({

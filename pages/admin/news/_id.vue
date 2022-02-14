@@ -1,53 +1,51 @@
 <template>
   <div class="news-edit">
-     <validation-observer
-      v-slot="{ invalid }"
-      tag="form"
-      name="news-edit"
-    >
-    <div class="news-edit__img news-edit__field">
-      <div class="news-edit__img-title">Фото:</div>
-      <my-file-input @getFile="getFileImg">
-        <div class="news-edit__photo">
-          <img
-            class="news-edit__photo-img"
-            :src="img"
-            alt=""
-          />
-          <span class="news-edit__photo-text" :class="{ show: !img }"
-            >Загрузить фото</span
-          >
-        </div>
-      </my-file-input>
-    </div>
-    <div class="news-edit__title news-edit__field">
-       <validation-provider name="title" rules="required">
-        <div slot-scope="{ errors }">
-          <vs-input v-model="title" class="news-edit__input" :danger="errors.length > 0" :danger-text="errors[0]" label="Заголовок" />
-        </div>
-      </validation-provider>
-    </div>
-    <div class="news-edit__composition news-edit__field">
-      <vs-textarea v-model="text" label="Текст" />
-    </div>
-    <div class="news-edit__btns">
-      <vs-button
-        class="news-edit__btn"
-        :disabled="invalid"
-        color="success"
-        type="filled"
-        @click="submit"
-        >Сохранить</vs-button
-      >
-      <vs-button
-        class="news-edit__btn"
-        color="danger"
-        type="filled"
-        @click="$router.push('/admin/news')"
-        >Назад</vs-button
-      >
-    </div>
-     </validation-observer>
+    <validation-observer v-slot="{ invalid }" tag="form" name="news-edit">
+      <div class="news-edit__img news-edit__field">
+        <div class="news-edit__img-title">Фото:</div>
+        <my-file-input @getFile="getFileImg">
+          <div class="news-edit__photo">
+            <img class="news-edit__photo-img" :src="img" alt="" />
+            <span class="news-edit__photo-text" :class="{ show: !img }"
+              >Загрузить фото</span
+            >
+          </div>
+        </my-file-input>
+      </div>
+      <div class="news-edit__title news-edit__field">
+        <validation-provider name="title" rules="required">
+          <div slot-scope="{ errors }">
+            <vs-input
+              v-model="title"
+              class="news-edit__input"
+              :danger="errors.length > 0"
+              :danger-text="errors[0]"
+              label="Заголовок"
+            />
+          </div>
+        </validation-provider>
+      </div>
+      <div class="news-edit__composition news-edit__field">
+        <vs-textarea v-model="text" label="Текст" />
+      </div>
+      <div class="news-edit__btns">
+        <vs-button
+          class="news-edit__btn"
+          :disabled="invalid"
+          color="success"
+          type="filled"
+          @click="submit"
+          >Сохранить</vs-button
+        >
+        <vs-button
+          class="news-edit__btn"
+          color="danger"
+          type="filled"
+          @click="$router.push('/admin/news')"
+          >Назад</vs-button
+        >
+      </div>
+    </validation-observer>
   </div>
 </template>
 
@@ -59,7 +57,7 @@ export default {
   },
   data() {
     return {
-       date: '',
+      date: '',
       img: 'https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png',
       text: '',
       title: '',
@@ -67,7 +65,7 @@ export default {
   },
   mounted() {
     if (this.news) {
-      this.date = this.news.date 
+      this.date = this.news.date
       this.img = this.news.img
       this.text = this.news.text
       this.title = this.news.title
@@ -88,17 +86,17 @@ export default {
             : '0' + (new Date().getMonth() + 1)
         date = day + '.' + month + '.' + new Date().getFullYear()
       }
+      if (this.file) {
+        const format =
+          this.file.name.split('.')[this.file.name.split('.').length - 1]
+        this.img = await this.$uploadImg(this.file, `news/${id}.${format}`)
+      }
       const news = {
         id,
         date,
         img: this.img,
         title: this.title,
         text: this.text,
-      }
-      if (this.file) {
-        const format =
-          this.file.name.split('.')[this.file.name.split('.').length - 1]
-        this.img = await this.$uploadImg(this.file, `news/${id}.${format}`)
       }
       await this.$writeData(`news/${id}`, news)
       this.$vs.notify({
