@@ -18,9 +18,12 @@ export default {
   background-color: #fff;
 }
 .admin__container {
+  padding: 50px;
   padding-left: 300px;
-  padding-right: 50px;
-  padding-top: 100px;
-  padding-bottom: 50px;
+}
+@media (max-width: 900px) {
+  .admin__container {
+    padding: 50px;
+  }
 }
 </style>

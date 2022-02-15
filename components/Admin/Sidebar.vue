@@ -1,8 +1,9 @@
 <template lang="html">
 
   <div class="parentx-static">
-
-    <vs-sidebar v-model="active" static-position default-index="1" color="primary" class="sidebarx" spacer>
+    <vs-button v-if="width < 900" class="sidebar__btn" radius color="primary" type="filled" icon="menu" @click="active=!active">
+    </vs-button>
+    <vs-sidebar v-model="active" class="sidebarx" :static-position="width > 900" default-index="1" color="primary" spacer>
 
       <div slot="header" class="header-sidebar">
         <nuxt-link to="/">
@@ -14,11 +15,11 @@
         Статистика
       </vs-divider>
 
-      <vs-sidebar-item index="1" to="/admin/stats">
+      <vs-sidebar-item index="1" icon="query_stats" to="/admin/stats">
         Статистика
       </vs-sidebar-item>
 
-      <vs-sidebar-item index="2" to="/admin/orders">
+      <vs-sidebar-item index="2" icon="monetization_on" to="/admin/orders">
         Продажи
       </vs-sidebar-item>
 
@@ -26,41 +27,48 @@
         Сайт
       </vs-divider>
 
-      <vs-sidebar-item index="3" to="/admin/products">
+      <vs-sidebar-item index="3" icon="inventory_2" to="/admin/products">
         Товары
       </vs-sidebar-item>
-      <vs-sidebar-item index="4" to="/admin/banners">
+      <vs-sidebar-item index="4" icon="view_carousel" to="/admin/banners">
         Баннеры
       </vs-sidebar-item>
-      <vs-sidebar-item index="5" to="/admin/news">
+      <vs-sidebar-item index="5" icon="newspaper" to="/admin/news">
         Новости
       </vs-sidebar-item>
-      <vs-sidebar-item index="6" to="/admin/gallery">
+      <vs-sidebar-item index="6" icon="collections" to="/admin/gallery">
         Галерея
       </vs-sidebar-item>
-      <vs-sidebar-item index="7" to="/admin/users">
+      <vs-sidebar-item index="7" icon="people" to="/admin/users">
         Пользователи
       </vs-sidebar-item>
-      <vs-sidebar-item index="8" to="/admin/contacts">
+      <vs-sidebar-item index="8" icon="contacts" to="/admin/contacts">
         Контакты
       </vs-sidebar-item>
     </vs-sidebar>
   </div>
-
 </template>
 
 <script>
 export default {
   data: () => ({
     active: false,
+    width: 0
   }),
+  mounted() {
+    window.addEventListener('resize', this.updateWidth);
+    this.updateWidth();
+  },
   methods: {
     async logout() {
       await this.$fire.auth.signOut()
       this.$router.push('/auth/login')
       this.$store.dispatch('getUserAction', null)
     },
-  }
+    updateWidth() {
+      this.width = window.innerWidth;
+    },
+  },
 }
 </script>
 
@@ -73,7 +81,13 @@ export default {
   min-height: 100%;
   left: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 1000;
+}
+
+.sidebar__btn {
+  position: relative;
+  top: 10px;
+  left: 10px;
 }
 
 .vs-sidebar {
@@ -95,26 +109,5 @@ export default {
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  h4 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    > button {
-      margin-left: 10px;
-    }
-  }
-}
-
-.footer-sidebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  > button {
-    border: 0px solid rgba(0, 0, 0, 0) !important;
-    border-left: 1px solid rgba(0, 0, 0, 0.07) !important;
-    border-radius: 0px !important;
-  }
 }
 </style>
