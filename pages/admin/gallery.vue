@@ -211,6 +211,15 @@ export default {
           text: this.text || '',
           video: this.video || '',
         }
+      } else {
+        this.galleryRu = {
+          id: this.selectedItem,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          video: this.video || '',
+          ua: this.galleryUa,
+        }
       }
       if (this.gallery[this.itemIndex]) {
         this.gallery[this.itemIndex] = this.galleryRu

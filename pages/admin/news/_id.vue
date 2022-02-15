@@ -141,6 +141,15 @@ export default {
           title: this.title,
           text: this.text || '',
         }
+      } else {
+        this.newsRu = {
+          id,
+          date: this.date,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          ua: this.newsUa,
+        }
       }
       await this.$writeData(`news/${id}`, this.newsRu)
       this.$vs.notify({
