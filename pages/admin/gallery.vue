@@ -35,7 +35,6 @@
         <span slot="on">Ua</span>
         <span slot="off">Ru</span>
       </vs-switch>
-      {{ galleryRu }}
       <my-file-input @getFile="getFileImg">
         <div class="gallery__photo">
           <img
