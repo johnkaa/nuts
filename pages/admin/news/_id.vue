@@ -1,6 +1,10 @@
 <template>
   <div class="news-edit">
     <validation-observer v-slot="{ invalid }" tag="form" name="news-edit">
+      <vs-switch v-model="ua" class="product-edit__lang" :disabled="invalid">
+        <span slot="on">Ua</span>
+        <span slot="off">Ru</span>
+      </vs-switch>
       <div class="news-edit__img news-edit__field">
         <div class="news-edit__img-title">Фото:</div>
         <my-file-input @getFile="getFileImg">
@@ -57,11 +61,42 @@ export default {
   },
   data() {
     return {
+      ua: false,
       date: '',
       img: 'https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png',
       text: '',
       title: '',
+      newsRu: {},
+      newsUa: {},
     }
+  },
+  watch: {
+    ua() {
+      const id = this.$route.params.id
+      if (this.ua) {
+        this.newsRu = {
+          id,
+          date: this.date,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          ua: this.newsUa,
+        }
+        this.title = this.newsUa.title
+        this.text = this.newsUa.text
+      } else {
+        this.newsUa = {
+          id,
+          date: this.date,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+        }
+        this.title = this.newsRu.title || ''
+        this.text = this.newsRu.text || ''
+        this.newsRu.ua = this.newsUa
+      }
+    },
   },
   mounted() {
     if (this.news) {
@@ -69,14 +104,17 @@ export default {
       this.img = this.news.img
       this.text = this.news.text
       this.title = this.news.title
-    }
-  },
-  methods: {
-    async submit() {
-      const id = this.$route.params.id
-      let date = this.date
-      if (!date) {
-        const day =
+      this.newsUa = this.news.ua || {}
+      this.newsRu = {
+          id: this.news.id,
+          date: this.date,
+          img: this.img,
+          title: this.title,
+          text: this.text,
+          ua: this.news.ua || {},
+        }
+    } else {
+      const day =
           new Date().getDate() > 9
             ? new Date().getDate()
             : '0' + new Date().getDate()
@@ -84,21 +122,27 @@ export default {
           new Date().getMonth() + 1 > 9
             ? new Date().getMonth() + 1
             : '0' + (new Date().getMonth() + 1)
-        date = day + '.' + month + '.' + new Date().getFullYear()
-      }
+        this.date = day + '.' + month + '.' + new Date().getFullYear()
+    }
+  },
+  methods: {
+    async submit() {
+      const id = this.$route.params.id
       if (this.file) {
         const format =
           this.file.name.split('.')[this.file.name.split('.').length - 1]
         this.img = await this.$uploadImg(this.file, `news/${id}.${format}`)
       }
-      const news = {
-        id,
-        date,
-        img: this.img,
-        title: this.title,
-        text: this.text,
+      if(this.ua) {
+        this.newsRu.ua = {
+          id,
+          date: this.date,
+          img: this.img,
+          title: this.title,
+          text: this.text || '',
+        }
       }
-      await this.$writeData(`news/${id}`, news)
+      await this.$writeData(`news/${id}`, this.newsRu)
       this.$vs.notify({
         color: 'success',
         title: 'Вы изменили новость.',
