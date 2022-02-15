@@ -1,5 +1,10 @@
 <template>
   <div class="product-edit">
+    <vs-switch v-model="ua" class="product-edit__lang">
+      <span slot="on">Ua</span>
+      <span slot="off">Ru</span>
+    </vs-switch>
+    {{img}}
     <div class="product-edit__img product-edit__field">
       <div class="product-edit__img-title">Фото:</div>
       <my-file-input @getFile="getFileImg">
@@ -21,7 +26,9 @@
     <div class="product-edit__type product-edit__field">
       <vs-select v-model="type" class="selectExample" label="Тип ореха">
         <vs-select-item
-          v-for="(item, index) in ['Грецкий орех', 'Фундук', 'Шиповник']"
+          v-for="(item, index) in ua
+            ? ['Волоський горіх', 'Фундук', 'Шипшина']
+            : ['Грецкий орех', 'Фундук', 'Шиповник']"
           :key="index"
           :value="item"
           :text="item"
@@ -113,6 +120,7 @@ export default {
   },
   data() {
     return {
+      ua: false,
       id: '',
       calories: 0,
       composition: '',
@@ -127,7 +135,71 @@ export default {
       title: '',
       type: 'Грецкий орех',
       weight: 0,
+      productRu: {},
+      productUa: {},
     }
+  },
+  watch: {
+    ua() {
+      const id = this.$route.params.id
+      if (this.ua) {
+        this.productRu = {
+          id,
+          calories: this.calories,
+          composition: this.composition,
+          conditions: this.conditions,
+          experation: this.experation,
+          img: this.img,
+          newProduct: this.newProduct,
+          price: this.price,
+          sale: this.sale,
+          discount: this.sale ? this.discount : 0,
+          title: this.title,
+          type: this.type,
+          weight: this.weight,
+          ua: this.productUa || {},
+        }
+        if (this.productUa) {
+          this.composition = this.productUa.composition || ''
+          this.conditions = this.productUa.conditions || ''
+          this.experation = this.productUa.experation || ''
+          this.title = this.productUa.title || ''
+        }
+        this.type =
+          this.type === 'Грецкий орех'
+            ? 'Волоський горіх'
+            : this.type === 'Шиповник'
+            ? 'Шипшина'
+            : this.type
+      } else {
+        this.productUa = {
+          id,
+          calories: this.calories,
+          composition: this.composition,
+          conditions: this.conditions,
+          experation: this.experation,
+          img: this.img,
+          newProduct: this.newProduct,
+          price: this.price,
+          sale: this.sale,
+          discount: this.sale ? this.discount : 0,
+          title: this.title,
+          type: this.type,
+          weight: this.weight,
+        }
+        this.composition = this.productRu.composition
+        this.conditions = this.productRu.conditions
+        this.experation = this.productRu.experation
+        this.title = this.productRu.title
+        this.type =
+          this.type === 'Волоський горіх'
+            ? 'Грецкий орех'
+            : this.type === 'Шипшина'
+            ? 'Шиповник'
+            : this.type
+        this.productRu.ua = this.productUa
+      }
+    },
   },
   mounted() {
     if (this.product) {
@@ -143,6 +215,23 @@ export default {
       this.title = this.product.title
       this.type = this.product.type
       this.weight = this.product.weight
+      this.productUa = this.product.ua
+      this.productRu = {
+        id: this.product.id,
+        calories: this.calories,
+        composition: this.composition,
+        conditions: this.conditions,
+        experation: this.experation,
+        img: this.img,
+        newProduct: this.newProduct,
+        price: this.price,
+        sale: this.sale,
+        discount: this.sale ? this.discount : null,
+        title: this.title,
+        type: this.type,
+        weight: this.weight,
+        ua: this.productUa || {},
+      }
     }
   },
   methods: {
@@ -164,22 +253,40 @@ export default {
           this.file.name.split('.')[this.file.name.split('.').length - 1]
         this.img = await this.$uploadImg(this.file, `products/${id}.${format}`)
       }
-      const product = {
-        id,
-        calories: this.calories,
-        composition: this.composition,
-        conditions: this.conditions,
-        discount: this.sale ? this.discount : null,
-        experation: this.experation,
-        img: this.img,
-        newProduct: this.newProduct,
-        price: this.price,
-        sale: this.sale,
-        title: this.title,
-        type: this.type,
-        weight: this.weight,
+      if (this.ua) {
+        this.productRu.ua = {
+          id,
+          calories: this.calories,
+          composition: this.composition,
+          conditions: this.conditions,
+          experation: this.experation,
+          img: this.img,
+          newProduct: this.newProduct,
+          price: this.price,
+          sale: this.sale,
+          discount: this.sale ? this.discount : null,
+          title: this.title,
+          type: this.type,
+        }
+      } else {
+        this.productRu = {
+          id,
+          calories: this.calories,
+          composition: this.composition,
+          conditions: this.conditions,
+          experation: this.experation,
+          img: this.img,
+          newProduct: this.newProduct,
+          price: this.price,
+          sale: this.sale,
+          discount: this.sale ? this.discount : 0,
+          title: this.title,
+          type: this.type,
+          weight: this.weight,
+          ua: this.productUa || {},
+        }
       }
-      this.$writeData(`products/${id}`, product)
+      this.$writeData(`products/${id}`, this.productRu)
       this.$vs.notify({
         color: 'success',
         title: 'Вы изменили данные о товаре.',
@@ -200,6 +307,9 @@ export default {
 
 <style lang="scss">
 .product-edit {
+  &__lang {
+    margin-bottom: 20px;
+  }
   &__img {
     display: flex;
     align-items: center;
