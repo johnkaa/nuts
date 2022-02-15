@@ -195,15 +195,6 @@ export default {
           title: 'Загрузите картинку.',
         })
       }
-      if(this.ua) {
-        this.galleryRu.ua = {
-          id: this.selectedItem,
-          img: this.img,
-          title: this.title || '',
-          text: this.text || '',
-          video: this.video || '',
-        }
-      }
       if (this.file) {
         const format =
           this.file.name.split('.')[this.file.name.split('.').length - 1]
@@ -211,6 +202,15 @@ export default {
           this.file,
           `gallery/${this.selectedItem}.${format}`
         )
+      }
+      if (this.ua) {
+        this.galleryRu.ua = {
+          id: this.selectedItem,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          video: this.video || '',
+        }
       }
       if (this.gallery[this.itemIndex]) {
         this.gallery[this.itemIndex] = this.galleryRu
