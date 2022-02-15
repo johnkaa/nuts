@@ -1,7 +1,11 @@
 <template>
   <div class="orders">
     <h2 class="orders__title">Заказы</h2>
-    <vs-popup class="holamundo" title="Информация о заказе" :active.sync="popupActivo">
+    <vs-popup
+      class="holamundo"
+      title="Информация о заказе"
+      :active.sync="popupActivo"
+    >
       <div class="orders-popup__inner">
         <div class="orders-popup__title">Информация о заказе</div>
         <div class="orders-popup__items">
@@ -14,9 +18,7 @@
             <span class="orders-popup__item-info">{{ order.date }}</span>
           </div>
           <div class="orders-popup__item">
-                <span class="orders-popup__item-title"
-                >Кол-во товаров:</span
-                >
+            <span class="orders-popup__item-title">Кол-во товаров:</span>
             <span class="orders-popup__item-info">{{ order.amount }}</span>
           </div>
           <div class="orders-popup__item">
@@ -50,27 +52,40 @@
             <span class="orders-popup__item-title">Телефон:</span>
             <span class="orders-popup__item-info">{{ order.user.phone }}</span>
           </div>
-          </div>
-          <div v-if="order.delivery !== 'self'" class="orders-popup__title">Адрес заказа</div>
-        <div v-if="order.user && order.user.address" class="orders-popup__items">
+        </div>
+        <div v-if="order.delivery !== 'self'" class="orders-popup__title">
+          Адрес заказа
+        </div>
+        <div
+          v-if="order.user && order.user.address"
+          class="orders-popup__items"
+        >
           <template v-if="order.delivery === 'post'">
             <div class="orders-popup__item">
               <span class="orders-popup__item-title">Область:</span>
-              <span class="orders-popup__item-info">{{ order.user.address.area }}</span>
+              <span class="orders-popup__item-info">{{
+                order.user.address.area
+              }}</span>
             </div>
             <div class="orders-popup__item">
               <span class="orders-popup__item-title">Город:</span>
-              <span class="orders-popup__item-info">{{ order.user.address.city }}</span>
+              <span class="orders-popup__item-info">{{
+                order.user.address.city
+              }}</span>
             </div>
             <div class="orders-popup__item">
               <span class="orders-popup__item-title">Отделение:</span>
-              <span class="orders-popup__item-info">{{ order.user.address.warehouse }}</span>
+              <span class="orders-popup__item-info">{{
+                order.user.address.warehouse
+              }}</span>
             </div>
           </template>
           <template v-else-if="order.delivery === 'courier'">
             <div class="orders-popup__item">
               <span class="orders-popup__item-title">Адрес:</span>
-              <span class="orders-popup__item-info">{{ order.user.address }}</span>
+              <span class="orders-popup__item-info">{{
+                order.user.address
+              }}</span>
             </div>
           </template>
         </div>
@@ -78,46 +93,36 @@
     </vs-popup>
     <vs-table class="orders__table" :data="orders">
       <template slot="thead">
-        <vs-th class="orders__item-title">
-          №
-        </vs-th>
-        <vs-th class="orders__item-title">
-          Дата
-        </vs-th>
-        <vs-th class="orders__item-title">
-          Email
-        </vs-th>
-        <vs-th class="orders__item-title">
-          Статус
-        </vs-th>
-        <vs-th class="orders__item-title">
-          Цена
-        </vs-th>
-        <vs-th class="orders__item-title"></vs-th>
+        <vs-th class="orders__item-title orders__table-item"> № </vs-th>
+        <vs-th class="orders__item-title orders__table-item"> Дата </vs-th>
+        <vs-th class="orders__item-title orders__table-item"> Email </vs-th>
+        <vs-th class="orders__item-title orders__table-item"> Статус </vs-th>
+        <vs-th class="orders__item-title orders__table-item"> Цена </vs-th>
+        <vs-th class="orders__item-title orders__table-item"></vs-th>
       </template>
-      <template slot-scope="{data}">
-        <vs-tr v-for="order in data" :key="order.id">
-          <vs-td :data="order.id">
-            {{ order.id }}
+      <template slot-scope="{ data }">
+        <vs-tr v-for="orderItem in data" :key="orderItem.id">
+          <vs-td class="orders__table-item" :data="orderItem.id">
+            {{ orderItem.id }}
           </vs-td>
 
-          <vs-td :data="order.date">
-            {{ order.date }}
+          <vs-td class="orders__table-item" :data="orderItem.date">
+            {{ orderItem.date }}
           </vs-td>
 
-          <vs-td :data="order.user.email">
-            {{ order.user.email }}
+          <vs-td class="orders__table-item" :data="orderItem.user.email">
+            {{ orderItem.user.email }}
           </vs-td>
 
-          <vs-td :data="order.status">
-            {{ order.status }}
+          <vs-td class="orders__table-item" :data="orderItem.status">
+            {{ orderItem.status }}
           </vs-td>
 
-          <vs-td :data="order.price">
-            {{ order.price }}
+          <vs-td class="orders__table-item" :data="orderItem.price">
+            {{ orderItem.price }}
           </vs-td>
 
-          <vs-td>
+          <vs-td class="orders__table-item">
             <svg
               class="view-icon"
               width="24"
@@ -125,7 +130,7 @@
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              @click="showDetails(order)"
+              @click="showDetails(orderItem)"
             >
               <path
                 d="M23.8475 12.4668C23.6331 12.7601 18.5245 19.6483 11.9999 19.6483C5.47529 19.6483 0.36647 12.7601 0.152297 12.4671C-0.0507657 12.1888 -0.0507657 11.8114 0.152297 11.5332C0.36647 11.2399 5.47529 4.35165 11.9999 4.35165C18.5245 4.35165 23.6331 11.2399 23.8475 11.533C24.0508 11.8112 24.0508 12.1888 23.8475 12.4668ZM11.9999 5.93406C7.19383 5.93406 3.03127 10.5059 1.79907 12.0005C3.02968 13.4965 7.18352 18.0659 11.9999 18.0659C16.8057 18.0659 20.968 13.4949 22.2007 11.9995C20.9701 10.5036 16.8163 5.93406 11.9999 5.93406Z"
@@ -148,21 +153,21 @@ export default {
   async asyncData({ $readData }) {
     const ordersObj = await $readData('/orders')
     let orders = []
-    Object.keys(ordersObj).forEach(order => orders.push(ordersObj[order]))
+    Object.keys(ordersObj).forEach((order) => orders.push(ordersObj[order]))
     orders = orders.reverse()
     return { orders }
   },
   data() {
     return {
       popupActivo: false,
-      order: {}
+      order: {},
     }
   },
   methods: {
     showDetails(order) {
       this.popupActivo = true
       this.order = order
-    }
+    },
   },
 }
 </script>
@@ -204,7 +209,7 @@ export default {
     padding: 10px;
     text-align: center;
     background-color: #dddddd;
- }
+  }
 }
 .view-icon {
   position: relative;
@@ -216,6 +221,13 @@ export default {
     cursor: pointer;
     path {
       fill: #337d5a;
+    }
+  }
+}
+@media (max-width: 630px) {
+  .orders__table-item {
+    &:nth-child(4) {
+      display: none;
     }
   }
 }
