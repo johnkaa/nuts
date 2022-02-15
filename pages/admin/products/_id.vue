@@ -4,7 +4,6 @@
       <span slot="on">Ua</span>
       <span slot="off">Ru</span>
     </vs-switch>
-    {{img}}
     <div class="product-edit__img product-edit__field">
       <div class="product-edit__img-title">Фото:</div>
       <my-file-input @getFile="getFileImg">
