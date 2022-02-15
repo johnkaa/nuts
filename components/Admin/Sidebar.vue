@@ -29,22 +29,16 @@
       <vs-sidebar-item index="3" to="/admin/products">
         Товары
       </vs-sidebar-item>
-      <vs-sidebar-item index="4" to="/admin/banners">
-        Баннеры
-      </vs-sidebar-item>
-      <vs-sidebar-item index="5" to="/admin/news">
+      <vs-sidebar-item index="4" to="/admin/news">
         Новости
       </vs-sidebar-item>
-      <vs-sidebar-item index="6" to="/admin/gallery">
+      <vs-sidebar-item index="5" to="/admin/gallery">
         Галерея
       </vs-sidebar-item>
-      <vs-sidebar-item index="7" to="/admin/pages">
-        Страницы
-      </vs-sidebar-item>
-      <vs-sidebar-item index="8" to="/admin/users">
+      <vs-sidebar-item index="6" to="/admin/users">
         Пользователи
       </vs-sidebar-item>
-      <vs-sidebar-item index="9" to="/admin/contacts">
+      <vs-sidebar-item index="7" to="/admin/contacts">
         Контакты
       </vs-sidebar-item>
     </vs-sidebar>
