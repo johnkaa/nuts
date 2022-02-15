@@ -1,6 +1,12 @@
 <template>
   <div class="gallery">
-    <vs-button class="gallery__add" color="success" type="filled" @click="addItem()">Добавить</vs-button>
+    <vs-button
+      class="gallery__add"
+      color="success"
+      type="filled"
+      @click="addItem()"
+      >Добавить</vs-button
+    >
     <vs-popup
       class="holamundo"
       title="Подтвердите действие"
@@ -25,6 +31,11 @@
       </div>
     </vs-popup>
     <vs-popup class="holamundo" title="Редактировать" :active.sync="popupEdit">
+      <vs-switch v-model="ua" class="product-edit__lang">
+        <span slot="on">Ua</span>
+        <span slot="off">Ru</span>
+      </vs-switch>
+      {{ galleryRu }}
       <my-file-input @getFile="getFileImg">
         <div class="gallery__photo">
           <img
@@ -40,21 +51,9 @@
           >
         </div>
       </my-file-input>
-      <vs-input
-        v-model="title"
-        class="gallery-edit__field"
-        label="Заголовок"
-      />
-      <vs-input
-        v-model="text"
-        class="gallery-edit__field"
-        label="Текст"
-      />
-      <vs-input
-        v-model="video"
-        class="gallery-edit__field"
-        label="Видео"
-      />
+      <vs-input v-model="title" class="gallery-edit__field" label="Заголовок" />
+      <vs-input v-model="text" class="gallery-edit__field" label="Текст" />
+      <vs-input v-model="video" class="gallery-edit__field" label="Видео" />
       <div class="gallery__popup-btns">
         <vs-button
           class="gallery__popup-btn"
@@ -89,7 +88,9 @@
           class="gallery__item-img"
           :src="item.img"
           alt=""
-          @click=";(popupEdit = true), (selectedItem = item.id), (itemIndex = index)"
+          @click="
+            ;(popupEdit = true), (selectedItem = item.id), (itemIndex = index)
+          "
         />
       </div>
     </div>
@@ -110,27 +111,67 @@ export default {
       popupEdit: false,
       itemIndex: '',
       selectedItem: '',
+      ua: false,
       file: null,
       img: '',
       title: '',
       text: '',
       video: '',
-      loading: false
+      galleryRu: {},
+      galleryUa: {},
+      loading: false,
     }
   },
   watch: {
     async selectedItem() {
       const galleryItem = await this.$readData(`gallery/${this.selectedItem}`)
-      if(galleryItem) {
+      if (galleryItem) {
         this.img = galleryItem.img
-        this.title = galleryItem.title
-        this.text = galleryItem.text
-        this.video = galleryItem.video
+        this.title = galleryItem.title || ''
+        this.text = galleryItem.text || ''
+        this.video = galleryItem.video || ''
+        this.galleryUa = galleryItem.ua || {}
+        this.galleryRu = {
+          id: galleryItem.id,
+          img: galleryItem.img,
+          title: galleryItem.title || '',
+          text: galleryItem.text || '',
+          video: galleryItem.video || '',
+          ua: galleryItem.ua || {},
+        }
       } else {
         this.img = ''
         this.title = ''
         this.text = ''
         this.video = ''
+      }
+      this.ua = false
+    },
+    ua() {
+      if (this.ua) {
+        this.galleryRu = {
+          id: this.selectedItem,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          video: this.video || '',
+          ua: this.galleryUa,
+        }
+        this.title = this.galleryUa.title
+        this.text = this.galleryUa.text
+        this.video = this.galleryUa.video
+      } else {
+        this.galleryUa = {
+          id: this.selectedItem,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          video: this.video || '',
+        }
+        this.title = this.galleryRu.title || ''
+        this.text = this.galleryRu.text || ''
+        this.video = this.galleryRu.video || ''
+        this.galleryRu.ua = this.galleryUa
       }
     },
   },
@@ -142,37 +183,42 @@ export default {
         img: '',
         title: '',
         text: '',
-        video: ''
+        video: '',
       }
       this.popupEdit = true
     },
     async saveItem() {
       this.loading = true
-      if(!this.img) {
+      if (!this.img) {
         this.loading = false
         return this.$vs.notify({
           color: 'danger',
           title: 'Загрузите картинку.',
         })
       }
-      if(this.file) {
+      if(this.ua) {
+        this.galleryRu.ua = {
+          id: this.selectedItem,
+          img: this.img,
+          title: this.title || '',
+          text: this.text || '',
+          video: this.video || '',
+        }
+      }
+      if (this.file) {
         const format =
           this.file.name.split('.')[this.file.name.split('.').length - 1]
-        this.img = await this.$uploadImg(this.file, `gallery/${this.selectedItem}.${format}`)
+        this.img = await this.$uploadImg(
+          this.file,
+          `gallery/${this.selectedItem}.${format}`
+        )
       }
-      const galleryItem = {
-        id: this.selectedItem,
-        img: this.img,
-        title: this.title || null,
-        text: this.text || null,
-        video: this.video || null
-      }
-      if(this.gallery[this.itemIndex]) {
-        this.gallery[this.itemIndex] = galleryItem
+      if (this.gallery[this.itemIndex]) {
+        this.gallery[this.itemIndex] = this.galleryRu
       } else {
-        this.gallery.push(galleryItem)
+        this.gallery.push(this.galleryRu)
       }
-      await this.$writeData(`gallery/${this.selectedItem}`, galleryItem)
+      await this.$writeData(`gallery/${this.selectedItem}`, this.galleryRu)
       this.file = null
       this.popupEdit = false
       this.loading = false
@@ -198,7 +244,7 @@ export default {
       reader.onload = (e) => {
         this.img = e.target.result
       }
-    }
+    },
   },
 }
 </script>
