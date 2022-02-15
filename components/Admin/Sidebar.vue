@@ -81,7 +81,7 @@ export default {
   min-height: 100%;
   left: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 11;
 }
 
 .sidebar__btn {
