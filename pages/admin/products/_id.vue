@@ -253,6 +253,10 @@ export default {
         this.img = await this.$uploadImg(this.file, `products/${id}.${format}`)
       }
       if (this.ua) {
+        this.productRu.weight = this.weight
+        this.productRu.sale = this.sale
+        this.productRu.discount = this.sale ? this.discount : null
+        this.productRu.img = this.img
         this.productRu.ua = {
           id,
           calories: this.calories,
@@ -266,8 +270,13 @@ export default {
           discount: this.sale ? this.discount : null,
           title: this.title,
           type: this.type,
+          weight: this.weight
         }
       } else {
+        this.productUa.weight = this.weight
+        this.productUa.sale = this.sale
+        this.productUa.discount = this.sale ? this.discount : null
+        this.productUa.img = this.img
         this.productRu = {
           id,
           calories: this.calories,
