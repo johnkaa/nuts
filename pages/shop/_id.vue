@@ -2,9 +2,9 @@
   <div class="shop">
     <div class="container">
       <div class="shop__pos position">
-        <nuxt-link class="shop__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="shop__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -28,11 +28,7 @@
             class="product__popup"
             @close="showPreview = false"
           >
-            <img
-              class="product__popup-img"
-              :src="product.img"
-              alt=""
-            />
+            <img class="product__popup-img" :src="product.img" alt="" />
           </my-popup>
           <img :src="product.img" alt="" />
           <svg
@@ -67,37 +63,49 @@
             {{ product.title }}
           </div>
           <div class="shop__info-item">
-            <div class="shop__info-item-title">Состав:</div>
+            <div class="shop__info-item-title">{{ $t('shopItem.composition') }}</div>
             <div class="shop__info-item-text">
               {{ product.composition }}
             </div>
           </div>
           <div class="shop__info-item">
-            <div class="shop__info-item-title">Масса нетто:</div>
+            <div class="shop__info-item-title">{{ $t('shopItem.weight') }}</div>
             <div class="shop__info-item-text">{{ product.weight }}г.</div>
           </div>
           <div class="shop__info-item">
-            <div class="shop__info-item-title">Энергетическая ценность:</div>
+            <div class="shop__info-item-title">{{ $t('shopItem.calories') }}</div>
             <div class="shop__info-item-text">{{ product.calories }} Ккал.</div>
           </div>
           <div class="shop__info-item">
-            <div class="shop__info-item-title">Срок годности:</div>
+            <div class="shop__info-item-title">{{ $t('shopItem.experation') }}</div>
             <div class="shop__info-item-text">{{ product.experation }}</div>
           </div>
           <div class="shop__info-conditions">{{ product.conditions }}</div>
           <div class="shop__info-bottom">
             <template v-if="product.sale">
               <div class="shop__info-price">
-              Ваша цена: <span class="shop__info-price-new">{{ product.price - ((product.price / 100) * product.discount) }} грн.</span
-              ><span class="shop__info-price-old">{{ product.price }} грн.</span>
-            </div>
+                {{ $t('shopItem.price') }}
+                <span class="shop__info-price-new"
+                  >{{
+                    product.price - (product.price / 100) * product.discount
+                  }}
+                  грн.</span
+                ><span class="shop__info-price-old"
+                  >{{ product.price }} грн.</span
+                >
+              </div>
             </template>
             <template v-else>
               <div class="shop__info-price">
-              Ваша цена: <span class="shop__info-price-new">{{ product.price }} грн.</span
-              ></div>
+                {{ $t('shopItem.price') }}
+                <span class="shop__info-price-new"
+                  >{{ product.price }} грн.</span
+                >
+              </div>
             </template>
-            <my-button class="shop__info-btn" @click="addToBasket">Заказать</my-button>
+            <my-button class="shop__info-btn" @click="addToBasket"
+              >{{ $t('shopItem.order') }}</my-button
+            >
           </div>
         </div>
       </div>
@@ -108,28 +116,28 @@
             :class="{ active: selectedBottom === 'description' }"
             @click="selectedBottom = 'description'"
           >
-            Описание
+            {{ $t('shopItem.about.description.title') }}
           </div>
           <div
             class="shop__bottom-title"
             :class="{ active: selectedBottom === 'package' }"
             @click="selectedBottom = 'package'"
           >
-            Упаковка
+            {{ $t('shopItem.about.package.title') }}
           </div>
           <div
             class="shop__bottom-title"
             :class="{ active: selectedBottom === 'payment' }"
             @click="selectedBottom = 'payment'"
           >
-            Оплата
+            {{ $t('shopItem.about.payment.title') }}
           </div>
           <div
             class="shop__bottom-title"
             :class="{ active: selectedBottom === 'delivery' }"
             @click="selectedBottom = 'delivery'"
           >
-            Доставка
+            {{ $t('shopItem.about.delivery.title') }}
           </div>
         </div>
         <div class="shop__bottom-items">
@@ -137,72 +145,61 @@
             v-if="selectedBottom === 'description'"
             class="shop__bottom-item"
           >
-            <div v-if="product.type === 'Грецкий орех'" class="shop__bottom-walnut">
+            <div
+              v-if="product.type === 'Грецкий орех' || product.type === 'Волоський горіх'"
+              class="shop__bottom-walnut"
+            >
               <img class="shop__bottom-walnut-img" src="/images/walnut.jpg" />
               <div class="shop__bottom-walnut-info">
-                <p class="shop__bottom-walnut-text">
-                  Уже 4000 лет люди питаются ценными
-                  <span class="shop__bottom-walnut-text_bold"
-                    >грецкими орехами.</span
-                  >
-                  Они особенно полезны послеоперационным больным, детям,
-                  кормящим, беременным женщинам. Чтобы вернуть силы, укрепить
-                  иммунитет, одолеть туберкулез, кашель; грецкий орех очищенный,
-                  отборный нужно истолочь, смешать с медом (2:1) и чайную ложку
-                  целебной смеси употреблять перед едой.
-                </p>
-                <p class="shop__bottom-walnut-text">
-                  В белке грецких орехов много (15 %) аргинина. Он особенно
-                  нужен детям, больным, пожилым людям, в организме которых
-                  аминокислота плохо синтезируется. Аргинин помогает сосудам
-                  регенерировать, а всему организму – победить воспаления.
-                </p>
+                <p class="shop__bottom-walnut-text">{{ $t('shopItem.about.description.walnut.text') }}</p>
                 <div class="shop__bottom-walnut-title">
-                  Другие полезные вещества грецких орехов:
+                  {{ $t('shopItem.about.description.walnut.list1.title') }}
                 </div>
                 <ul class="shop__bottom-walnut-list">
                   <li class="shop__bottom-walnut-list-item">
-                    Антиоксиданты защищают печень от повреждений
+                    {{ $t('shopItem.about.description.walnut.list1.item1') }}
                   </li>
                   <li class="shop__bottom-walnut-list-item">
-                    Полифенолы не дают образоваться сосудистым тромбам
+                    {{ $t('shopItem.about.description.walnut.list1.item2') }}
                   </li>
                   <li class="shop__bottom-walnut-list-item">
-                    Нейропротекторы улучшают работу мозга, отодвигают старость
+                    {{ $t('shopItem.about.description.walnut.list1.item3') }}
                   </li>
                 </ul>
                 <div class="shop__bottom-walnut-title">
-                  Нужно систематически есть грецкие орехи, чтобы:
+                  {{ $t('shopItem.about.description.walnut.list2.title') }}
                 </div>
                 <ul class="shop__bottom-walnut-list">
                   <li class="shop__bottom-walnut-list-item">
-                    На 30–40 % снизить риск заболевания раком простаты
+                    {{ $t('shopItem.about.description.walnut.list2.item1') }}
                   </li>
                   <li class="shop__bottom-walnut-list-item">
-                    На 50 % – раком молочной железы
+                    {{ $t('shopItem.about.description.walnut.list2.item2') }}
                   </li>
                   <li class="shop__bottom-walnut-list-item">
-                    Предотвратить дегенерацию глазной макулы, а значит, улучшить
-                    зрение
+                    {{ $t('shopItem.about.description.walnut.list2.item3') }}
                   </li>
                   <li class="shop__bottom-walnut-list-item">
-                    Отрегулировать обмен веществ, выработку инсулина; понизить
-                    количество сахара в крови
+                    {{ $t('shopItem.about.description.walnut.list2.item4') }}
                   </li>
                 </ul>
               </div>
             </div>
-            <div v-if="product.type === 'Фундук'" class="shop__bottom-hazelnut">Фундук очень полезен</div>
-            <div v-if="product.type === 'Шиповник'" class="shop__bottom-rose">Шиповник очень полезен</div>
+            <div v-if="product.type === 'Фундук'" class="shop__bottom-hazelnut">
+              {{ $t('shopItem.about.description.hazelnut.text') }}
+            </div>
+            <div v-if="product.type === 'Шиповник' || product.type === 'Шипшина'" class="shop__bottom-rose">
+              {{ $t('shopItem.about.description.rose.text') }}
+            </div>
           </div>
           <div v-if="selectedBottom === 'package'" class="shop__bottom-item">
-            Хорошо упакуем
+            {{ $t('shopItem.about.package.text') }}
           </div>
           <div v-if="selectedBottom === 'payment'" class="shop__bottom-item">
-            Оплачивайте любым удобным способом
+            {{ $t('shopItem.about.payment.text') }}
           </div>
           <div v-if="selectedBottom === 'delivery'" class="shop__bottom-item">
-            Быстро доставим
+            {{ $t('shopItem.about.delivery.text') }}
           </div>
         </div>
       </div>
@@ -222,11 +219,20 @@ export default {
       selectedBottom: 'description',
     }
   },
+  watch: {
+    async '$i18n.locale'() {
+      if(this.$i18n.locale === 'ua') {
+        this.product = await this.$readData(`/products/${this.$route.params.id}/ua`)
+      } else {
+        this.product = await this.$readData(`/products/${this.$route.params.id}`)
+      }
+    }
+  },
   methods: {
     addToBasket() {
       this.$store.dispatch('addToBasketAction', this.product)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -430,7 +436,7 @@ export default {
             width: 5px;
             height: 5px;
             position: absolute;
-            background-color: #93B474;
+            background-color: #93b474;
             border-radius: 50%;
             left: 0;
             top: 50%;

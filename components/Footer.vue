@@ -4,7 +4,7 @@
       <div class="container">
         <div class="footer__info-inner">
           <div class="footer__info-contacts">
-            <h2 class="footer__title">Контакты</h2>
+            <h2 class="footer__title">{{ $t('footer.contacts.title') }}</h2>
             <div class="footer__contacts">
               <div class="footer__contacts-item">
                 <a class="footer__contacts-phone" :href="`tel:${mainPhone}`"
@@ -28,13 +28,13 @@
               <a :href="`mailto:${contacts.email}`">{{ contacts.email }}</a>
             </div>
             <div class="footer__office">
-              <div class="footer__office-title">Офис и отдел продаж</div>
+              <div class="footer__office-title">{{ $t('footer.contacts.office') }}</div>
               <p class="footer__office-text">
                 {{ contacts.office }}
               </p>
             </div>
             <div class="footer__farm">
-              <div class="footer__farm-title">Производство</div>
+              <div class="footer__farm-title">{{ $t('footer.contacts.factory') }}</div>
               <p class="footer__farm-text">
                 {{ contacts.factory }}
               </p>
@@ -54,30 +54,30 @@
           /></nuxt-link>
           <ul class="menu__list">
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
+              <nuxt-link class="menu__list-link" to="/shop">{{ $t('header.menu.shop') }}</nuxt-link>
             </li>
             <li class="menu__list-item">
               <nuxt-link class="menu__list-link" to="/about"
-                >О производстве</nuxt-link
+                >{{ $t('header.menu.about') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
               <nuxt-link class="menu__list-link" to="/delivery"
-                >Оплата и доставка</nuxt-link
+                >{{ $t('header.menu.delivery') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
               <nuxt-link class="menu__list-link" to="/corporate"
-                >Оптовым и корпоративным клиетам</nuxt-link
+                >{{ $t('header.menu.corporate') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
               <nuxt-link class="menu__list-link" to="/news"
-                >Новости и статьи</nuxt-link
+                >{{ $t('header.menu.news') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/gallery">Галерея</nuxt-link>
+              <nuxt-link class="menu__list-link" to="/gallery">{{ $t('header.menu.gallery') }}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -87,12 +87,12 @@
       <div class="container">
         <div class="footer__copy-inner">
           <a class="footer__by" href="https://avada-media.com/">
-            Разработано
+            {{ $t('footer.by') }}
             <span>AVADA</span>
             <span>MEDIA</span>
           </a>
           <div class="footer__copyright">
-            Copyright © 2019. Все права защищены
+            Copyright © 2019. {{ $t('footer.copyright') }}
           </div>
           <div v-if="contacts.sm" class="footer__sm">
             <a class="footer__sm-item" :href="contacts.sm.facebook">

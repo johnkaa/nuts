@@ -2,9 +2,9 @@
   <div class="shop">
     <div class="container">
       <div class="shop__pos position secondary">
-        <nuxt-link class="shop__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="shop__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -23,32 +23,37 @@
       </div>
     </div>
     <div class="shop__banner">
-      <h2 class="shop__banner-title">Каталог продукции</h2>
+      <h2 class="shop__banner-title">{{ $t('shop.title') }}</h2>
     </div>
     <div class="shop__catalog">
       <div class="container">
         <div class="shop__filter">
           <div class="shop__filter-settings">
-            <div class="shop__filter-title">Фильтр</div>
+            <div class="shop__filter-title">{{ $t('shop.filter.title') }}</div>
             <div class="shop__filter-selects">
               <my-select
                 v-model="type"
                 :value="type"
                 class="shop__filter-select"
-                :options="['Грецкий орех', 'Фундук', 'Шиповник']"
-                placeholder="Тип"
+                :options="
+                  $i18n.locale === 'ua'
+                    ? ['Волоський горіх', 'Фундук', 'Шипшина']
+                    : ['Грецкий орех', 'Фундук', 'Шиповник']
+                "
+                :placeholder="$t('shop.filter.type')"
               />
               <my-select
                 v-model="weight"
                 :value="weight"
                 class="shop__filter-select"
                 :options="filterWeight"
-                placeholder="Масса"
+                :placeholder="$t('shop.filter.weight')"
               />
             </div>
             <div class="shop__filter-price">
-              <span class="shop__filter-price-text" @click="setPriceFilter"
-                >Стоимость</span
+              <span class="shop__filter-price-text" @click="setPriceFilter">{{
+                $t('shop.filter.price')
+              }}</span
               ><svg
                 class="shop__filter-price-arrow bottom"
                 :class="{ active: price === 'lower' }"
@@ -82,9 +87,9 @@
             </div>
           </div>
           <div class="shop__filter-actions">
-            <my-button class="shop__filter-btn" @click="filtered = true"
-              >Применить</my-button
-            >
+            <my-button class="shop__filter-btn" @click="filtered = true">{{
+              $t('shop.filter.submit')
+            }}</my-button>
             <div v-if="filtered" class="shop__filter-reset" @click="reset">
               <svg
                 width="12"
@@ -99,7 +104,7 @@
                   fill="#C4C4C4"
                 />
               </svg>
-              Сбросить
+              {{ $t('shop.filter.reset') }}
             </div>
           </div>
         </div>
@@ -115,13 +120,13 @@
           v-if="!showAll && filteredProducts.length > 6"
           class="shop__btn secondary"
           @click="setShow"
-          >Посмотреть ещё</my-button
+          >{{ $t('shop.showAll') }}</my-button
         >
         <my-button
           v-if="showAll && filteredProducts.length > 6"
           class="shop__btn secondary"
           @click="setShow"
-          >Скрыть</my-button
+          >{{ $t('shop.hideAll') }}</my-button
         >
       </div>
     </div>
@@ -130,40 +135,13 @@
         <div class="shop__info-inner">
           <div class="shop__about">
             <div class="shop__about-title">
-              Экологически чистый грецкий орех
+              {{ $t('shop.about.title') }}
             </div>
-            <div class="shop__about-subtitle">Оптом и в розницу</div>
+            <div class="shop__about-subtitle">
+              {{ $t('shop.about.subtitle') }}
+            </div>
             <div class="shop__about-inner">
-              <p class="shop__about-text">
-                Сельскохозяйственный обслуживающий кооператив “Орех
-                Причерноморья” выращивает смешанные сады ореха грецкого с
-                фундуком, а также ореха грецкого с шиповником, на площади более
-                150 гектаров.
-              </p>
-              <p class="shop__about-text">
-                Помимо этого кооператив занимается выращиванием посадочного
-                материала, саженцов привитого и непривитого грецкого ореха,
-                фундука и шиповника.
-              </p>
-              <p class="shop__about-text">
-                Орех Причерноморья – это первый и единственный в Украине сад по
-                совместному выращиванию фундука и грецкого ореха
-              </p>
-              <p class="shop__about-text">
-                Сельскохозяйственный обслуживающий кооператив “Орех
-                Причерноморья” выращивает смешанные сады ореха грецкого с
-                фундуком, а также ореха грецкого с шиповником, на площади более
-                150 гектаров.
-              </p>
-              <p class="shop__about-text">
-                Помимо этого кооператив занимается выращиванием посадочного
-                материала, саженцов привитого и непривитого грецкого ореха,
-                фундука и шиповника.
-              </p>
-              <p class="shop__about-text">
-                Орех Причерноморья – это первый и единственный в Украине сад по
-                совместному выращиванию фундука и грецкого ореха
-              </p>
+              <p class="shop__about-text">{{ $t('shop.about.text') }}</p>
             </div>
           </div>
           <div class="shop__slider">
@@ -178,7 +156,9 @@
 <script>
 export default {
   async asyncData({ $readData }) {
-    const products = await $readData('/products')
+    const productsObj = await $readData('products')
+    const products = []
+    Object.keys(productsObj).forEach((item) => products.push(productsObj[item]))
     return { products }
   },
   data() {
@@ -193,10 +173,7 @@ export default {
   },
   computed: {
     filteredProducts() {
-      let products = []
-      Object.keys(this.products).forEach((item) =>
-        products.push(this.products[item])
-      )
+      let products = this.products
       if (this.filtered) {
         if (this.type) {
           products = products.filter((product) => product.type === this.type)
@@ -233,7 +210,20 @@ export default {
     },
     filtered() {
       this.setWeight(this.productsToShow)
-    }
+    },
+    async '$i18n.locale'() {
+      const products = await this.$readData('products')
+      this.products = []
+      if (this.$i18n.locale === 'ua') {
+        Object.keys(products).forEach((product) => {
+          this.products.push(products[product].ua)
+        })
+      } else {
+        Object.keys(products).forEach((product) => {
+          this.products.push(products[product])
+        })
+      }
+    },
   },
   mounted() {
     this.setWeight(this.productsToShow)
@@ -428,9 +418,7 @@ export default {
       }
     }
     &-text {
-      & + & {
-        margin-top: 35px;
-      }
+      line-height: 30px;
     }
   }
   &__slider {

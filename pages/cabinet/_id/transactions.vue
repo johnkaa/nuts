@@ -6,7 +6,7 @@
           class="transactions__item-date transactions__item-title"
           @click="filter = 'date'"
         >
-          Добавлено<svg
+          {{ $t('historyTransactions.date') }}<svg
             class="transactions__item-title-icon"
             :class="{ active: filter === 'date' }"
             width="10"
@@ -74,12 +74,12 @@
         >
           <div class="transactions__item-popup__inner">
             <div class="transactions__item-popup__title">
-              Информация о заказе
+              {{ $t('historyOrders.info') }}
             </div>
             <div class="transactions__item-popup__items">
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title"
-                  >№ Заказа:</span
+                  >{{ $t('historyOrders.id') }}:</span
                 >
                 <span class="transactions__item-popup__item-info">{{ order.id }}</span>
               </div>
@@ -91,7 +91,7 @@
               </div>
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title"
-                  >Кол-во товаров:</span
+                  >{{ $t('historyOrders.amount') }}:</span
                 >
                 <span class="transactions__item-popup__item-info">{{ order.amount }}</span>
               </div>
@@ -105,7 +105,7 @@
               </div>
               <div class="transactions__item-popup__item">
                 <span class="transactions__item-popup__item-title"
-                  >Стоимость:</span
+                  >{{ $t('historyOrders.price') }}:</span
                 >
                 <span class="transactions__item-popup__item-info"
                   >{{ order.price }} грн.</span
@@ -118,7 +118,7 @@
           {{ order.date }}
         </div>
         <div class="transactions__item-status transactions__item-info">
-          Платеж принят
+          {{ $t('historyTransactions.success') }}
         </div>
         <div class="transactions__item-sum transactions__item-info">
           {{ order.price }} грн.

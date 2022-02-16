@@ -12,7 +12,7 @@
         name="callback"
         @submit.prevent="callbackSubmit"
       >
-        <h2 class="callback-modal__title">Введите ваш номер телефона</h2>
+        <h2 class="callback-modal__title">{{ $t('header.callbackOrder') }}</h2>
         <validation-provider name="phone" rules="required">
           <div slot-scope="{ errors }" class="callback-modal__field">
             <my-input
@@ -24,7 +24,7 @@
           </div>
         </validation-provider>
         <my-button class="callback-modal__btn" :disabled="invalid"
-          >Подтвердить</my-button
+          >{{ $t('header.callbackConfirm') }}</my-button
         >
       </validation-observer>
     </my-popup>
@@ -99,14 +99,14 @@
             </p></a
           >
           <div class="header__top-callback" @click="showCallbackModal = true">
-            Заказать звонок
+            {{ $t('header.callback') }}
           </div>
           <div
             v-if="user && user.sale"
             class="header__sale"
             :class="{ auth: user }"
           >
-            Ваша персональная скидка - {{ user.sale }}%
+            {{ $t('header.sale') }} - {{ user.sale }}%
           </div>
           <div v-if="!user" class="header__auth">
             <nuxt-link class="header__auth-link" to="/auth/login"
@@ -114,10 +114,10 @@
                 class="header__auth-img"
                 src="/images/icons/user.svg"
                 alt=""
-              />Вход</nuxt-link
+              />{{ $t('header.login') }}</nuxt-link
             >
             <nuxt-link class="header__auth-link" to="/auth/register"
-              >Регистрация</nuxt-link
+              >{{ $t('header.register') }}</nuxt-link
             >
           </div>
           <div v-if="user" class="header__admin">
@@ -125,7 +125,7 @@
               ><my-button
                 v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
                 class="header__admin-btn"
-                >Админка
+                >{{ $t('header.admin') }}
               </my-button></nuxt-link
             >
           </div>
@@ -140,13 +140,13 @@
             />{{ user.name }}</nuxt-link
           >
           <my-button v-if="user" class="header__logout" @click="logout"
-            >Выйти</my-button
+            >{{ $t('header.logout') }}</my-button
           >
           <div class="header__lang">
-            Ru<img src="/images/icons/arrow-down.svg" alt="" />
+            {{ $i18n.locale[0].toUpperCase() + $i18n.locale.slice(1) }}<img src="/images/icons/arrow-down.svg" alt="" />
             <div class="header__lang-select">
-              <div class="header__lang-select-item">Ru</div>
-              <div class="header__lang-select-item">Ua</div>
+              <div class="header__lang-select-item" @click="$i18n.locale = 'ru'">Ru</div>
+              <div class="header__lang-select-item" @click="$i18n.locale = 'ua'">Ua</div>
             </div>
           </div>
         </div>
@@ -175,10 +175,10 @@
                       class="header__auth-img"
                       src="/images/icons/user.svg"
                       alt=""
-                    />Вход</nuxt-link
+                    />{{ $t('header.login') }}</nuxt-link
                   >
                   <nuxt-link class="header__auth-link" to="/auth/register"
-                    >Регистрация</nuxt-link
+                    >{{ $t('header.register') }}</nuxt-link
                   >
                 </div>
                 <div class="burger__user-panel">
@@ -187,7 +187,7 @@
                       v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
                       class="burger__admin-btn"
                     >
-                      <nuxt-link to="/admin/stats">Админка</nuxt-link>
+                      <nuxt-link to="/admin/stats">{{ $t('header.admin') }}</nuxt-link>
                     </my-button>
                   </div>
                   <nuxt-link
@@ -201,7 +201,7 @@
                     />{{ user.name }}</nuxt-link
                   >
                   <my-button v-if="user" class="burger__logout" @click="logout"
-                    >Выйти</my-button
+                    >{{ $t('header.logout') }}</my-button
                   >
                 </div>
                 <div v-if="contacts.sm" class="burger__sm">
@@ -258,32 +258,32 @@
               <ul class="burger__menu-list">
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/shop"
-                    >Магазин</nuxt-link
+                    >{{ $t('header.menu.shop') }}</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/about"
-                    >О производстве</nuxt-link
+                    >{{ $t('header.menu.about') }}</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/delivery"
-                    >Оплата и доставка</nuxt-link
+                    >{{ $t('header.menu.delivery') }}</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/corporate"
-                    >Оптовым и корпоративным клиетам</nuxt-link
+                    >{{ $t('header.menu.corporate') }}</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/news"
-                    >Новости и статьи</nuxt-link
+                    >{{ $t('header.menu.news') }}</nuxt-link
                   >
                 </li>
                 <li class="burger__menu-list-item">
                   <nuxt-link class="burger__menu-list-link" to="/gallery"
-                    >Галерея</nuxt-link
+                    >{{ $t('header.menu.gallery') }}</nuxt-link
                   >
                 </li>
               </ul>
@@ -331,10 +331,10 @@
             <my-button
               class="header__callback-btn"
               @click="showCallbackModal = true"
-              >Заказать звонок</my-button
+              >{{ $t('header.callback') }}</my-button
             >
             <div class="header__callback-text">
-              Ждем Вашего звонка ежедевно с 9 до 18
+              {{ $t('header.callbackTime') }}
             </div>
           </div>
           <div class="header__basket">
@@ -426,23 +426,23 @@
                 </div>
                 <div class="header__basket-bottom">
                   <p class="header__basket-price">
-                    Всего
+                    {{ $t('header.basket.total') }}
                     <span class="header__basket-price-num"
                       >{{ price }} грн.</span
                     >
                   </p>
                   <nuxt-link class="header__basket-link" to="/order">
                     <my-button class="header__basket-btn"
-                      >Перейти в корзину</my-button
+                      >{{ $t('header.basket.basket') }}</my-button
                     >
                   </nuxt-link>
                 </div>
               </template>
               <template v-else>
-                <p class="header__basket-error">Ничего не добавлено.</p>
+                <p class="header__basket-error">{{ $t('header.basket.empty') }}</p>
                 <nuxt-link class="header__basket-link" to="/shop">
                   <my-button class="header__basket-btn" @click="setShowBasket"
-                    >Перейти в каталог</my-button
+                    >{{ $t('header.basket.catalog') }}</my-button
                   >
                 </nuxt-link>
               </template>
@@ -454,34 +454,34 @@
     <nav class="menu">
       <div class="container">
         <div v-if="user && user.sale" class="header__sale mobile">
-          Ваша персональная скидка - {{ user.sale }}%
+          {{ $t('header.sale') }} - {{ user.sale }}%
         </div>
         <ul class="menu__list">
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/shop">Магазин</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/shop">{{ $t('header.menu.shop') }}</nuxt-link>
           </li>
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/about"
-              >О производстве</nuxt-link
+              >{{ $t('header.menu.about') }}</nuxt-link
             >
           </li>
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/delivery"
-              >Оплата и доставка</nuxt-link
+              >{{ $t('header.menu.delivery') }}</nuxt-link
             >
           </li>
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/corporate"
-              >Оптовым и корпоративным клиетам</nuxt-link
+              >{{ $t('header.menu.corporate') }}</nuxt-link
             >
           </li>
           <li class="menu__list-item">
             <nuxt-link class="menu__list-link" to="/news"
-              >Новости и статьи</nuxt-link
+              >{{ $t('header.menu.news') }}</nuxt-link
             >
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/gallery">Галерея</nuxt-link>
+            <nuxt-link class="menu__list-link" to="/gallery">{{ $t('header.menu.gallery') }}</nuxt-link>
           </li>
         </ul>
       </div>
@@ -674,6 +674,7 @@ export default {
       left: -2px;
       border: 1px solid rgba(#000, 0.06);
       &-item {
+        display: block;
         padding: 5px 13px;
         max-width: 42px;
         width: 100%;
@@ -721,7 +722,7 @@ export default {
     gap: 15px;
     margin-left: auto;
     &-btn {
-      max-width: 165px;
+      max-width: 175px;
     }
     &-text {
       max-width: 178px;

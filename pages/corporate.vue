@@ -2,9 +2,9 @@
   <div class="corporate">
     <div class="container">
       <div class="corporate__pos position secondary">
-        <nuxt-link class="corporate__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="corporate__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,29 +17,23 @@
             fill="#fff"
           />
         </svg>
-        <nuxt-link class="corporate__pos-link position-link" :to="$route.path"
-          >Оптовым и корпоративным клиентам</nuxt-link
+        <nuxt-link
+          class="corporate__pos-link position-link"
+          :to="$route.path"
+          >{{ $t('corporate.title') }}</nuxt-link
         >
       </div>
     </div>
     <div class="corporate__top">
-      <banners-top class="corporate__top-banner" :banner="topBanner"/>
+      <banners-top class="corporate__top-banner" :banner="topBanner" />
       <div class="container">
         <div class="corporate__top-info">
-          <h2 class="corporate__top-title">Оптовым и корпоративным клиентам</h2>
+          <h2 class="corporate__top-title">{{ $t('corporate.title') }}</h2>
           <p class="corporate__top-text">
-            Сельскохозяйственный обслуживающий кооператив “Орех Причерноморья”
-            предлагает своим клиентам выгодные условия сотрудничества. Особые
-            условия подготовлены для
-            <span class="corporate__top-text_bold"
-              >розничных магазинов, компаний HoReCa, спорт - клубов.</span
-            >
+            {{ $t('corporate.text1') }}
           </p>
           <p class="corporate__top-text">
-            Мы готовы рассмотреть особые условия для оптовых покупателей, с
-            готовностью идем на встречу любому предложению. Если вы
-            заинтересованы в нашей продукции, пишите, или звоните в наш главный
-            офис - мы всегда пойдем вам на встречу!
+            {{ $t('corporate.text2') }}
           </p>
         </div>
       </div>
@@ -58,13 +52,13 @@
             name="write"
             @submit.prevent="writeSubmit"
           >
-            <h2 class="corporate-modal__title">Введите ваше сообщение</h2>
+            <h2 class="corporate-modal__title">{{ $t('corporate.writeUs.title') }}</h2>
             <validation-provider name="name" rules="required">
               <div slot-scope="{ errors }" class="corporate-modal__field">
                 <my-input
                   v-model="writeName"
                   class="corporate-modal__input"
-                  placeholder="Ваше имя*"
+                  :placeholder="$t('corporate.writeUs.name')"
                   :errors="errors"
                 />
               </div>
@@ -74,7 +68,7 @@
                 <my-input
                   v-model="writeEmail"
                   class="corporate-modal__input"
-                  placeholder="Ваш эмейл*"
+                  :placeholder="$t('corporate.writeUs.email')"
                   :errors="errors"
                 />
               </div>
@@ -84,13 +78,13 @@
                 <my-input
                   v-model="writeMessage"
                   class="corporate-modal__input"
-                  placeholder="Ваше сообщение*"
+                  :placeholder="$t('corporate.writeUs.message')"
                   :errors="errors"
                 />
               </div>
             </validation-provider>
             <my-button class="corporate-modal__btn" :disabled="invalid"
-              >Подтвердить</my-button
+              >{{ $t('corporate.writeUs.submit') }}</my-button
             >
           </validation-observer>
         </my-popup>
@@ -171,7 +165,7 @@
                 </clipPath>
               </defs>
             </svg>
-            Крупные супермаркеты
+            {{ $t('corporate.supermarket.title') }}
           </div>
           <div
             class="corporate__info-title"
@@ -213,7 +207,7 @@
                 </clipPath>
               </defs>
             </svg>
-            Розничные магазины
+            {{ $t('corporate.shop.title') }}
           </div>
           <div
             class="corporate__info-title"
@@ -240,7 +234,7 @@
                 fill="#C4C4C4"
               />
             </svg>
-            Компании HoReCa
+            {{ $t('corporate.HoReCa.title') }}
           </div>
           <div
             class="corporate__info-title"
@@ -259,7 +253,7 @@
                 fill="#C4C4C4"
               />
             </svg>
-            Фитнес клубы
+            {{ $t('corporate.fitness.title') }}
           </div>
           <div
             class="corporate__info-title"
@@ -325,7 +319,7 @@
                 </clipPath>
               </defs>
             </svg>
-            Кондитерские и пекарни
+            {{ $t('corporate.confectionery.title') }}
           </div>
         </div>
         <div class="corporate__info-items">
@@ -335,25 +329,12 @@
           >
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-                СОК "Орех Причерноморья" предлагает своим клиентам выгодные
-                условия сорудничества.
-              </p>
-              <p class="corporate__info-item-text">
-                Мы готовы рассмотреть особые условия для оптовых покупателей, с
-                готовностью идем на встречу к любому предложению.
-              </p>
-              <p class="corporate__info-item-text">
-                Особые условия подготовленны для розничных магазинов. компаний
-                HoReCa, спорт-клубов.
-              </p>
-              <p class="corporate__info-item-text">
-                Если вы заинтересованы в нашей продукции, пишите или звоните в
-                наш главный офис, мы всегда пойдем вам на встречу.
+                {{ $t('corporate.supermarket.text') }}
               </p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('corporate.writeUs.btn') }}</my-button
               >
             </div>
             <img
@@ -364,25 +345,11 @@
           <div v-if="selectedCorporate === 'shop'" class="corporate__info-item">
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-                СОК "Орех Причерноморья" предлагает своим клиентам выгодные
-                условия сорудничества.
-              </p>
-              <p class="corporate__info-item-text">
-                Мы готовы рассмотреть особые условия для оптовых покупателей, с
-                готовностью идем на встречу к любому предложению.
-              </p>
-              <p class="corporate__info-item-text">
-                Особые условия подготовленны для розничных магазинов. компаний
-                HoReCa, спорт-клубов.
-              </p>
-              <p class="corporate__info-item-text">
-                Если вы заинтересованы в нашей продукции, пишите или звоните в
-                наш главный офис, мы всегда пойдем вам на встречу.
-              </p>
+                {{ $t('corporate.shop.text') }}</p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('corporate.writeUs.btn') }}</my-button
               >
             </div>
             <img
@@ -395,26 +362,11 @@
             class="corporate__info-item"
           >
             <div class="corporate__info-item-content">
-              <p class="corporate__info-item-text">
-                СОК "Орех Причерноморья" предлагает своим клиентам выгодные
-                условия сорудничества.
-              </p>
-              <p class="corporate__info-item-text">
-                Мы готовы рассмотреть особые условия для оптовых покупателей, с
-                готовностью идем на встречу к любому предложению.
-              </p>
-              <p class="corporate__info-item-text">
-                Особые условия подготовленны для розничных магазинов. компаний
-                HoReCa, спорт-клубов.
-              </p>
-              <p class="corporate__info-item-text">
-                Если вы заинтересованы в нашей продукции, пишите или звоните в
-                наш главный офис, мы всегда пойдем вам на встречу.
-              </p>
+              <p class="corporate__info-item-text">{{ $t('corporate.HoReCa.text') }}</p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('corporate.writeUs.btn') }}</my-button
               >
             </div>
             <img
@@ -428,25 +380,11 @@
           >
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-                СОК "Орех Причерноморья" предлагает своим клиентам выгодные
-                условия сорудничества.
-              </p>
-              <p class="corporate__info-item-text">
-                Мы готовы рассмотреть особые условия для оптовых покупателей, с
-                готовностью идем на встречу к любому предложению.
-              </p>
-              <p class="corporate__info-item-text">
-                Особые условия подготовленны для розничных магазинов. компаний
-                HoReCa, спорт-клубов.
-              </p>
-              <p class="corporate__info-item-text">
-                Если вы заинтересованы в нашей продукции, пишите или звоните в
-                наш главный офис, мы всегда пойдем вам на встречу.
-              </p>
+               {{ $t('corporate.fitness.text') }}</p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('corporate.writeUs.btn') }}</my-button
               >
             </div>
             <img
@@ -460,25 +398,11 @@
           >
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-                СОК "Орех Причерноморья" предлагает своим клиентам выгодные
-                условия сорудничества.
-              </p>
-              <p class="corporate__info-item-text">
-                Мы готовы рассмотреть особые условия для оптовых покупателей, с
-                готовностью идем на встречу к любому предложению.
-              </p>
-              <p class="corporate__info-item-text">
-                Особые условия подготовленны для розничных магазинов. компаний
-                HoReCa, спорт-клубов.
-              </p>
-              <p class="corporate__info-item-text">
-                Если вы заинтересованы в нашей продукции, пишите или звоните в
-                наш главный офис, мы всегда пойдем вам на встречу.
-              </p>
+               {{ $t('corporate.confectionery.text') }}</p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('corporate.writeUs.btn') }}</my-button
               >
             </div>
             <img
@@ -490,7 +414,7 @@
       </div>
     </div>
     <banners-area class="corporate__area-banner" />
-    <banners-eco class="corporate__eco-banner" :banner="ecoBanner"/>
+    <banners-eco class="corporate__eco-banner" :banner="ecoBanner" />
   </div>
 </template>
 
@@ -509,6 +433,17 @@ export default {
       writeEmail: '',
       writeMessage: '',
     }
+  },
+  watch: {
+    async '$i18n.locale'() {
+      if (this.$i18n.locale === 'ua') {
+        this.topBanner = await this.$readData('banners/top/ua')
+        this.ecoBanner = await this.$readData('banners/eco/ua')
+      } else {
+        this.topBanner = await this.$readData('banners/top')
+        this.ecoBanner = await this.$readData('banners/eco')
+      }
+    },
   },
   methods: {
     writeSubmit() {
@@ -590,11 +525,8 @@ export default {
       display: flex;
       justify-content: space-between;
       &-text {
-        line-height: 24px;
+        line-height: 30px;
         max-width: 440px;
-        & + & {
-          margin-top: 20px;
-        }
       }
       &-btn {
         margin-top: 30px;

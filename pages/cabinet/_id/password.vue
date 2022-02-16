@@ -14,7 +14,7 @@
             v-model="oldPassword"
             class="change-password__input"
             type="password"
-            placeholder="Текущий пароль*"
+            :placeholder="$t('changePassword.current')"
             :errors="errors"
           />
         </div>
@@ -25,7 +25,7 @@
             v-model="password"
             class="change-password__input"
             type="password"
-            placeholder="Новый пароль*"
+            :placeholder="$t('changePassword.new')"
             :errors="errors"
           />
         </div>
@@ -39,13 +39,13 @@
             v-model="repeatPassword"
             class="change-password__input"
             type="password"
-            placeholder="Подтвердите пароль*"
+            :placeholder="$t('changePassword.confirm')"
             :errors="errors"
           />
         </div>
       </validation-provider>
       <my-button class="change-password__btn" :disabled="invalid"
-        >Продолжить</my-button
+        >{{ $t('changePassword.submit') }}</my-button
       >
     </validation-observer>
   </div>
@@ -69,7 +69,7 @@ export default {
   methods: {
     changePassword() {
       if (this.userPassword !== this.oldPassword) {
-        return this.$toasted.error('Вы ввели неверный текущий пароль.')
+        return this.$toasted.error(this.$t('changePassword.error'))
       }
       const id = this.$route.params.id
       const auth = getAuth()
@@ -79,7 +79,7 @@ export default {
         })
         .then(() => {
           this.$router.push(`/cabinet/${id}/orders`)
-          this.$toasted.success('Вы изменили пароль.')
+          this.$toasted.success(this.$t('changePassword.success'))
         })
         .catch((error) => {
           return this.$toasted.error(error)

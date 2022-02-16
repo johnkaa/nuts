@@ -6,27 +6,27 @@
           <div class="area__item-title">
             240<span class="area__item-mark">Га</span>
           </div>
-          <div class="area__item-text">Смешаных садов</div>
+          <div class="area__item-text">{{ $t('area.item1') }}</div>
         </div>
         <div class="area__item">
           <div class="area__item-title">
             1<span class="area__item-mark">Га</span>
           </div>
-          <div class="area__item-text">Тепличного комплекса</div>
+          <div class="area__item-text">{{ $t('area.item2') }}</div>
         </div>
         <div class="area__item">
           <div class="area__item-title">
             10<span class="area__item-mark">Га</span>
           </div>
           <div class="area__item-text">
-            Первая промышленная плантация шиповника в Украине
+            {{ $t('area.item3') }}
           </div>
         </div>
         <div class="area__item">
           <div class="area__item-title">
             80<span class="area__item-mark">%</span>
           </div>
-          <div class="area__item-text">Приживаемости саженцев</div>
+          <div class="area__item-text">{{ $t('area.item4') }}</div>
         </div>
       </div>
     </div>
@@ -53,22 +53,22 @@ export default {}
       font-weight: 800;
       margin-bottom: 10px;
     }
-      &-mark {
-        font-size: 18px;
-        font-weight: 900;
-        font-family: 'Raleway', sans-serif;
-        vertical-align: super;
-        position: relative;
-        top: -10px;
+    &-mark {
+      font-size: 18px;
+      font-weight: 900;
+      font-family: 'Raleway', sans-serif;
+      vertical-align: super;
+      position: relative;
+      top: -10px;
+    }
+    &-text {
+      max-width: 130px;
+    }
+    &:nth-child(3) {
+      .area__item-text {
+        max-width: 300px;
       }
-      &-text {
-        max-width: 130px;
-      }
-      &:nth-child(3) {
-        .area__item-text {
-          max-width: 300px;
-        }
-      }
+    }
   }
 }
 @media (max-width: 800px) {

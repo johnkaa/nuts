@@ -2,9 +2,9 @@
   <div class="gallery">
     <div class="container">
       <div class="gallery__pos position secondary">
-        <nuxt-link class="gallery__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="gallery__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,34 +17,44 @@
             fill="#fff"
           />
         </svg>
-        <nuxt-link class="gallery__pos-link position-link" :to="$route.path"
-          >Галерея</nuxt-link
-        >
+        <nuxt-link class="gallery__pos-link position-link" :to="$route.path">{{
+          $t('gallery.title')
+        }}</nuxt-link>
       </div>
     </div>
     <div class="gallery__banner">
-      <h2 class="gallery__banner-title">Галерея</h2>
-      <p class="gallery__banner-text">Кадры социальной активности компании</p>
+      <h2 class="gallery__banner-title">{{ $t('gallery.title') }}</h2>
+      <p class="gallery__banner-text">{{ $t('gallery.text') }}</p>
     </div>
     <div class="container">
       <div class="gallery__items">
-        <gallery-card v-for="(item, index) in gallery" :key="index" class="gallery__item" :gallery-card="item"/>
+        <gallery-card
+          v-for="(item, index) in gallery"
+          :key="index"
+          class="gallery__item"
+          :gallery-card="item"
+        />
       </div>
-      <my-button v-if="gallery.length > 6" class="gallery__btn">Посмотреть ещё</my-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-   async asyncData({ $readData }) {
+  async asyncData({ $readData }) {
     const gallery = await $readData('gallery')
-    let latestGallery = []
-    Object.keys(gallery).forEach(item => {
-      latestGallery.push(gallery[item])
-    })
-    latestGallery = latestGallery.slice(0, 6)
-    return { gallery, latestGallery }
+    return { gallery }
+  },
+  watch: {
+    async '$i18n.locale'() {
+      if (this.$i18n.locale === 'ua') {
+        Object.keys(this.gallery).forEach((item) => {
+          this.gallery[item] = this.gallery[item].ua
+        })
+      } else {
+        this.gallery = await this.$readData('gallery')
+      }
+    },
   },
 }
 </script>

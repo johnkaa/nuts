@@ -2,9 +2,9 @@
   <div class="about">
     <div class="container">
       <div class="about__pos position secondary">
-        <nuxt-link class="about__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="about__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,13 +17,13 @@
             fill="#fff"
           />
         </svg>
-        <nuxt-link class="about__pos-link position-link" :to="$route.path"
-          >О производстве</nuxt-link
-        >
+        <nuxt-link class="about__pos-link position-link" :to="$route.path">{{
+          $t('about.position')
+        }}</nuxt-link>
       </div>
     </div>
-    <banners-top class="about__banner-top" :banner="topBanner"/>
-    <About class="about__about" :about="about"/>
+    <banners-top class="about__banner-top" :banner="topBanner" />
+    <About class="about__about" />
     <div class="about__info">
       <div class="container">
         <my-popup
@@ -38,13 +38,13 @@
             name="write"
             @submit.prevent="writeSubmit"
           >
-            <h2 class="about-modal__title">Введите ваше сообщение</h2>
+            <h2 class="about-modal__title">{{ $t('about.writeUs.title') }}</h2>
             <validation-provider name="name" rules="required">
               <div slot-scope="{ errors }" class="about-modal__field">
                 <my-input
                   v-model="writeName"
                   class="about-modal__input"
-                  placeholder="Ваше имя*"
+                  :placeholder="$t('about.writeUs.name')"
                   :errors="errors"
                 />
               </div>
@@ -54,7 +54,7 @@
                 <my-input
                   v-model="writeEmail"
                   class="about-modal__input"
-                  placeholder="Ваш эмейл*"
+                  :placeholder="$t('about.writeUs.email')"
                   :errors="errors"
                 />
               </div>
@@ -64,53 +64,41 @@
                 <my-input
                   v-model="writeMessage"
                   class="about-modal__input"
-                  placeholder="Ваше сообщение*"
+                  :placeholder="$t('about.writeUs.message')"
                   :errors="errors"
                 />
               </div>
             </validation-provider>
-            <my-button class="about-modal__btn" :disabled="invalid"
-              >Подтвердить</my-button
-            >
+            <my-button class="about-modal__btn" :disabled="invalid">{{
+              $t('about.writeUs.submit')
+            }}</my-button>
           </validation-observer>
         </my-popup>
         <div class="about__info-inner">
           <div class="about__chief">
             <img class="about__chief-img" src="/images/chief.jpg" />
             <div class="about__chief-info">
-              <div class="about__chief-name">Павел Тулба</div>
+              <div class="about__chief-name">{{ $t('about.chief.name') }}</div>
               <div class="about__chief-pos">
-                Учередитель и владелец предприятия "Орех Причерноморья"
+                {{ $t('about.chief.pos') }}
               </div>
               <p class="about__chief-quote">
-                Главная наша цель - получить максимальную прибыль с одного
-                гектара
+                {{ $t('about.chief.quote') }}
               </p>
               <my-button
                 class="about__chief-btn secondary"
                 @click="showWriteModal = true"
-                >Написать нам</my-button
+                >{{ $t('about.chief.writeUs') }}</my-button
               >
             </div>
           </div>
           <div class="about__history">
-            <div class="about__history-title">История предприятия</div>
-            <p class="about__history-text">
-              Наше предприятие основано в 2012 году для закладки смешанного сада
-              грецкого ореха и фундука.
-            </p>
-            <p class="about__history-text">
-              На сегодня мы уже заложили более 100 гектаров сада и продолжаем
-              расширять свои насаждения. Кроме выращивания грецкого ореха и
-              фундука, мы занимаемся выращиванием саженцев, разведением и
-              выращиванием овец, а также являемся первой в Украине компанией,
-              приступившей к промышленному выращиванию трюфелей на корнях
-              фундука.
-            </p>
-            <p class="about__history-text">
-              Земля, которой пользуется кооператив, является собственностью
-              членов нашего кооператива.
-            </p>
+            <div class="about__history-title">
+              {{ $t('about.history.title') }}
+            </div>
+            <p class="about__history-text">{{ $t('about.history.text1') }}</p>
+            <p class="about__history-text">{{ $t('about.history.text2') }}</p>
+            <p class="about__history-text">{{ $t('about.history.text3') }}</p>
           </div>
         </div>
       </div>
@@ -118,16 +106,25 @@
     <banners-area class="about__area" />
     <div class="about__gallery">
       <div class="container">
-        <h2 class="about__gallery-title">Галерея</h2>
-        <p class="about__gallery-text">Кадры социальной активности компании</p>
+        <h2 class="about__gallery-title">{{ $t('about.gallery.title') }}</h2>
+        <p class="about__gallery-text">{{ $t('about.gallery.text') }}</p>
         <div class="about__gallery-items">
-        <gallery-card v-for="(item, index) in latestGallery" :key="index" class="about__gallery-item" :gallery-card="item"/>
+          <gallery-card
+            v-for="(item, index) in latestGallery"
+            :key="index"
+            class="about__gallery-item"
+            :gallery-card="item"
+          />
         </div>
-          <my-button class="about__gallery-btn secondary" @click="$router.push('/gallery')">Смотреть всю галерею</my-button>
+        <my-button
+          class="about__gallery-btn secondary"
+          @click="$router.push('/gallery')"
+          >{{ $t('about.gallery.showAll') }}</my-button
+        >
       </div>
     </div>
-    <banners-eco class="about__eco" :banner="ecoBanner"/>
-    <news-latest class="about__news" :news="latestNews"/>
+    <banners-eco class="about__eco" :banner="ecoBanner" />
+    <news-latest class="about__news" :news="news" />
   </div>
 </template>
 
@@ -135,17 +132,13 @@
 export default {
   async asyncData({ $readData }) {
     const topBanner = await $readData('banners/top')
-    const about = await $readData('pages/about')
     const gallery = await $readData('gallery')
     const ecoBanner = await $readData('banners/eco')
     const news = await $readData('news')
-    let latestNews = []
     let latestGallery = []
-    Object.keys(news).forEach((item) => latestNews.push(news[item]))
     Object.keys(gallery).forEach((item) => latestGallery.push(gallery[item]))
-    latestNews = latestNews.slice(0, 3)
     latestGallery = latestGallery.slice(0, 6)
-    return { topBanner, about, latestGallery, ecoBanner, latestNews }
+    return { topBanner, latestGallery, ecoBanner, news }
   },
   data() {
     return {
@@ -154,6 +147,33 @@ export default {
       writeEmail: '',
       writeMessage: '',
     }
+  },
+  watch: {
+    async '$i18n.locale'() {
+      if (this.$i18n.locale === 'ua') {
+        this.topBanner = await this.$readData('banners/top/ua')
+        this.ecoBanner = await this.$readData('banners/eco/ua')
+        Object.keys(this.news).forEach((item) => {
+          this.news[item] = this.news[item].ua
+        })
+        const gallery = await this.$readData('gallery')
+        this.latestGallery = []
+        Object.keys(gallery).forEach((item) =>
+          this.latestGallery.push(gallery[item].ua)
+        )
+        this.latestGallery = this.latestGallery.slice(0, 6)
+      } else {
+        this.topBanner = await this.$readData('banners/top')
+        this.ecoBanner = await this.$readData('banners/eco')
+        this.news = await this.$readData('news')
+        const gallery = await this.$readData('gallery')
+        this.latestGallery = []
+        Object.keys(gallery).forEach((item) =>
+          this.latestGallery.push(gallery[item])
+        )
+        this.latestGallery = this.latestGallery.slice(0, 6)
+      }
+    },
   },
   methods: {
     writeSubmit() {

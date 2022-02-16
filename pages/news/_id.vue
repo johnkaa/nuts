@@ -2,9 +2,9 @@
   <div class="news">
     <div class="container">
       <div class="news__pos position">
-        <nuxt-link class="news__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="news__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,9 +17,9 @@
             fill="#8a8a8a"
           />
         </svg>
-        <nuxt-link class="news__pos-link position-link" to="/news"
-          >Новости и статьи</nuxt-link
-        >
+        <nuxt-link class="news__pos-link position-link" to="/news">{{
+          $t('news.title')
+        }}</nuxt-link>
       </div>
       <div class="news__inner">
         <div class="news__content">
@@ -29,7 +29,7 @@
           <p class="news__text">{{ news.text }}</p>
         </div>
         <div class="news__latest">
-          <div class="news__latest-title">Последние публикации</div>
+          <div class="news__latest-title">{{ $t('news.latest') }}</div>
           <div class="news__latest-items">
             <news-card
               v-for="(item, index) in latestNews"
@@ -38,9 +38,9 @@
               :news="item"
             />
             <div class="news__latest-sm">
-              <div class="news__latest-sm-title">ОРЕХ ПРИЧЕРНОМОРЬЯ</div>
+              <div class="news__latest-sm-title">{{ $t('news.sm.title') }}</div>
               <div class="news__latest-sm-text">
-                Присоединяйтесь к нам в соц. сетях
+                {{ $t('news.sm.text') }}
               </div>
               <div class="news__latest-sm-items">
                 <a class="news__latest-sm-item" :href="sm.facebook"
@@ -109,7 +109,7 @@ export default {
     const news = await $readData(`news/${params.id}`)
     const sm = await $readData('contacts/sm')
     let latestNews = []
-    Object.keys(allNews).forEach(item => {
+    Object.keys(allNews).forEach((item) => {
       latestNews.push(allNews[item])
     })
     latestNews = latestNews.slice(0, 3)
@@ -119,6 +119,27 @@ export default {
     return {
       id: '',
     }
+  },
+  watch: {
+    async '$i18n.locale'() {
+      const news = await this.$readData('news')
+      this.latestNews = []
+      if (this.$i18n.locale === 'ua') {
+        this.news = await this.$readData(`news/${this.$route.params.id}/ua`)
+        Object.keys(news).forEach((item, index) => {
+          if(index < 3) {
+            this.latestNews.push(news[item].ua)
+          }
+        })
+      } else {
+        this.news = await this.$readData(`news/${this.$route.params.id}`)
+        Object.keys(news).forEach((item, index) => {
+          if(index < 3) {
+            this.latestNews.push(news[item])
+          }
+        })
+      }
+    },
   },
   mounted() {
     this.id = this.$route.params.id

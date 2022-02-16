@@ -2,9 +2,9 @@
   <div class="order">
     <div class="container">
       <div class="order__pos position">
-        <nuxt-link class="order__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="order__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,14 +17,14 @@
             fill="#8a8a8a"
           />
         </svg>
-        <nuxt-link class="order__pos-link position-link" :to="$route.path"
-          >Оформление заказа</nuxt-link
-        >
+        <nuxt-link class="order__pos-link position-link" :to="$route.path">{{
+          $t('order.title')
+        }}</nuxt-link>
       </div>
       <div class="order__top">
-        <h2 class="order__title">Оформление заказа</h2>
+        <h2 class="order__title">{{ $t('order.title') }}</h2>
         <div class="order__manager">
-          <div class="order__manager-name">Ваш личный менеджер Олег</div>
+          <div class="order__manager-name">{{ $t('cabinet.manager') }}</div>
           <a class="order__manager-phone" href="tel:380677771412">
             <svg
               width="15"
@@ -82,7 +82,8 @@
             class="order__basket-item-value item-title"
             @click="sort = 'value'"
           >
-            Кол-во<svg
+            {{ $t('order.amount')
+            }}<svg
               class="item-title-icon"
               :class="{ active: sort === 'value' }"
               width="10"
@@ -103,7 +104,8 @@
             class="order__basket-item-price item-title"
             @click="sort = 'price'"
           >
-            Цена за товар<svg
+            {{ $t('order.price')
+            }}<svg
               class="item-title-icon"
               :class="{ active: sort === 'price' }"
               width="10"
@@ -124,7 +126,8 @@
             class="order__basket-item-totalPrice item-title"
             @click="sort = 'totalPrice'"
           >
-            Итоговая стоимость<svg
+            {{ $t('order.sum')
+            }}<svg
               class="item-title-icon"
               :class="{ active: sort === 'totalPrice' }"
               width="10"
@@ -207,20 +210,22 @@
         </div>
         <div class="order__basket-bottom">
           <nuxt-link class="order__basket-link" to="/shop">
-            <my-button class="order__basket-btn"
-              >Вернуться к покупкам</my-button
-            >
+            <my-button class="order__basket-btn">{{
+              $t('order.back')
+            }}</my-button>
           </nuxt-link>
           <template v-if="user">
             <div v-if="user.sale" class="order__basket-price">
-              Цена <span class="order__basket-price-num">(-{{ user.sale }}%):</span>
+              {{ $t('product.price') }}
+              <span class="order__basket-price-num">(-{{ user.sale }}%):</span>
               <span class="order__basket-price-num"
                 >{{ (price - (price / 100) * user.sale).toFixed(2) }} грн.</span
               >
             </div>
           </template>
           <div v-else class="order__basket-price">
-            Всего <span class="order__basket-price-num">{{ price }} грн.</span>
+            {{ $t('order.total') }}
+            <span class="order__basket-price-num">{{ price }} грн.</span>
           </div>
         </div>
       </div>
@@ -233,14 +238,16 @@
         @submit.prevent="submitOrder"
       >
         <div class="order__form-block">
-          <div class="order__form-title">1. Контактные данные</div>
+          <div class="order__form-title">
+            1. {{ $t('register.contactDetails') }}
+          </div>
           <validation-provider name="name" rules="required">
             <div slot-scope="{ errors }" class="order__form-field">
               <my-input
                 v-model="name"
                 :value="name"
                 type="text"
-                placeholder="ФИО*"
+                :placeholder="$t('register.name')"
                 :errors="errors"
               />
             </div>
@@ -269,13 +276,15 @@
           </validation-provider>
         </div>
         <div class="order__form-block">
-          <div class="order__form-title">2. Способ доставки</div>
+          <div class="order__form-title">
+            2. {{ $t('order.delivery.title') }}
+          </div>
           <div
             class="order__form-delivery-title"
             :class="{ active: delivery === 'post' }"
             @click="delivery = 'post'"
           >
-            Новая почта (по Украине оплата за счет клиента)
+            {{ $t('order.delivery.title') }}
           </div>
           <div v-if="delivery === 'post'" class="order__form-delivery-item">
             <validation-provider name="area" rules="required">
@@ -284,7 +293,7 @@
                   v-model="area"
                   :options="areas"
                   :errors="errors"
-                  placeholder="Область*"
+                  :placeholder="$t('register.region')"
                 />
               </div>
             </validation-provider>
@@ -295,7 +304,7 @@
                   :value="city"
                   :options="cities"
                   :errors="errors"
-                  placeholder="Город*"
+                  :placeholder="$t('register.city')"
                 />
               </div>
             </validation-provider>
@@ -306,7 +315,7 @@
                   :value="warehouse"
                   :options="warehouses"
                   :errors="errors"
-                  placeholder="Отделение*"
+                  :placeholder="$t('order.delivery.warehouse')"
                 />
               </div>
             </validation-provider>
@@ -316,57 +325,65 @@
             :class="{ active: delivery === 'courier' }"
             @click="delivery = 'courier'"
           >
-            Курьер по Одессе
+            {{ $t('order.delivery.courier') }}
           </div>
           <div v-if="delivery === 'courier'" class="order__form-delivery-item">
             <validation-provider name="address" rules="required">
-            <div slot-scope="{ errors }" class="order__form-field">
-              <my-input
-                v-model="address"
-                :value="address"
-                type="text"
-                placeholder="Адрес*"
-                :errors="errors"
-              />
-            </div>
-          </validation-provider>
+              <div slot-scope="{ errors }" class="order__form-field">
+                <my-input
+                  v-model="address"
+                  :value="address"
+                  type="text"
+                  :placeholder="$t('register.address') + '*'"
+                  :errors="errors"
+                />
+              </div>
+            </validation-provider>
           </div>
           <div
             class="order__form-delivery-title"
             :class="{ active: delivery === 'self' }"
             @click="delivery = 'self'"
           >
-            Самовывоз со склада
+            {{ $t('order.delivery.self') }}
           </div>
         </div>
         <div class="order__form-block">
-          <div class="order__form-title">3. Способ оплаты</div>
+          <div class="order__form-title">3. {{ $t('order.payment') }}</div>
           <my-radio-select
             v-model="payment"
             class="order__form-payment"
-            :selects="[
-              'Безналичный расчет',
-              'LiqPay / Приват24',
-              'Наличными при получении (Наложенным платежом)',
-            ]"
+            :selects="
+              $i18n.locale === 'ua'
+                ? [
+                    'Безготівковий розрахунок',
+                    'LiqPay / Приват24',
+                    'Готiвкою при отриманні(Післяплатою)',
+                  ]
+                : [
+                    'Безналичный расчет',
+                    'LiqPay / Приват24',
+                    'Наличными при получении (Наложенным платежом)',
+                  ]
+            "
             :select-value="payment"
             name="payment"
           />
         </div>
-        <my-button class="order__form-btn" :disabled="invalid"
-            >Продолжить</my-button
-          >
+        <my-button class="order__form-btn" :disabled="invalid">{{
+          $t('register.submit')
+        }}</my-button>
       </validation-observer>
       <div v-else class="order__auth">
-        <div class="order__auth-title">Для оформления заказа необходимо</div>
+        <div class="order__auth-title">{{ $t('order.auth') }}</div>
         <div class="oruder__auth-links">
-          <nuxt-link class="order__auth-link" to="/auth/login"
-            >Авторизоваться</nuxt-link
-          >
-          <span class="order__auth-text">или</span>
-          <nuxt-link class="order__auth-link" to="/auth/register"
-            >Зарегистрироваться</nuxt-link
-          >
+          <nuxt-link class="order__auth-link" to="/auth/login">{{
+            $t('order.login')
+          }}</nuxt-link>
+          <span class="order__auth-text">{{ $t('order.or') }}</span>
+          <nuxt-link class="order__auth-link" to="/auth/register">{{
+            $t('order.register')
+          }}</nuxt-link>
         </div>
       </div>
     </div>
@@ -394,7 +411,7 @@ export default {
       warehouse: '',
       warehouses: [],
       address: '',
-      payment: 'Безналичный расчет',
+      payment: 'LiqPay / Приват24',
     }
   },
   computed: {
@@ -405,17 +422,17 @@ export default {
         nut.index = index
         basket.push(nut)
       })
-      if(this.sort === 'title') {
-        basket = basket.sort((a,b) => a.title.localeCompare(b.title))
+      if (this.sort === 'title') {
+        basket = basket.sort((a, b) => a.title.localeCompare(b.title))
       }
-      if(this.sort === 'value') {
+      if (this.sort === 'value') {
         basket = basket.sort((a, b) => a.value - b.value)
       }
-      if(this.sort === 'price') {
+      if (this.sort === 'price') {
         basket = basket.sort((a, b) => a.price - b.price)
       }
-      if(this.sort === 'totalPrice') {
-        basket = basket.sort((a, b) => (a.price * a.value) - (b.price * b.value))
+      if (this.sort === 'totalPrice') {
+        basket = basket.sort((a, b) => a.price * a.value - b.price * b.value)
       }
       return basket
     },
@@ -428,7 +445,6 @@ export default {
   },
   watch: {
     basket() {
-      this.isEmpty()
       this.countPrice()
     },
     async area() {
@@ -472,7 +488,6 @@ export default {
     },
   },
   mounted() {
-    this.isEmpty()
     this.countPrice()
     if (this.user) {
       this.name = this.user.name
@@ -485,13 +500,15 @@ export default {
   methods: {
     async submitOrder() {
       const id = +new Date()
-      let date = new Date().toJSON().slice(0,10).split('-')
+      let date = new Date().toJSON().slice(0, 10).split('-')
       date = date[2] + '.' + date[1] + '.' + date[0]
       let amount = 0
-      this.basket.forEach(item => {
+      this.basket.forEach((item) => {
         amount += item.value
       })
-      const price = this.user.sale ? (this.price - (this.price / 100) * this.user.sale).toFixed(2) : this.price
+      const price = this.user.sale
+        ? (this.price - (this.price / 100) * this.user.sale).toFixed(2)
+        : this.price
       const order = {
         id,
         date,
@@ -499,22 +516,22 @@ export default {
         status: 'Отправлено',
         price,
         delivery: this.delivery,
-        payment: this.payment
+        payment: this.payment,
       }
       await this.$writeData(`/users/${this.user.id}/orders/${id}`, order)
       order.user = {
         name: this.name,
         email: this.email,
-        phone: this.phone
+        phone: this.phone,
       }
-      if(this.delivery === 'post') {
+      if (this.delivery === 'post') {
         order.user.address = {
           area: this.area,
           city: this.city,
-          warehouse: this.warehouse
+          warehouse: this.warehouse,
         }
       }
-      if(this.delivery === 'courier') {
+      if (this.delivery === 'courier') {
         order.user.address = this.address
       }
       await this.$writeData(`/orders/${id}`, order)
@@ -532,11 +549,6 @@ export default {
         }
       })
     },
-    isEmpty() {
-      if (this.basket.length === 0) {
-        this.$router.push('/')
-      }
-    },
     async getAreas() {
       const res = await this.$axios.post(
         'https://api.novaposhta.ua/v2.0/json/',
@@ -548,7 +560,7 @@ export default {
       )
       const areas = res.data.data
       areas.forEach((area) => {
-        if(area.DescriptionRu !== 'АРК') {
+        if (area.DescriptionRu !== 'АРК') {
           this.areas.push(area.DescriptionRu)
         }
       })
@@ -568,7 +580,7 @@ export default {
       const cities = res.data.data
       this.cities = []
       cities.forEach((city) => {
-        if(!this.cities.includes(city.DescriptionRu)) {
+        if (!this.cities.includes(city.DescriptionRu)) {
           this.cities.push(city.DescriptionRu)
         }
       })
@@ -587,7 +599,9 @@ export default {
       )
       const warehouses = res.data.data
       this.warehouses = []
-      warehouses.forEach(warehouse => this.warehouses.push(warehouse.DescriptionRu))
+      warehouses.forEach((warehouse) =>
+        this.warehouses.push(warehouse.DescriptionRu)
+      )
     },
     incrementBasketItemValue(index) {
       this.$store.dispatch('incrementBasketItemValueAction', index)
@@ -788,7 +802,8 @@ export default {
   .order__basket-item {
     grid-template-columns: repeat(3, 1fr);
   }
-  .item-title, .item-info {
+  .item-title,
+  .item-info {
     &:nth-child(4) {
       display: none;
     }
@@ -806,22 +821,22 @@ export default {
     }
     &__basket {
       &-item {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  &-bottom {
-    flex-direction: column;
-    gap: 10px;
-    
-  }
-  &-price {
-      order: 0;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      &-bottom {
+        flex-direction: column;
+        gap: 10px;
+      }
+      &-price {
+        order: 0;
+      }
+      &-link {
+        order: 1;
+      }
     }
-    &-link {
-      order: 1;
-    }
-    }
   }
-  .item-title, .item-info {
+  .item-title,
+  .item-info {
     &:nth-child(3) {
       display: none;
     }
@@ -831,5 +846,5 @@ export default {
   .item-info {
     font-size: 12px;
   }
-} 
+}
 </style>

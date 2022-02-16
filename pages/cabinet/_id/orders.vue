@@ -6,7 +6,7 @@
           class="orders__item-num orders__item-title"
           @click="filter = 'id'"
         >
-          № Заказа<svg
+          {{ $t('historyOrders.id') }}<svg
             class="orders__item-title-icon"
             :class="{ active: filter === 'id' }"
             width="10"
@@ -48,7 +48,7 @@
           class="orders__item-amount orders__item-title"
           @click="filter = 'amount'"
         >
-          Кол-во товаров<svg
+          {{ $t('historyOrders.amount') }}<svg
             class="orders__item-title-icon"
             :class="{ active: filter === 'amount' }"
             width="10"
@@ -90,7 +90,7 @@
           class="orders__item-price orders__item-title"
           @click="filter = 'price'"
         >
-          Стоимость<svg
+          {{ $t('historyOrders.price') }}<svg
             class="orders__item-title-icon"
             :class="{ active: filter === 'price' }"
             width="10"
@@ -107,7 +107,7 @@
             />
           </svg>
         </div>
-        <div class="orders__item-functions orders__item-title">Функции</div>
+        <div class="orders__item-functions orders__item-title">{{ $t('historyOrders.functions') }}</div>
       </div>
       <div v-for="order in sortedOrders" :key="order.id" class="orders__item">
         <my-popup
@@ -116,10 +116,10 @@
           @close="showDetails(null)"
         >
           <div class="orders__item-popup__inner">
-            <div class="orders__item-popup__title">Информация о заказе</div>
+            <div class="orders__item-popup__title">{{ $t('historyOrders.info') }}</div>
             <div class="orders__item-popup__items">
               <div class="orders__item-popup__item">
-                <span class="orders__item-popup__item-title">№ Заказа:</span>
+                <span class="orders__item-popup__item-title">{{ $t('historyOrders.id') }}:</span>
                 <span class="orders__item-popup__item-info">{{ order.id }}</span>
               </div>
               <div class="orders__item-popup__item">
@@ -128,7 +128,7 @@
               </div>
               <div class="orders__item-popup__item">
                 <span class="orders__item-popup__item-title"
-                  >Кол-во товаров:</span
+                  >{{ $t('historyOrders.amount') }}:</span
                 >
                 <span class="orders__item-popup__item-info">{{ order.amount }}</span>
               </div>
@@ -137,7 +137,7 @@
                 <span class="orders__item-popup__item-info">{{ order.status }}</span>
               </div>
               <div class="orders__item-popup__item">
-                <span class="orders__item-popup__item-title">Стоимость:</span>
+                <span class="orders__item-popup__item-title">{{ $t('historyOrders.price') }}:</span>
                 <span class="orders__item-popup__item-info">{{ order.price }} грн.</span>
               </div>
             </div>
@@ -168,7 +168,7 @@
               />
             </svg>
           </div>
-          <div class="copy-icon__wrapper" @click="copy(0)">
+          <div class="copy-icon__wrapper" @click="copy(order.id)">
             <svg
               class="orders__item-functions-icon copy-icon"
               width="16"

@@ -49,14 +49,14 @@
       <div class="product__name">{{ product.title }}</div>
       <div class="product__info">
         <div class="product__weight product__info-item">
-          <div class="product__weight-title product__info-title">Масса:</div>
+          <div class="product__weight-title product__info-title">{{ $t('product.weight') }}</div>
           <div class="product__weight-text product__info-text">
             {{ product.weight }}г
           </div>
         </div>
         <div class="product__package product__info-item">
           <div class="product__package-title product__info-title">Упаковка</div>
-          <div class="product__package-text product__info-text">вакуумная</div>
+          <div class="product__package-text product__info-text">{{ $t('product.package') }}</div>
         </div>
       </div>
     </nuxt-link>
@@ -64,7 +64,7 @@
       <div class="product__bottom-inner">
         <template v-if="product.sale"
           ><div class="product__price">
-            Цена:
+            {{ $t('product.price') }}
             <span class="product__price-num"
               >{{
                 product.price - (product.price / 100) * product.discount
@@ -77,11 +77,11 @@
 
         <template v-else>
           <div class="product__price">
-            Цена:
+            {{ $t('product.price') }}
             <span class="product__price-num">{{ product.price }} грн.</span>
           </div>
         </template>
-        <my-button class="product__btn" @click="addToBasket">Купить</my-button>
+        <my-button class="product__btn" @click="addToBasket">{{ $t('product.buy') }}</my-button>
       </div>
     </div>
   </div>

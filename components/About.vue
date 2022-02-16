@@ -1,26 +1,32 @@
 <template>
-      <div class="about">
-      <div class="container">
-        <div class="about__inner">
-          <div class="about__info">
-            <h2 class="about__title">О производителе</h2>
-            <p class="about__text">{{ about.text }}</p>
-            <my-button class="about__btn secondary" @click="$router.push('/about')">Подробнее</my-button>
-          </div>
-          <div class="about__slider">
-            <div v-for="(item, index) in about.gallery" :key="index" class="about__slider-item">
-              <img class="about__slider-item-img" :src="item.img" alt="" />
-            </div>
+  <div class="about">
+    <div class="container">
+      <div class="about__inner">
+        <div class="about__info">
+          <h2 class="about__title">{{ $t('about.title') }}</h2>
+          <p class="about__text">
+            {{ $t('about.text') }}
+          </p>
+          <my-button
+            class="about__btn secondary"
+            @click="$router.push('/about')"
+            >{{ $t('about.description') }}</my-button
+          >
+        </div>
+        <div class="about__slider">
+          <div
+            class="about__slider-item"
+          >
+            <img class="about__slider-item-img" src="/images/about-slider-img.jpg" alt="" />
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-export default {
-  props: ['about']
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>

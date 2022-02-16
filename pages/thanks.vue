@@ -1,7 +1,7 @@
 <template>
   <div class="thanks">
-    <h2 class="thanks__title">Благодарим Вас за заказ!</h2>
-    <p class="thanks__text">Наши менеджеры свяжутся с Вами в ближайшее время</p>
+    <h2 class="thanks__title">{{ $t('thanks.title') }}</h2>
+    <p class="thanks__text">{{ $t('thanks.text') }}</p>
   </div>
 </template>
 

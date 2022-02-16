@@ -11,7 +11,7 @@
         <template v-if="news.text.length > 150">...</template>
       </div>
       <nuxt-link class="news-card__link" :to="`/news/${news.id}`">
-        Читать
+        {{ $t('news.read') }}
         <svg
           width="14"
           height="14"

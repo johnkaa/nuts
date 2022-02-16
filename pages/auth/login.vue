@@ -3,15 +3,15 @@
     <div class="container">
       <div class="login__pos position">
         <nuxt-link class="login__pos-link position-link" to="/"
-          >Главная</nuxt-link
+          >{{ $t('home.position') }}</nuxt-link
         >
         <img src="/images/icons/right-arrow.svg" alt="" />
         <nuxt-link class="login__pos-link position-link" to="/auth/login"
-          >Вход</nuxt-link
+          >{{ $t('login.position') }}</nuxt-link
         >
       </div>
       <form class="login__form" @submit.prevent="submit">
-        <h2 class="login__title">Войти в личный кабинет</h2>
+        <h2 class="login__title">{{ $t('login.title') }}</h2>
         <my-input v-model="email" class="login__input" placeholder="Email*" />
         <my-input
           v-model="password"
@@ -22,11 +22,11 @@
         <nuxt-link
           class="login__forgot-password login__link"
           to="/auth/forgot-password"
-          >Забыли пароль?</nuxt-link
+          >{{ $t('login.forgot') }}</nuxt-link
         >
-        <my-button class="login__btn">Войти</my-button>
+        <my-button class="login__btn">{{ $t('login.submit') }}</my-button>
         <nuxt-link class="login__register login__link" to="/auth/register"
-          >Регистрация</nuxt-link
+          >{{ $t('login.register') }}</nuxt-link
         >
       </form>
     </div>
@@ -44,7 +44,7 @@ export default {
   methods: {
     async submit() {
       if (this.email === '' || this.password === '') {
-        return this.$toasted.error('Все поля должны быть заполнены.')
+        return this.$toasted.error(this.$t('login.required'))
       }
       try {
         await this.$fire.auth
@@ -52,13 +52,13 @@ export default {
           .then(() => {
             this.$store.dispatch('getUserAction')
             this.$router.push('/')
-            this.$toasted.success('Вы успешно вошли в аккаунт.')
+            this.$toasted.success(this.$t('login.success'))
           })
       } catch (e) {
         if (e.toString().includes('(auth/invalid-email)')) {
-          this.$toasted.error('Почта не зарегистрирована.')
+          this.$toasted.error(this.$t('login.wrongEmail'))
         } else if (e.toString().includes('(auth/wrong-password)')) {
-          this.$toasted.error('Неправильный пароль.')
+          this.$toasted.error(this.$t('login.wrongPassword'))
         }
       }
     },

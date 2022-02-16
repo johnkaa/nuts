@@ -7,7 +7,7 @@
       name="change-address"
       @submit.prevent="changeAddress"
     >
-      <h2 class="change-address__title">Адрес</h2>
+      <h2 class="change-address__title">{{ $t('register.address') }}</h2>
       <validation-provider name="country" rules="required">
         <div slot-scope="{ errors }" class="change-address__field">
           <my-select
@@ -16,7 +16,7 @@
             class="change-address__input"
             :options="countries"
             :errors="errors"
-            placeholder="Страна*"
+            :placeholder="$t('register.country')"
           />
         </div>
       </validation-provider>
@@ -28,7 +28,7 @@
             class="change-address__input"
             :options="regions"
             :errors="errors"
-            placeholder="Область*"
+            :placeholder="$t('register.region')"
           />
         </div>
       </validation-provider>
@@ -40,7 +40,7 @@
             class="change-address__input"
             :options="cities"
             :errors="errors"
-            placeholder="Город*"
+            :placeholder="$t('register.city')"
           />
         </div>
       </validation-provider>
@@ -48,10 +48,10 @@
         v-model="address"
         :value="address"
         class="change-address__field"
-        placeholder="Адрес"
+        :placeholder="$t('register.address')"
       />
       <my-button class="change-address__btn" :disabled="invalid"
-        >Продолжить</my-button
+        >{{ $t('register.submit') }}</my-button
       >
     </validation-observer>
   </div>

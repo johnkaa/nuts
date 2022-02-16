@@ -3,61 +3,41 @@
     <banners-top class="top-banner" :banner="topBanner"/>
     <div class="products">
       <div class="container">
-        <h2 class="products__title">Продукция</h2>
-        <p class="products__text">
-          Экологически чистые, качественные ядра грецкого ореха и фундука, а
-          также плоды шиповника в удобной, надежной, вакуумной упаковке разного
-          объема
-        </p>
+        <h2 class="products__title">{{ $t('home.products.title') }}</h2>
+        <p class="products__text">{{ $t('home.products.text') }}</p>
         <div class="products__items">
           <Product v-for="item in products" :key="item.id" :product="item"/>
         </div>
         <slider-mobile class="products__slider" :items="products" />
         <my-button class="products__btn secondary" @click="$router.push('/shop')"
-            >Перейти в магазин</my-button
+            >{{ $t('home.products.btn') }}</my-button
           >
       </div>
     </div>
-    <About class="about" :about="about"/>
+    <About class="about" />
     <banners-area class="area" />
     <banners-factory class="factory" :banner="factoryBanner"/>
     <div class="benefits">
       <div class="container">
-        <h2 class="benefits__title">О пользе продукта</h2>
-        <p class="benefits__text">
-          Каждый вид ореха содержит свой неповторимый уникальный баланс
-          витаминов, и микроэлементов
-        </p>
+        <h2 class="benefits__title">{{ $t('home.benefits.title') }}</h2>
+        <p class="benefits__text">{{ $t('home.benefits.text') }}</p>
         <div class="benefits__items">
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/walnut.svg" />
-            <div class="benefits__item-title">Грецкий орех</div>
-            <p class="benefits__item-text">
-              Дерево жизни - так часто величают грецкий орех, поскольку с давних
-              пор он кормил, восстанавливал силы и лечил человека. Даже
-              небольшая горсть грецких орехов - это кладезь витаминов и хорошая
-              профилактика многих заболеваний.
-            </p>
+            <div class="benefits__item-title">{{ $t('home.benefits.walnut.title') }}</div>
+            <p class="benefits__item-text">{{ $t('home.benefits.walnut.text') }}</p>
             <div class="benefits__item-filter"></div>
           </div>
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/hazelnut.svg" />
-            <div class="benefits__item-title">Фундук</div>
-            <p class="benefits__item-text">
-              Витамин А улучшает зрение и повышает иммунитет. Комплекс витаминов
-              группы В нормализует работу ЦНС, улучшает состав крови, укрепляет
-              иммунную и кровеносную системы, систему обмена веществ.
-            </p>
+            <div class="benefits__item-title">{{ $t('home.benefits.hazelnut.title') }}</div>
+            <p class="benefits__item-text">{{ $t('home.benefits.hazelnut.text') }}</p>
             <div class="benefits__item-filter"></div>
           </div>
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/rose.svg" />
-            <div class="benefits__item-title">Шиповник</div>
-            <p class="benefits__item-text">
-              В народной медицине отвары из шиповника применялись при
-              скарлатине, тифе, туберкулезе, воспалении почек, болезнях
-              кишечника, печени, желудка.
-            </p>
+            <div class="benefits__item-title">{{ $t('home.benefits.rose.title') }}</div>
+            <p class="benefits__item-text">{{ $t('home.benefits.text') }}</p>
             <div class="benefits__item-filter"></div>
           </div>
         </div>
@@ -73,15 +53,39 @@ export default {
   async asyncData({ $readData }) {
     const topBanner = await $readData('banners/top')
     const productsObj = await $readData('products')
-    const about = await $readData('pages/about')
     const factoryBanner = await $readData('banners/factory')
     const ecoBanner = await $readData('banners/eco')
     const news = await $readData('news')
     let products = []
     Object.keys(productsObj).forEach(item => products.push(productsObj[item]))
     products = products.slice(0, 6)
-    return { topBanner, products, about, factoryBanner, ecoBanner, news }
+    return { topBanner, products, factoryBanner, ecoBanner, news }
   },
+  watch: {
+    async '$i18n.locale'() {
+      if(this.$i18n.locale === 'ua') {
+        this.topBanner = await this.$readData('banners/top/ua')
+        this.factoryBanner = await this.$readData('banners/factory/ua')
+        this.ecoBanner = await this.$readData('banners/eco/ua')
+        const products = await this.$readData('products')
+        this.products = []
+        Object.keys(products).forEach(product => this.products.push(products[product].ua))
+        this.products = this.products.slice(0, 6)
+        const news = await this.$readData('news')
+        this.news = []
+        Object.keys(news).forEach(id => this.news.push(news[id].ua))
+      } else {
+        this.topBanner = await this.$readData('banners/top')
+        this.factoryBanner = await this.$readData('banners/factory')
+        this.ecoBannner = await this.$readData('banners/eco')
+        const products = await this.$readData('products')
+        Object.keys(products).forEach(product => this.products.push(products[product]))
+        this.products = this.products.slice(0, 6)
+        this.products = products
+        this.news = await this.$readData('news')
+      }
+    }
+  }
 }
 </script>
 

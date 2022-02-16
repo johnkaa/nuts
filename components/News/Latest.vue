@@ -2,8 +2,8 @@
   <div class="news">
     <div class="container">
       <div class="swiper-container">
-        <h2 class="news__title">Новости</h2>
-        <p class="news__text">Свежие новости и полезная информация</p>
+        <h2 class="news__title">{{ $t('latestNews.title') }}</h2>
+        <p class="news__text">{{ $t('news.text') }}</p>
         <div class="slider-buttons">
           <div class="slider-button slider-button-prev">
             <svg
@@ -49,7 +49,7 @@
         </div>
       </div>
       <my-button class="news__btn secondary" @click="$router.push('/news')"
-        >Смотреть все новости</my-button
+        >{{ $t('latestNews.showAll') }}</my-button
       >
     </div>
   </div>

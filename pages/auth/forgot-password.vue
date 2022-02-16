@@ -3,13 +3,13 @@
     <div class="container">
       <div class="forgot-password__pos position">
         <nuxt-link class="register__pos-link position-link" to="/"
-          >Главная</nuxt-link
+          >{{ $t('home.position') }}</nuxt-link
         >
         <img src="/images/icons/right-arrow.svg" alt="" />
         <nuxt-link
           class="register__pos-link position-link"
           to="/auth/forgot-password"
-          >Восстановление пароля</nuxt-link
+          >{{ $t('forgotPassword.title') }}</nuxt-link
         >
       </div>
       <validation-observer
@@ -19,14 +19,13 @@
         name="forgot-password"
         @submit.prevent="submit"
       >
-        <h2 class="forgot-password__title">Восстановление пароля</h2>
+        <h2 class="forgot-password__title">{{ $t('forgotPassword.title') }}</h2>
         <div class="forgot-password__post-title">
           <img src="/images/icons/lock.svg" alt="" />
-          <span class="forgot-password__post-title__text">Забыли пароль?</span>
+          <span class="forgot-password__post-title__text">{{ $t('login.forgot') }}</span>
         </div>
         <div class="forgot-password__text">
-          Введите Email Вашего аккаунта. Вам будет выслана ссылка для
-          восстановления пароля.
+          {{ $t('forgotPassword.text') }}
         </div>
         <validation-provider name="email" rules="required|email">
           <div slot-scope="{ errors }" class="forgot-password__field">
@@ -39,7 +38,7 @@
           </div>
         </validation-provider>
         <my-button class="forgot-password__btn" :disabled="invalid"
-          >Отправить ссылку</my-button
+          >{{ $t('forgotPassword.submit') }}</my-button
         >
       </validation-observer>
     </div>
@@ -61,7 +60,7 @@ export default {
         this.$toasted.error(e)
       }
       this.$router.push('/auth/login')
-      this.$toasted.success('Проверьте ваш e-mail.')
+      this.$toasted.success(this.$t('forgotPassword.success'))
     },
   },
 }

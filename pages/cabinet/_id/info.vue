@@ -14,7 +14,7 @@
             :value="name"
             class="info__input"
             type="text"
-            placeholder="ФИО*"
+            :placeholder="$t('register.name')"
             :errors="errors"
           />
         </div>
@@ -43,7 +43,7 @@
           />
         </div>
       </validation-provider>
-      <my-button class="info__btn" :disabled="invalid">Сохранить</my-button>
+      <my-button class="info__btn" :disabled="invalid">{{ $i18n.locale === 'ua' ? 'Зберегти' : 'Сохранить' }}</my-button>
     </validation-observer>
     <my-file-input @getFile="getFileImg">
       <div class="info__avatar">
@@ -53,7 +53,7 @@
           alt=""
         />
         <span class="info__avatar-text" :class="{ show: !img }"
-          >Загрузить фото</span
+          >{{ $t('register.photo') }}</span
         >
       </div>
     </my-file-input>

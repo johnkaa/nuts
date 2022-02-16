@@ -3,11 +3,11 @@
     <div class="container">
       <div class="register__pos position">
         <nuxt-link class="register__pos-link position-link" to="/"
-          >Главная</nuxt-link
+          >{{ $t('home.position') }}</nuxt-link
         >
         <img src="/images/icons/right-arrow.svg" alt="" />
         <nuxt-link class="register__pos-link position-link" to="/auth/register"
-          >Регистрация</nuxt-link
+          >{{ $t('register.title') }}</nuxt-link
         >
       </div>
       <validation-observer
@@ -18,22 +18,22 @@
         @submit.prevent="submit"
       >
         <div class="register__person">
-          <h2 class="register__title">Регистрация</h2>
-          <div class="register__text">1. Контактные данные</div>
+          <h2 class="register__title">{{ $t('register.title') }}</h2>
+          <div class="register__text">1. {{ $t('register.contactDetails') }}</div>
           <div class="register__type">
             <div
               class="register__type-item"
               :class="{ active: type === 'person' }"
               @click="type = 'person'"
             >
-              Физическое лицо
+             {{ $t('register.type.person') }}
             </div>
             <div
               class="register__type-item"
               :class="{ active: type === 'company' }"
               @click="type = 'company'"
             >
-              Юридическое лицо
+              {{ $t('register.type.company') }}
             </div>
           </div>
           <validation-provider name="name" rules="required">
@@ -41,7 +41,7 @@
               <my-input
                 v-model="name"
                 class="register__input"
-                placeholder="ФИО*"
+                :placeholder="$t('register.name')"
                 :errors="errors"
               />
             </div>
@@ -62,12 +62,12 @@
                 v-model="phone"
                 type="tel"
                 class="register__input"
-                placeholder="Телефон*"
+                :placeholder="$t('register.phone')"
                 :errors="errors"
               />
             </div>
           </validation-provider>
-          <div class="register__text address">2. Адрес</div>
+          <div class="register__text address">2. {{ $t('register.address') }}</div>
           <validation-provider name="country" rules="required">
             <div slot-scope="{ errors }" class="register__field">
               <my-select
@@ -75,7 +75,7 @@
                 class="register__input"
                 :options="countries"
                 :errors="errors"
-                placeholder="Страна*"
+                :placeholder="$t('register.country')"
               />
             </div>
           </validation-provider>
@@ -86,7 +86,7 @@
                 class="register__input"
                 :options="regions"
                 :errors="errors"
-                placeholder="Область*"
+                :placeholder="$t('register.region')"
               />
             </div>
           </validation-provider>
@@ -97,23 +97,23 @@
                 class="register__input"
                 :options="cities"
                 :errors="errors"
-                placeholder="Город*"
+                :placeholder="$t('register.city')"
               />
             </div>
           </validation-provider>
           <my-input
             v-model="address"
             class="register__field"
-            placeholder="Адрес"
+            :placeholder="$t('register.address')"
           />
-          <div class="register__text password">3. Пароль</div>
+          <div class="register__text password">3. {{ $t('register.password') }}</div>
           <validation-provider name="password" rules="required|min:6">
             <div slot-scope="{ errors }" class="register__field">
               <my-input
                 v-model="password"
                 type="password"
                 class="register__input"
-                placeholder="Пароль*"
+                :placeholder="$t('register.password') + '*'"
                 :errors="errors"
               />
             </div>
@@ -127,7 +127,7 @@
                 v-model="repeatPassword"
                 type="password"
                 class="register__input"
-                placeholder="Повторите пароль*"
+                :placeholder="$t('register.repeatPassword')"
                 :errors="errors"
               />
             </div>
@@ -138,13 +138,13 @@
                 v-model="agree"
                 class="register__checkbox"
                 :errors="errors"
-                >Я согласен с <span>условиями регистрации</span></my-checkbox
+                >{{ $t('register.agree.text') }} <span>{{ $t('register.agree.conditions') }}</span></my-checkbox
               >
             </div>
           </validation-provider>
 
           <my-button class="register__btn" :disabled="invalid"
-            >Продолжить</my-button
+            >{{ $t('register.submit') }}</my-button
           >
         </div>
         <div class="register__company">
@@ -156,7 +156,7 @@
                 alt=""
               />
               <span class="register__avatar-text" :class="{ show: !img }"
-                >Загрузить фото</span
+                >{{ $t('register.photo') }}</span
               >
             </div>
           </my-file-input>
@@ -164,24 +164,24 @@
             <my-radio-select
               v-model="companyType"
               class="register__select"
-              :selects="['Юр. лицо', 'ФОП']"
+              :selects="['ООО', 'ФОП']"
               :select-value="companyType"
               name="companyType"
             />
-            <div class="register__text requisite">1. Реквизиты</div>
+            <div class="register__text requisite">1. {{ $t('register.requisite') }}</div>
             <validation-provider name="requisite" rules="required">
               <div slot-scope="{ errors }" class="register__field">
                 <my-input
                   v-model="requisite"
                   :value="requisite"
                   class="register__input"
-                  placeholder="Реквизиты*"
+                  :placeholder="$t('register.requisite') + '*'"
                   :errors="errors"
                 />
               </div>
             </validation-provider>
             <div class="register__text company-address">
-              2. Юридический адрес
+              2. {{ $t('register.companyAddress') }}
             </div>
             <validation-provider name="companyCountry" rules="required">
               <div slot-scope="{ errors }" class="register__field">
@@ -191,7 +191,7 @@
                   class="register__input"
                   :options="countries"
                   :errors="errors"
-                  placeholder="Страна*"
+                  :placeholder="$t('register.country')"
                 />
               </div>
             </validation-provider>
@@ -203,7 +203,7 @@
                   class="register__input"
                   :options="companyRegions"
                   :errors="errors"
-                  placeholder="Область*"
+                  :placeholder="$t('register.region')"
                 />
               </div>
             </validation-provider>
@@ -215,7 +215,7 @@
                   class="register__input"
                   :options="companyCities"
                   :errors="errors"
-                  placeholder="Город*"
+                  :placeholder="$t('register.city')"
                 />
               </div>
             </validation-provider>
@@ -223,7 +223,7 @@
               v-model="companyAddress"
               :value="companyAddress"
               class="register__input"
-              placeholder="Адрес"
+              :placeholder="$t('register.address')"
             />
           </div>
         </div>
@@ -261,7 +261,7 @@ export default {
       file: null,
       img: '',
       type: 'person',
-      companyType: 'Юр. лицо',
+      companyType: 'ООО',
       requisite: '',
       companyCountry: '',
       companyRegion: '',
@@ -389,7 +389,7 @@ export default {
       } catch (e) {
         this.$toasted.error(e)
       }
-      this.$toasted.success('Вы успешно зарегистрировались.')
+      this.$toasted.success(this.$t('register.success'))
       this.$router.push('/auth/login')
     },
     getFileImg(file) {

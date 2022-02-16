@@ -3,18 +3,18 @@
     <div class="container">
       <div class="cabinet__pos position">
         <nuxt-link class="cabinet__pos-link position-link" to="/"
-          >Главная</nuxt-link
+          >{{ $t('home.position') }}</nuxt-link
         >
 
         <img src="/images/icons/right-arrow.svg" alt="" />
         <nuxt-link class="cabinet__pos-link position-link" :to="$route.path"
-          >Кабинет</nuxt-link
+          >{{ $t('cabinet.position') }}</nuxt-link
         >
       </div>
       <div class="cabinet__top">
-        <h2 class="cabinet__title">Учетная запись</h2>
+        <h2 class="cabinet__title">{{ $t('cabinet.title') }}</h2>
         <div class="cabinet__manager">
-          <p class="cabinet__manager-text">Ваш личный менеджер Олег</p>
+          <p class="cabinet__manager-text">{{ $t('cabinet.manager') }}</p>
           <a class="cabinet__manager-phone" href="tel:+380677771412"
             ><img src="/images/icons/phone.svg" alt="" />+38 067 777 14 12</a
           >
@@ -22,44 +22,44 @@
       </div>
       <div class="cabinet__inner">
         <div class="cabinet__sidebar">
-          <div class="cabinet__sidebar-title">Мои заказы</div>
+          <div class="cabinet__sidebar-title">{{ $t('cabinet.orders') }}</div>
           <ul class="cabinet__sidebar-list orders">
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
                 :to="`/cabinet/${$route.params.id}/orders`"
-                >История заказов</nuxt-link
+                >{{ $t('cabinet.historyOrders') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
                 :to="`/cabinet/${$route.params.id}/transactions`"
-                >История транзакций</nuxt-link
+                >{{ $t('cabinet.historyTransactions') }}</nuxt-link
               >
             </li>
           </ul>
-          <div class="cabinet__sidebar-title">Моя учетная запись</div>
+          <div class="cabinet__sidebar-title">{{ $t('cabinet.account') }}</div>
           <ul class="cabinet__sidebar-list">
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
                 :to="`/cabinet/${$route.params.id}/info`"
-                >Контактная информация</nuxt-link
+                >{{ $t('cabinet.contacts') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
                 :to="`/cabinet/${$route.params.id}/password`"
-                >Пароль</nuxt-link
+                >{{ $t('cabinet.password') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
                 :to="`/cabinet/${$route.params.id}/address`"
-                >Адрес</nuxt-link
+                >{{ $t('cabinet.address') }}</nuxt-link
               >
             </li>
           </ul>

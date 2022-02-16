@@ -2,9 +2,9 @@
   <div class="delivery">
     <div class="container">
       <div class="delivery__pos position secondary">
-        <nuxt-link class="delivery__pos-link position-link" to="/"
-          >Главная</nuxt-link
-        >
+        <nuxt-link class="delivery__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <svg
           width="12"
           height="12"
@@ -17,13 +17,13 @@
             fill="#fff"
           />
         </svg>
-        <nuxt-link class="delivery__pos-link position-link" :to="$route.path"
-          >Оплата и доставка</nuxt-link
-        >
+        <nuxt-link class="delivery__pos-link position-link" :to="$route.path">{{
+          $t('delivery.title')
+        }}</nuxt-link>
       </div>
     </div>
     <div class="delivery__banner">
-      <h2 class="delivery__banner-title">Оплата и доставка</h2>
+      <h2 class="delivery__banner-title">{{ $t('delivery.title') }}</h2>
     </div>
     <div class="delivery__info">
       <div class="delivery__info-titles">
@@ -44,7 +44,7 @@
               fill="#C4C4C4"
             />
           </svg>
-          Оплата заказа
+          {{ $t('delivery.payment.title') }}
         </div>
         <div
           class="delivery__info-title"
@@ -96,7 +96,7 @@
               </clipPath>
             </defs>
           </svg>
-          Доставка партии
+          {{ $t('delivery.delivery.title') }}
         </div>
         <div
           class="delivery__info-title"
@@ -139,7 +139,7 @@
               fill="#C4C4C4"
             />
           </svg>
-          Возврат товара
+          {{ $t('delivery.return.title') }}
         </div>
       </div>
       <div class="container">
@@ -148,33 +148,30 @@
             <div class="delivery__info-item__content">
               <div class="delivery__info-item__payment">
                 <div class="delivery__info-item__payment-title">
-                  Способы оплаты
+                  {{ $t('delivery.payment.subtitle') }}
                 </div>
                 <div class="delivery__info-item__payment-item">
                   <div class="delivery__info-item__payment-item-title">
-                    Безналичный расчет
+                    {{ $t('delivery.payment.item1.title') }}
                   </div>
                   <div class="delivery__info-item__payment-item-text">
-                    Вы можете выбрать “получить реквизиты” для дальнейшей оплаты
-                    на карту, или в терминалах.
-                  </div>
-                </div>
-                <div class="delivery__info-item__payment-item">
-                  <div class="delivery__info-item__payment-item-title">
-                    Оплата с помощью банковской карты
-                  </div>
-                  <div class="delivery__info-item__payment-item-text">
-                    Оплатите Ваш заказ картой любого банка онлайн
-                    (LiqPay/Приват24)
+                    {{ $t('delivery.payment.item1.text') }}
                   </div>
                 </div>
                 <div class="delivery__info-item__payment-item">
                   <div class="delivery__info-item__payment-item-title">
-                    Наличный расчет
+                    {{ $t('delivery.payment.item2.title') }}
                   </div>
                   <div class="delivery__info-item__payment-item-text">
-                    Оплата заказов наложенным платежом в отделении Новой Почты,
-                    или наличными курьерами
+                    {{ $t('delivery.payment.item2.text') }}
+                  </div>
+                </div>
+                <div class="delivery__info-item__payment-item">
+                  <div class="delivery__info-item__payment-item-title">
+                    {{ $t('delivery.payment.item3.title') }}
+                  </div>
+                  <div class="delivery__info-item__payment-item-text">
+                    {{ $t('delivery.payment.item3.text') }}
                   </div>
                 </div>
               </div>
@@ -188,14 +185,14 @@
             <div class="delivery__info-item__content">
               <div class="delivery__info-item__delivery">
                 <div class="delivery__info-item__delivery-title">
-                  Способы доставки
+                  {{ $t('delivery.delivery.subtitle') }}
                 </div>
                 <div class="delivery__info-item__delivery-item">
                   <div class="delivery__info-item__delivery-item-title">
-                    Новая почта
+                    {{ $t('delivery.delivery.item.title') }}
                   </div>
                   <div class="delivery__info-item__delivery-item-text">
-                    Доставки по всей Украине.
+                    {{ $t('delivery.delivery.item.text') }}
                   </div>
                 </div>
               </div>
@@ -209,11 +206,10 @@
             <div class="delivery__info-item__content">
               <div class="delivery__info-item__return">
                 <div class="delivery__info-item__payment-title">
-                  Возврат товара
+                  {{ $t('delivery.return.title') }}
                 </div>
                 <div class="delivery__info-item__return-text">
-                  Возврат товара осуществляется в соответствии с Законом Украины
-                  «О защите прав потребителей».
+                  {{ $t('delivery.return.text') }}
                 </div>
               </div>
             </div>
@@ -226,7 +222,7 @@
       </div>
     </div>
     <banners-area class="delivery__area-banner" />
-    <banners-factory class="delivery__factory-banner" :banner="factoryBanner"/>
+    <banners-factory class="delivery__factory-banner" :banner="factoryBanner" />
   </div>
 </template>
 
@@ -240,6 +236,15 @@ export default {
     return {
       selectedInfo: 'payment',
     }
+  },
+  watch: {
+    async '$i18n.locale'() {
+      if (this.$i18n.locale === 'ua') {
+        this.factoryBanner = await this.$readData('banners/factory/ua')
+      } else {
+        this.factoryBanner = await this.$readData('banners/factory')
+      }
+    },
   },
 }
 </script>
