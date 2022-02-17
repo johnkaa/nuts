@@ -108,7 +108,7 @@ export default {
         })
         .then(() => {
           this.$toasted.success('Вы изменили свои данные.')
-          this.$router.push(`/cabinet/${id}/orders`)
+          this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${id}/orders`)
         })
         .catch((error) => {
           return this.$toasted.error(error)

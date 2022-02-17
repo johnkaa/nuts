@@ -51,7 +51,7 @@ export default {
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.$store.dispatch('getUserAction')
-            this.$router.push('/')
+            this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + '/')
             this.$toasted.success(this.$t('login.success'))
           })
       } catch (e) {

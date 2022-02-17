@@ -104,14 +104,22 @@
 
 <script>
 export default {
-  async asyncData({ $readData, params }) {
+  async asyncData({ $readData, params, i18n }) {
     const allNews = await $readData('news')
-    const news = await $readData(`news/${params.id}`)
+    let news
     const sm = await $readData('contacts/sm')
     let latestNews = []
-    Object.keys(allNews).forEach((item) => {
+    if(i18n.locale === 'ua') {
+      news = await $readData(`news/${params.id}/ua`)
+      Object.keys(allNews).forEach((item) => {
+      latestNews.push(allNews[item].ua)
+    })
+    } else {
+      news = await $readData(`news/${params.id}`)
+      Object.keys(allNews).forEach((item) => {
       latestNews.push(allNews[item])
     })
+    }
     latestNews = latestNews.slice(0, 3)
     return { news, latestNews, sm }
   },

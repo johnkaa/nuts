@@ -2,7 +2,7 @@
   <div class="delivery">
     <div class="container">
       <div class="delivery__pos position secondary">
-        <nuxt-link class="delivery__pos-link position-link" to="/">{{
+        <nuxt-link class="delivery__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'">{{
           $t('home.position')
         }}</nuxt-link>
         <svg
@@ -228,8 +228,13 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
-    const factoryBanner = await $readData('banners/factory')
+  async asyncData({ $readData, i18n }) {
+    let factoryBanner
+    if(i18n.locale === 'ua') {
+      factoryBanner = await $readData('banners/factory')
+    } else {
+      factoryBanner = await $readData('banners/factory/ua')
+    }
     return { factoryBanner }
   },
   data() {

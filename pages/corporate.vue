@@ -2,7 +2,7 @@
   <div class="corporate">
     <div class="container">
       <div class="corporate__pos position secondary">
-        <nuxt-link class="corporate__pos-link position-link" to="/">{{
+        <nuxt-link class="corporate__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'">{{
           $t('home.position')
         }}</nuxt-link>
         <svg
@@ -52,7 +52,9 @@
             name="write"
             @submit.prevent="writeSubmit"
           >
-            <h2 class="corporate-modal__title">{{ $t('corporate.writeUs.title') }}</h2>
+            <h2 class="corporate-modal__title">
+              {{ $t('corporate.writeUs.title') }}
+            </h2>
             <validation-provider name="name" rules="required">
               <div slot-scope="{ errors }" class="corporate-modal__field">
                 <my-input
@@ -83,9 +85,9 @@
                 />
               </div>
             </validation-provider>
-            <my-button class="corporate-modal__btn" :disabled="invalid"
-              >{{ $t('corporate.writeUs.submit') }}</my-button
-            >
+            <my-button class="corporate-modal__btn" :disabled="invalid">{{
+              $t('corporate.writeUs.submit')
+            }}</my-button>
           </validation-observer>
         </my-popup>
         <div class="corporate__info-titles">
@@ -345,7 +347,8 @@
           <div v-if="selectedCorporate === 'shop'" class="corporate__info-item">
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-                {{ $t('corporate.shop.text') }}</p>
+                {{ $t('corporate.shop.text') }}
+              </p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
@@ -362,7 +365,9 @@
             class="corporate__info-item"
           >
             <div class="corporate__info-item-content">
-              <p class="corporate__info-item-text">{{ $t('corporate.HoReCa.text') }}</p>
+              <p class="corporate__info-item-text">
+                {{ $t('corporate.HoReCa.text') }}
+              </p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
@@ -380,7 +385,8 @@
           >
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-               {{ $t('corporate.fitness.text') }}</p>
+                {{ $t('corporate.fitness.text') }}
+              </p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
@@ -398,7 +404,8 @@
           >
             <div class="corporate__info-item-content">
               <p class="corporate__info-item-text">
-               {{ $t('corporate.confectionery.text') }}</p>
+                {{ $t('corporate.confectionery.text') }}
+              </p>
               <my-button
                 class="corporate__info-item-btn"
                 @click="showWriteModal = true"
@@ -420,9 +427,16 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
-    const topBanner = await $readData('banners/top')
-    const ecoBanner = await $readData('banners/eco')
+  async asyncData({ $readData, i18n }) {
+    let topBanner
+    let ecoBanner
+    if (i18n.locale === 'ua') {
+      topBanner = await $readData('banners/top/ua')
+      ecoBanner = await $readData('banners/eco/ua')
+    } else {
+      topBanner = await $readData('banners/top')
+      ecoBanner = await $readData('banners/eco')
+    }
     return { topBanner, ecoBanner }
   },
   data() {

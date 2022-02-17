@@ -103,7 +103,7 @@ export default {
       }
       const id = this.$route.params.id
       this.$writeData(`users/${id}/address`, address)
-      this.$router.push(`/cabinet/${id}/orders`)
+      this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${id}/orders`)
       this.$toasted.success('Вы изменили свой адрес')
     },
     setRegions() {

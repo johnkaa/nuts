@@ -2,7 +2,7 @@
   <div class="gallery">
     <div class="container">
       <div class="gallery__pos position secondary">
-        <nuxt-link class="gallery__pos-link position-link" to="/">{{
+        <nuxt-link class="gallery__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'">{{
           $t('home.position')
         }}</nuxt-link>
         <svg
@@ -41,8 +41,13 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
+  async asyncData({ $readData, i18n }) {
     const gallery = await $readData('gallery')
+    if (i18n.locale === 'ua') {
+      Object.keys(gallery).forEach((item) => {
+        gallery[item] = gallery[item].ua
+      })
+    }
     return { gallery }
   },
   watch: {

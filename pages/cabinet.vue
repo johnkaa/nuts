@@ -2,7 +2,7 @@
   <div class="cabinet">
     <div class="container">
       <div class="cabinet__pos position">
-        <nuxt-link class="cabinet__pos-link position-link" to="/"
+        <nuxt-link class="cabinet__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
           >{{ $t('home.position') }}</nuxt-link
         >
 
@@ -27,14 +27,14 @@
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
-                :to="`/cabinet/${$route.params.id}/orders`"
+                :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${$route.params.id}/orders`"
                 >{{ $t('cabinet.historyOrders') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
-                :to="`/cabinet/${$route.params.id}/transactions`"
+                :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${$route.params.id}/transactions`"
                 >{{ $t('cabinet.historyTransactions') }}</nuxt-link
               >
             </li>
@@ -44,21 +44,21 @@
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
-                :to="`/cabinet/${$route.params.id}/info`"
+                :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${$route.params.id}/info`"
                 >{{ $t('cabinet.contacts') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
-                :to="`/cabinet/${$route.params.id}/password`"
+                :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${$route.params.id}/password`"
                 >{{ $t('cabinet.password') }}</nuxt-link
               >
             </li>
             <li class="cabinet__sidebar-list-item">
               <nuxt-link
                 class="cabinet__sidebar-list-link"
-                :to="`/cabinet/${$route.params.id}/address`"
+                :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${$route.params.id}/address`"
                 >{{ $t('cabinet.address') }}</nuxt-link
               >
             </li>

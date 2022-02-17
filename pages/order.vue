@@ -2,7 +2,7 @@
   <div class="order">
     <div class="container">
       <div class="order__pos position">
-        <nuxt-link class="order__pos-link position-link" to="/">{{
+        <nuxt-link class="order__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'">{{
           $t('home.position')
         }}</nuxt-link>
         <svg
@@ -209,7 +209,7 @@
           </template>
         </div>
         <div class="order__basket-bottom">
-          <nuxt-link class="order__basket-link" to="/shop">
+          <nuxt-link class="order__basket-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/shop'">
             <my-button class="order__basket-btn">{{
               $t('order.back')
             }}</my-button>
@@ -377,11 +377,11 @@
       <div v-else class="order__auth">
         <div class="order__auth-title">{{ $t('order.auth') }}</div>
         <div class="oruder__auth-links">
-          <nuxt-link class="order__auth-link" to="/auth/login">{{
+          <nuxt-link class="order__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/login'">{{
             $t('order.login')
           }}</nuxt-link>
           <span class="order__auth-text">{{ $t('order.or') }}</span>
-          <nuxt-link class="order__auth-link" to="/auth/register">{{
+          <nuxt-link class="order__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/register'">{{
             $t('order.register')
           }}</nuxt-link>
         </div>
@@ -536,7 +536,7 @@ export default {
       }
       await this.$writeData(`/orders/${id}`, order)
       this.$store.dispatch('deleteBasketAction')
-      this.$router.push('/thanks')
+      this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + '/thanks')
     },
     countPrice() {
       this.price = 0

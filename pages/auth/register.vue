@@ -390,7 +390,7 @@ export default {
         this.$toasted.error(e)
       }
       this.$toasted.success(this.$t('register.success'))
-      this.$router.push('/auth/login')
+      this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + '/auth/login')
     },
     getFileImg(file) {
       this.file = file

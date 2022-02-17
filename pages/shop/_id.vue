@@ -209,8 +209,13 @@
 
 <script>
 export default {
-  async asyncData({ $readData, route }) {
-    const product = await $readData(`/products/${route.params.id}`)
+  async asyncData({ $readData, route, i18n }) {
+    let product
+    if(i18n.locale === 'ua') {
+      product = await $readData(`/products/${route.params.id}/ua`)
+    } else {
+      product = await $readData(`/products/${route.params.id}`)
+    }
     return { product }
   },
   data() {

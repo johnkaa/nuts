@@ -155,10 +155,14 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
+  async asyncData({ $readData, i18n }) {
     const productsObj = await $readData('products')
     const products = []
-    Object.keys(productsObj).forEach((item) => products.push(productsObj[item]))
+    if(i18n.locale === 'ua') {
+      Object.keys(productsObj).forEach((item) => products.push(productsObj[item].ua))
+    } else {
+      Object.keys(productsObj).forEach((item) => products.push(productsObj[item]))
+    }
     return { products }
   },
   data() {

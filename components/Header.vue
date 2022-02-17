@@ -23,9 +23,9 @@
             />
           </div>
         </validation-provider>
-        <my-button class="callback-modal__btn" :disabled="invalid"
-          >{{ $t('header.callbackConfirm') }}</my-button
-        >
+        <my-button class="callback-modal__btn" :disabled="invalid">{{
+          $t('header.callbackConfirm')
+        }}</my-button>
       </validation-observer>
     </my-popup>
     <div class="header__top">
@@ -109,16 +109,16 @@
             {{ $t('header.sale') }} - {{ user.sale }}%
           </div>
           <div v-if="!user" class="header__auth">
-            <nuxt-link class="header__auth-link" to="/auth/login"
+            <nuxt-link class="header__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/login'"
               ><img
                 class="header__auth-img"
                 src="/images/icons/user.svg"
                 alt=""
               />{{ $t('header.login') }}</nuxt-link
             >
-            <nuxt-link class="header__auth-link" to="/auth/register"
-              >{{ $t('header.register') }}</nuxt-link
-            >
+            <nuxt-link class="header__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/register'">{{
+              $t('header.register')
+            }}</nuxt-link>
           </div>
           <div v-if="user" class="header__admin">
             <nuxt-link to="/admin/stats"
@@ -132,21 +132,32 @@
           <nuxt-link
             v-if="user"
             class="header__user"
-            :to="`/cabinet/${user.id}/orders`"
+            :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${user.id}/orders`"
             ><img
               class="header__auth-img"
               src="/images/icons/user.svg"
               alt=""
             />{{ user.name }}</nuxt-link
           >
-          <my-button v-if="user" class="header__logout" @click="logout"
-            >{{ $t('header.logout') }}</my-button
-          >
+          <my-button v-if="user" class="header__logout" @click="logout">{{
+            $t('header.logout')
+          }}</my-button>
           <div class="header__lang">
-            {{ $i18n.locale[0].toUpperCase() + $i18n.locale.slice(1) }}<img src="/images/icons/arrow-down.svg" alt="" />
+            {{ $i18n.locale[0].toUpperCase() + $i18n.locale.slice(1)
+            }}<img src="/images/icons/arrow-down.svg" alt="" />
             <div class="header__lang-select">
-              <div class="header__lang-select-item" @click="$i18n.locale = 'ru'">Ru</div>
-              <div class="header__lang-select-item" @click="$i18n.locale = 'ua'">Ua</div>
+              <div
+                class="header__lang-select-item"
+                @click="$i18n.setLocale('ru'), switchLocalePath('ru')"
+              >
+                Ru
+              </div>
+              <div
+                class="header__lang-select-item"
+                @click="$i18n.setLocale('ua'), switchLocalePath('ua')"
+              >
+                Ua
+              </div>
             </div>
           </div>
         </div>
@@ -164,22 +175,22 @@
             </div>
             <div class="header__burger-menu burger__menu">
               <div class="burger__menu-top">
-                <nuxt-link class="logo" to="/"
+                <nuxt-link class="logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
                   ><img src="/images/logo.svg" alt=""
                 /></nuxt-link>
               </div>
               <div class="burger__menu-middle">
                 <div v-if="!user" class="burger__auth">
-                  <nuxt-link class="header__auth-link" to="/auth/login"
+                  <nuxt-link class="header__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/login'"
                     ><img
                       class="header__auth-img"
                       src="/images/icons/user.svg"
                       alt=""
                     />{{ $t('header.login') }}</nuxt-link
                   >
-                  <nuxt-link class="header__auth-link" to="/auth/register"
-                    >{{ $t('header.register') }}</nuxt-link
-                  >
+                  <nuxt-link class="header__auth-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/auth/register'">{{
+                    $t('header.register')
+                  }}</nuxt-link>
                 </div>
                 <div class="burger__user-panel">
                   <div v-if="user" class="burger__admin">
@@ -187,20 +198,25 @@
                       v-if="user.id === '9qQGy4TbmBdtHX1wMOUDbjzCmr83'"
                       class="burger__admin-btn"
                     >
-                      <nuxt-link to="/admin/stats">{{ $t('header.admin') }}</nuxt-link>
+                      <nuxt-link :to="($i18n.locale === 'ua' ? '/ua' : '') + '/admin/stats'">{{
+                        $t('header.admin')
+                      }}</nuxt-link>
                     </my-button>
                   </div>
                   <nuxt-link
                     v-if="user"
                     class="burger__user"
-                    :to="`/cabinet/${user.id}/orders`"
+                    :to="($i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${user.id}/orders`"
                     ><img
                       class="burger__auth-img"
                       src="/images/icons/user.svg"
                       alt=""
                     />{{ user.name }}</nuxt-link
                   >
-                  <my-button v-if="user" class="burger__logout" @click="logout"
+                  <my-button
+                    v-if="user"
+                    class="burger__logout"
+                    @click="logout"
                     >{{ $t('header.logout') }}</my-button
                   >
                 </div>
@@ -257,39 +273,39 @@
               </div>
               <ul class="burger__menu-list">
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/shop"
-                    >{{ $t('header.menu.shop') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/shop'">{{
+                    $t('header.menu.shop')
+                  }}</nuxt-link>
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/about"
-                    >{{ $t('header.menu.about') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/about'">{{
+                    $t('header.menu.about')
+                  }}</nuxt-link>
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/delivery"
-                    >{{ $t('header.menu.delivery') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/delivery'">{{
+                    $t('header.menu.delivery')
+                  }}</nuxt-link>
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/corporate"
-                    >{{ $t('header.menu.corporate') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/corporate'">{{
+                    $t('header.menu.corporate')
+                  }}</nuxt-link>
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/news"
-                    >{{ $t('header.menu.news') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/news'">{{
+                    $t('header.menu.news')
+                  }}</nuxt-link>
                 </li>
                 <li class="burger__menu-list-item">
-                  <nuxt-link class="burger__menu-list-link" to="/gallery"
-                    >{{ $t('header.menu.gallery') }}</nuxt-link
-                  >
+                  <nuxt-link class="burger__menu-list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/gallery'">{{
+                    $t('header.menu.gallery')
+                  }}</nuxt-link>
                 </li>
               </ul>
             </div>
           </div>
-          <nuxt-link class="logo" to="/"
+          <nuxt-link class="logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
             ><img src="/images/logo.svg" alt=""
           /></nuxt-link>
           <div v-if="contacts.messengers" class="header__contacts">
@@ -431,17 +447,21 @@
                       >{{ price }} грн.</span
                     >
                   </p>
-                  <nuxt-link class="header__basket-link" to="/order">
-                    <my-button class="header__basket-btn"
-                      >{{ $t('header.basket.basket') }}</my-button
-                    >
+                  <nuxt-link class="header__basket-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/order'">
+                    <my-button class="header__basket-btn">{{
+                      $t('header.basket.basket')
+                    }}</my-button>
                   </nuxt-link>
                 </div>
               </template>
               <template v-else>
-                <p class="header__basket-error">{{ $t('header.basket.empty') }}</p>
-                <nuxt-link class="header__basket-link" to="/shop">
-                  <my-button class="header__basket-btn" @click="setShowBasket"
+                <p class="header__basket-error">
+                  {{ $t('header.basket.empty') }}
+                </p>
+                <nuxt-link class="header__basket-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/shop'">
+                  <my-button
+                    class="header__basket-btn"
+                    @click="setShowBasket"
                     >{{ $t('header.basket.catalog') }}</my-button
                   >
                 </nuxt-link>
@@ -458,30 +478,34 @@
         </div>
         <ul class="menu__list">
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/shop">{{ $t('header.menu.shop') }}</nuxt-link>
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/shop'">{{
+              $t('header.menu.shop')
+            }}</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/about"
-              >{{ $t('header.menu.about') }}</nuxt-link
-            >
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/about'">{{
+              $t('header.menu.about')
+            }}</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/delivery"
-              >{{ $t('header.menu.delivery') }}</nuxt-link
-            >
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/delivery'">{{
+              $t('header.menu.delivery')
+            }}</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/corporate"
-              >{{ $t('header.menu.corporate') }}</nuxt-link
-            >
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/corporate'">{{
+              $t('header.menu.corporate')
+            }}</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/news"
-              >{{ $t('header.menu.news') }}</nuxt-link
-            >
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/news'">{{
+              $t('header.menu.news')
+            }}</nuxt-link>
           </li>
           <li class="menu__list-item">
-            <nuxt-link class="menu__list-link" to="/gallery">{{ $t('header.menu.gallery') }}</nuxt-link>
+            <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/gallery'">{{
+              $t('header.menu.gallery')
+            }}</nuxt-link>
           </li>
         </ul>
       </div>

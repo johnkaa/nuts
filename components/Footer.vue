@@ -49,35 +49,35 @@
     <div class="footer__menu">
       <div class="container">
         <div class="footer__menu-inner">
-          <nuxt-link class="footer__logo" to="/"
+          <nuxt-link class="footer__logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
             ><img src="/images/logo.svg" alt=""
           /></nuxt-link>
           <ul class="menu__list">
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/shop">{{ $t('header.menu.shop') }}</nuxt-link>
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/shop'">{{ $t('header.menu.shop') }}</nuxt-link>
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/about"
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/about'"
                 >{{ $t('header.menu.about') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/delivery"
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/delivery'"
                 >{{ $t('header.menu.delivery') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/corporate"
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/corporate'"
                 >{{ $t('header.menu.corporate') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/news"
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/news'"
                 >{{ $t('header.menu.news') }}</nuxt-link
               >
             </li>
             <li class="menu__list-item">
-              <nuxt-link class="menu__list-link" to="/gallery">{{ $t('header.menu.gallery') }}</nuxt-link>
+              <nuxt-link class="menu__list-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/gallery'">{{ $t('header.menu.gallery') }}</nuxt-link>
             </li>
           </ul>
         </div>

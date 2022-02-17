@@ -1,22 +1,24 @@
 <template>
   <div class="main-page">
-    <banners-top class="top-banner" :banner="topBanner"/>
+    <banners-top class="top-banner" :banner="topBanner" />
     <div class="products">
       <div class="container">
         <h2 class="products__title">{{ $t('home.products.title') }}</h2>
         <p class="products__text">{{ $t('home.products.text') }}</p>
         <div class="products__items">
-          <Product v-for="item in products" :key="item.id" :product="item"/>
+          <Product v-for="item in products" :key="item.id" :product="item" />
         </div>
         <slider-mobile class="products__slider" :items="products" />
-        <my-button class="products__btn secondary" @click="$router.push('/shop')"
-            >{{ $t('home.products.btn') }}</my-button
-          >
+        <my-button
+          class="products__btn secondary"
+          @click="$router.push(($i18n.locale === 'ua' ? '/ua' : '') + '/shop')"
+          >{{ $t('home.products.btn') }}</my-button
+        >
       </div>
     </div>
     <About class="about" />
     <banners-area class="area" />
-    <banners-factory class="factory" :banner="factoryBanner"/>
+    <banners-factory class="factory" :banner="factoryBanner" />
     <div class="benefits">
       <div class="container">
         <h2 class="benefits__title">{{ $t('home.benefits.title') }}</h2>
@@ -24,68 +26,101 @@
         <div class="benefits__items">
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/walnut.svg" />
-            <div class="benefits__item-title">{{ $t('home.benefits.walnut.title') }}</div>
-            <p class="benefits__item-text">{{ $t('home.benefits.walnut.text') }}</p>
+            <div class="benefits__item-title">
+              {{ $t('home.benefits.walnut.title') }}
+            </div>
+            <p class="benefits__item-text">
+              {{ $t('home.benefits.walnut.text') }}
+            </p>
             <div class="benefits__item-filter"></div>
           </div>
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/hazelnut.svg" />
-            <div class="benefits__item-title">{{ $t('home.benefits.hazelnut.title') }}</div>
-            <p class="benefits__item-text">{{ $t('home.benefits.hazelnut.text') }}</p>
+            <div class="benefits__item-title">
+              {{ $t('home.benefits.hazelnut.title') }}
+            </div>
+            <p class="benefits__item-text">
+              {{ $t('home.benefits.hazelnut.text') }}
+            </p>
             <div class="benefits__item-filter"></div>
           </div>
           <div class="benefits__item">
             <img class="benefits__item-icon" src="/images/icons/rose.svg" />
-            <div class="benefits__item-title">{{ $t('home.benefits.rose.title') }}</div>
+            <div class="benefits__item-title">
+              {{ $t('home.benefits.rose.title') }}
+            </div>
             <p class="benefits__item-text">{{ $t('home.benefits.text') }}</p>
             <div class="benefits__item-filter"></div>
           </div>
         </div>
       </div>
     </div>
-    <banners-eco class="eco-banner" :banner="ecoBanner"/>
-    <news-latest class="news" :news="news"/>
+    <banners-eco class="eco-banner" :banner="ecoBanner" />
+    <news-latest class="news" :news="news" />
   </div>
 </template>
 
 <script>
 export default {
-  async asyncData({ $readData }) {
-    const topBanner = await $readData('banners/top')
-    const productsObj = await $readData('products')
-    const factoryBanner = await $readData('banners/factory')
-    const ecoBanner = await $readData('banners/eco')
-    const news = await $readData('news')
-    let products = []
-    Object.keys(productsObj).forEach(item => products.push(productsObj[item]))
-    products = products.slice(0, 6)
-    return { topBanner, products, factoryBanner, ecoBanner, news }
+  async asyncData({ $readData, i18n }) {
+    if (i18n.locale === 'ua') {
+      const topBanner = await $readData('banners/top/ua')
+      const productsObj = await $readData('products')
+      const factoryBanner = await $readData('banners/factory/ua')
+      const ecoBanner = await $readData('banners/eco/ua')
+      const news = await $readData('news')
+      Object.keys(news).forEach((item) => {
+        news[item] = news[item].ua
+      })
+      let products = []
+      Object.keys(productsObj).forEach((item) =>
+        products.push(productsObj[item].ua)
+      )
+      products = products.slice(0, 6)
+      return { topBanner, products, factoryBanner, ecoBanner, news }
+    } else {
+      const topBanner = await $readData('banners/top')
+      const productsObj = await $readData('products')
+      const factoryBanner = await $readData('banners/factory')
+      const ecoBanner = await $readData('banners/eco')
+      const news = await $readData('news')
+      let products = []
+      Object.keys(productsObj).forEach((item) =>
+        products.push(productsObj[item])
+      )
+      products = products.slice(0, 6)
+      return { topBanner, products, factoryBanner, ecoBanner, news }
+    }
   },
   watch: {
     async '$i18n.locale'() {
-      if(this.$i18n.locale === 'ua') {
+      if (this.$i18n.locale === 'ua') {
         this.topBanner = await this.$readData('banners/top/ua')
         this.factoryBanner = await this.$readData('banners/factory/ua')
         this.ecoBanner = await this.$readData('banners/eco/ua')
         const products = await this.$readData('products')
         this.products = []
-        Object.keys(products).forEach(product => this.products.push(products[product].ua))
+        Object.keys(products).forEach((product) =>
+          this.products.push(products[product].ua)
+        )
         this.products = this.products.slice(0, 6)
         const news = await this.$readData('news')
         this.news = []
-        Object.keys(news).forEach(id => this.news.push(news[id].ua))
+        Object.keys(news).forEach((id) => this.news.push(news[id].ua))
       } else {
         this.topBanner = await this.$readData('banners/top')
         this.factoryBanner = await this.$readData('banners/factory')
         this.ecoBannner = await this.$readData('banners/eco')
         const products = await this.$readData('products')
-        Object.keys(products).forEach(product => this.products.push(products[product]))
+        Object.keys(products).forEach((product) =>
+          this.products.push(products[product])
+        )
         this.products = this.products.slice(0, 6)
         this.products = products
         this.news = await this.$readData('news')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

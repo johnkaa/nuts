@@ -78,7 +78,7 @@ export default {
           this.$writeData(`users/${id}/password`, this.password)
         })
         .then(() => {
-          this.$router.push(`/cabinet/${id}/orders`)
+          this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + `/cabinet/${id}/orders`)
           this.$toasted.success(this.$t('changePassword.success'))
         })
         .catch((error) => {

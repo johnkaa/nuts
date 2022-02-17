@@ -7,7 +7,7 @@
     >
       <img class="product__popup-img" :src="product.img" alt="" />
     </my-popup>
-    <nuxt-link :to="`/shop/${product.id}`">
+    <nuxt-link :to="($i18n.locale === 'ua' ? '/ua' : '') + `/shop/${product.id}`">
       <div
         class="product__img"
         :class="{ sale: product.sale, new: product.newProduct }"

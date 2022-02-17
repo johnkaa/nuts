@@ -59,7 +59,7 @@ export default {
       } catch (e) {
         this.$toasted.error(e)
       }
-      this.$router.push('/auth/login')
+      this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + '/auth/login')
       this.$toasted.success(this.$t('forgotPassword.success'))
     },
   },

@@ -2,7 +2,7 @@
   <div class="about">
     <div class="container">
       <div class="about__pos position secondary">
-        <nuxt-link class="about__pos-link position-link" to="/">{{
+        <nuxt-link class="about__pos-link position-link" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'">{{
           $t('home.position')
         }}</nuxt-link>
         <svg
@@ -118,7 +118,7 @@
         </div>
         <my-button
           class="about__gallery-btn secondary"
-          @click="$router.push('/gallery')"
+          @click="$router.push(($i18n.locale === 'ua' ? '/ua' : '') + '/gallery')"
           >{{ $t('about.gallery.showAll') }}</my-button
         >
       </div>
@@ -130,15 +130,31 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
-    const topBanner = await $readData('banners/top')
-    const gallery = await $readData('gallery')
-    const ecoBanner = await $readData('banners/eco')
-    const news = await $readData('news')
-    let latestGallery = []
-    Object.keys(gallery).forEach((item) => latestGallery.push(gallery[item]))
-    latestGallery = latestGallery.slice(0, 6)
-    return { topBanner, latestGallery, ecoBanner, news }
+  async asyncData({ $readData, i18n }) {
+    if (i18n.locale === 'ua') {
+      const topBanner = await $readData('banners/top/ua')
+      const gallery = await $readData('gallery')
+      const ecoBanner = await $readData('banners/eco/ua')
+      const news = await $readData('news')
+      Object.keys(news).forEach((item) => {
+        news[item] = news[item].ua
+      })
+      let latestGallery = []
+      Object.keys(gallery).forEach((item) =>
+        latestGallery.push(gallery[item].ua)
+      )
+      latestGallery = latestGallery.slice(0, 6)
+      return { topBanner, latestGallery, ecoBanner, news }
+    } else {
+      const topBanner = await $readData('banners/top')
+      const gallery = await $readData('gallery')
+      const ecoBanner = await $readData('banners/eco')
+      const news = await $readData('news')
+      let latestGallery = []
+      Object.keys(gallery).forEach((item) => latestGallery.push(gallery[item]))
+      latestGallery = latestGallery.slice(0, 6)
+      return { topBanner, latestGallery, ecoBanner, news }
+    }
   },
   data() {
     return {

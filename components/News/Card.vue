@@ -10,7 +10,7 @@
         {{ news.text.slice(0, 150) }}
         <template v-if="news.text.length > 150">...</template>
       </div>
-      <nuxt-link class="news-card__link" :to="`/news/${news.id}`">
+      <nuxt-link class="news-card__link" :to="($i18n.locale === 'ua' ? '/ua' : '') + `/news/${news.id}`">
         {{ $t('news.read') }}
         <svg
           width="14"

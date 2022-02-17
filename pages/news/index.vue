@@ -50,8 +50,13 @@
 
 <script>
 export default {
-  async asyncData({ $readData }) {
+  async asyncData({ $readData, i18n }) {
     const news = await $readData('news')
+    if(i18n.locale === 'ua') {
+      Object.keys(news).forEach(item => {
+        news[item] = news[item].ua
+      })
+    }
     return { news }
   },
   data() {

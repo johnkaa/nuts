@@ -48,7 +48,7 @@
           </swiper>
         </div>
       </div>
-      <my-button class="news__btn secondary" @click="$router.push('/news')"
+      <my-button class="news__btn secondary" @click="$router.push(($i18n.locale === 'ua' ? '/ua' : '') + '/news')"
         >{{ $t('latestNews.showAll') }}</my-button
       >
     </div>
