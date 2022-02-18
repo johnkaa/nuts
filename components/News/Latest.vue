@@ -37,18 +37,22 @@
           </div>
         </div>
         <div class="swiper-wrapper">
-          <swiper class="swiper" :options="swiperOptions">
-            <swiper-slide
-              v-for="(item, index) in news"
-              :key="index"
-              class="swiper-slide"
-            >
-              <news-card :news="item" />
-            </swiper-slide>
-          </swiper>
+          <client-only>
+            <swiper class="swiper" :options="swiperOptions">
+              <swiper-slide
+                v-for="(item, index) in news"
+                :key="index"
+                class="swiper-slide"
+              >
+                <news-card :news="item" />
+              </swiper-slide>
+            </swiper>
+          </client-only>
         </div>
       </div>
-      <my-button class="news__btn secondary" @click="$router.push(($i18n.locale === 'ua' ? '/ua' : '') + '/news')"
+      <my-button
+        class="news__btn secondary"
+        @click="$router.push(($i18n.locale === 'ua' ? '/ua' : '') + '/news')"
         >{{ $t('latestNews.showAll') }}</my-button
       >
     </div>
@@ -61,8 +65,8 @@ export default {
   data() {
     return {
       swiperOptions: {
-        slidesPerView: 3,
-            slidesPerGroup: 3,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
         loop: true,
         navigation: {
           prevEl: '.slider-button-prev',
@@ -71,14 +75,14 @@ export default {
         spaceBetween: 30,
         breakpoints: {
           1000: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          600: {
             slidesPerView: 2,
             slidesPerGroup: 2,
           },
-          600: {
-            slidesPerView: 1,
-            slidesPerGroup: 1,
-          },
-        }
+        },
       },
     }
   },

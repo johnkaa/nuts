@@ -1,12 +1,18 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <swiper ref="swiper" class="swiper" :options="swiperOptions">
-      <swiper-slide v-for="(item, index) in items" :key="index" class="swiper-slide">
-        <Product :product="item" :slide="true" />
-      </swiper-slide>
-    </swiper>
-    <div slot='pagination' class='swiper-pagination'></div>
+      <client-only>
+        <swiper ref="swiper" class="swiper" :options="swiperOptions">
+          <swiper-slide
+            v-for="(item, index) in items"
+            :key="index"
+            class="swiper-slide"
+          >
+            <Product :product="item" :slide="true" />
+          </swiper-slide>
+        </swiper>
+      </client-only>
+      <div slot="pagination" class="swiper-pagination"></div>
     </div>
   </div>
 </template>
@@ -20,7 +26,7 @@ export default {
         slidesPerView: 'auto',
         slidesPerGroup: 1,
         pagination: {
-          el: '.swiper-pagination'
+          el: '.swiper-pagination',
         },
         spaceBetween: 30,
       },

@@ -26,7 +26,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~node_modules/swiper/swiper-bundle.css',
+    '~node_modules/swiper/css/swiper.css',
     '~node_modules/vuesax/dist/vuesax.css',
     '~node_modules/material-icons/iconfont/material-icons.css',
     '~assets/style/global',
@@ -36,7 +36,7 @@ export default {
   plugins: [
     { src: '~plugins/toast', mode: 'client' },
     { src: '~plugins/select' },
-    { src: '~/plugins/swiper', mode: 'client', ssr: false },
+    { src: '~/plugins/swiper', ssr: false },
     { src: '~plugins/vee-validate', mode: 'client' },
     { src: '~plugins/uploadImg' },
     { src: '~plugins/db' },
@@ -828,6 +828,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transiple: ['vee-validate'],
+    transiple: ['vee-validate', 'swiper'],
   },
 }
