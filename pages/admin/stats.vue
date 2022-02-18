@@ -30,7 +30,7 @@
         </div>
         <div>
           <div class="stats__num">
-            {{ sumOfOrders }} грн.
+            {{ Math.floor(sumOfOrders) }} грн.
           </div>
         </div>
       </vs-card>
