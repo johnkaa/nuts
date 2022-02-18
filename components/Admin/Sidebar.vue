@@ -55,6 +55,14 @@ export default {
     active: false,
     width: 0
   }),
+  watch: {
+    active() {
+      this.$emit('setActive', this.active)
+    },
+    '$route.path'() {
+      this.active = false
+    },
+  },
   mounted() {
     window.addEventListener('resize', this.updateWidth);
     this.updateWidth();
@@ -81,7 +89,7 @@ export default {
   min-height: 100%;
   left: 0;
   bottom: 0;
-  z-index: 11;
+  z-index: 6;
 }
 
 .sidebar__btn {

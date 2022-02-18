@@ -1,15 +1,24 @@
 <template>
   <div class="admin">
-    <admin-sidebar class="admin__sidebar"/>
+    <admin-sidebar class="admin__sidebar" @setActive="setActive"/>
     <div class="admin__container">
-      <nuxt-child class="admin__inner"/>
+      <nuxt-child class="admin__inner" :class="{ active: !sidebarActive }"/>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      sidebarActive: false
+    }
+  },
+  methods: {
+    setActive(active) {
+      this.sidebarActive = active
+    }
+  }
 }
 </script>
 
@@ -23,7 +32,10 @@ export default {
 }
 .admin__inner {
   position: relative;
-  z-index: 10;
+  z-index: 5;
+  &.active {
+    z-index: 10;
+  }
 }
 @media (max-width: 900px) {
   .admin__container {
