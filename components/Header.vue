@@ -176,7 +176,7 @@
             <div class="header__burger-menu burger__menu">
               <div class="burger__menu-top">
                 <nuxt-link class="logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
-                  ><img src="/images/logo.svg" alt=""
+                  ><img src="/images/logo.png" alt=""
                 /></nuxt-link>
               </div>
               <div class="burger__menu-middle">
@@ -306,7 +306,7 @@
             </div>
           </div>
           <nuxt-link class="logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
-            ><img src="/images/logo.svg" alt=""
+            ><img src="/images/logo.png" alt=""
           /></nuxt-link>
           <div v-if="contacts.messengers" class="header__contacts">
             <a class="header__contacts-item" href="#"

@@ -7,7 +7,7 @@
 
       <div slot="header" class="header-sidebar">
         <nuxt-link to="/">
-          <img src="/images/logo.svg"/>
+          <img src="/images/logo.png"/>
         </nuxt-link>
       </div>
 

@@ -50,7 +50,7 @@
       <div class="container">
         <div class="footer__menu-inner">
           <nuxt-link class="footer__logo" :to="($i18n.locale === 'ua' ? '/ua' : '') + '/'"
-            ><img src="/images/logo.svg" alt=""
+            ><img src="/images/logo.png" alt=""
           /></nuxt-link>
           <ul class="menu__list">
             <li class="menu__list-item">
