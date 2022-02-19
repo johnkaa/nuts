@@ -128,27 +128,6 @@ export default {
       id: '',
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      const news = await this.$readData('news')
-      this.latestNews = []
-      if (this.$i18n.locale === 'ua') {
-        this.news = await this.$readData(`news/${this.$route.params.id}/ua`)
-        Object.keys(news).forEach((item, index) => {
-          if(index < 3) {
-            this.latestNews.push(news[item].ua)
-          }
-        })
-      } else {
-        this.news = await this.$readData(`news/${this.$route.params.id}`)
-        Object.keys(news).forEach((item, index) => {
-          if(index < 3) {
-            this.latestNews.push(news[item])
-          }
-        })
-      }
-    },
-  },
   mounted() {
     this.id = this.$route.params.id
   },

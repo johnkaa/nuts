@@ -164,33 +164,6 @@ export default {
       writeMessage: '',
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        this.topBanner = await this.$readData('banners/top/ua')
-        this.ecoBanner = await this.$readData('banners/eco/ua')
-        Object.keys(this.news).forEach((item) => {
-          this.news[item] = this.news[item].ua
-        })
-        const gallery = await this.$readData('gallery')
-        this.latestGallery = []
-        Object.keys(gallery).forEach((item) =>
-          this.latestGallery.push(gallery[item].ua)
-        )
-        this.latestGallery = this.latestGallery.slice(0, 6)
-      } else {
-        this.topBanner = await this.$readData('banners/top')
-        this.ecoBanner = await this.$readData('banners/eco')
-        this.news = await this.$readData('news')
-        const gallery = await this.$readData('gallery')
-        this.latestGallery = []
-        Object.keys(gallery).forEach((item) =>
-          this.latestGallery.push(gallery[item])
-        )
-        this.latestGallery = this.latestGallery.slice(0, 6)
-      }
-    },
-  },
   methods: {
     writeSubmit() {
       const messageData = {

@@ -74,17 +74,6 @@ export default {
       return news
     },
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        Object.keys(this.news).forEach(item => {
-          this.news[item] = this.news[item].ua
-        })
-      } else {
-        this.news = await this.$readData('news')
-      }
-    },
-  },
 }
 </script>
 

@@ -242,15 +242,6 @@ export default {
       selectedInfo: 'payment',
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        this.factoryBanner = await this.$readData('banners/factory/ua')
-      } else {
-        this.factoryBanner = await this.$readData('banners/factory')
-      }
-    },
-  },
 }
 </script>
 

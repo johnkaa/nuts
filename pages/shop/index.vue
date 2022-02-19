@@ -214,20 +214,7 @@ export default {
     },
     filtered() {
       this.setWeight(this.productsToShow)
-    },
-    async '$i18n.locale'() {
-      const products = await this.$readData('products')
-      this.products = []
-      if (this.$i18n.locale === 'ua') {
-        Object.keys(products).forEach((product) => {
-          this.products.push(products[product].ua)
-        })
-      } else {
-        Object.keys(products).forEach((product) => {
-          this.products.push(products[product])
-        })
-      }
-    },
+    }
   },
   mounted() {
     this.setWeight(this.productsToShow)

@@ -92,35 +92,6 @@ export default {
       return { topBanner, products, factoryBanner, ecoBanner, news }
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        this.topBanner = await this.$readData('banners/top/ua')
-        this.factoryBanner = await this.$readData('banners/factory/ua')
-        this.ecoBanner = await this.$readData('banners/eco/ua')
-        const products = await this.$readData('products')
-        this.products = []
-        Object.keys(products).forEach((product) =>
-          this.products.push(products[product].ua)
-        )
-        this.products = this.products.slice(0, 6)
-        const news = await this.$readData('news')
-        this.news = []
-        Object.keys(news).forEach((id) => this.news.push(news[id].ua))
-      } else {
-        this.topBanner = await this.$readData('banners/top')
-        this.factoryBanner = await this.$readData('banners/factory')
-        this.ecoBannner = await this.$readData('banners/eco')
-        const products = await this.$readData('products')
-        Object.keys(products).forEach((product) =>
-          this.products.push(products[product])
-        )
-        this.products = this.products.slice(0, 6)
-        this.products = products
-        this.news = await this.$readData('news')
-      }
-    },
-  },
 }
 </script>
 

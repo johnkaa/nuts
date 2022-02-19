@@ -224,15 +224,6 @@ export default {
       selectedBottom: 'description',
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if(this.$i18n.locale === 'ua') {
-        this.product = await this.$readData(`/products/${this.$route.params.id}/ua`)
-      } else {
-        this.product = await this.$readData(`/products/${this.$route.params.id}`)
-      }
-    }
-  },
   methods: {
     addToBasket() {
       this.$store.dispatch('addToBasketAction', this.product)

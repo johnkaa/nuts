@@ -50,17 +50,6 @@ export default {
     }
     return { gallery }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        Object.keys(this.gallery).forEach((item) => {
-          this.gallery[item] = this.gallery[item].ua
-        })
-      } else {
-        this.gallery = await this.$readData('gallery')
-      }
-    },
-  },
 }
 </script>
 

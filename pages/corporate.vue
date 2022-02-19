@@ -448,17 +448,6 @@ export default {
       writeMessage: '',
     }
   },
-  watch: {
-    async '$i18n.locale'() {
-      if (this.$i18n.locale === 'ua') {
-        this.topBanner = await this.$readData('banners/top/ua')
-        this.ecoBanner = await this.$readData('banners/eco/ua')
-      } else {
-        this.topBanner = await this.$readData('banners/top')
-        this.ecoBanner = await this.$readData('banners/eco')
-      }
-    },
-  },
   methods: {
     writeSubmit() {
       const messageData = {
