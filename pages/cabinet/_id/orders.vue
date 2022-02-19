@@ -185,12 +185,17 @@
           </div>
         </div>
       </div>
+      <div v-if="sortedOrders.length === 0" class="not-found">Не найдено</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  async asyncData({ $readData, route }) {
+    const ordersObj = await $readData(`users/${route.params.id}/orders`)
+    return { ordersObj }
+  },
   data() {
     return {
       filter: 'order',
@@ -200,9 +205,8 @@ export default {
   computed: {
     orders() {
       const orders = []
-      if(this.$store.state.user) {
-        const orderObj = this.$store.state.user.orders
-        Object.keys(orderObj).forEach(item => orders.push(orderObj[item]))
+      if(this.ordersObj) {
+        Object.keys(this.ordersObj).forEach(item => orders.push(this.ordersObj[item]))
       }
       return orders
     },
