@@ -372,6 +372,7 @@ export default {
         )
       }
       if (this.topBannerUa) {
+        this.topBannerRussian.img = this.topBannerImg
         this.topBannerRussian.ua = {
           img: this.topBannerImg,
           title: this.topBannerTitle,
@@ -379,6 +380,7 @@ export default {
           video: this.topBannerVideo,
         }
       } else {
+        this.topBannerUkrainian.img = this.topBannerImg
         this.topBannerRussian = {
           img: this.topBannerImg,
           title: this.topBannerTitle,
@@ -415,6 +417,7 @@ export default {
         )
       }
       if (this.factoryBannerUa) {
+        this.factoryBannerRussian.img = this.factoryBannerImg
         this.factoryBannerRussian.ua = {
           img: this.factoryBannerImg,
           title: this.factoryBannerTitle,
@@ -422,6 +425,7 @@ export default {
           video: this.factoryBannerVideo,
         }
       } else {
+        this.factoryBannerUkrainian.img = this.factoryBannerImg
         this.factoryBannerRussian = {
           img: this.factoryBannerImg,
           title: this.factoryBannerTitle,
@@ -458,12 +462,14 @@ export default {
         )
       }
       if (this.ecoBannerUa) {
+        this.ecoBannerRussian.img = this.ecoBannerImg
         this.ecoBannerRussian.ua = {
           img: this.ecoBannerImg,
           title: this.ecoBannerTitle,
           text: this.ecoBannerText,
         }
       } else {
+        this.ecoBannerUkrainian.img = this.ecoBannerImg
         this.ecoBannerRussian = {
           img: this.ecoBannerImg,
           title: this.ecoBannerTitle,

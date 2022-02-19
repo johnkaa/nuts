@@ -204,6 +204,7 @@ export default {
         )
       }
       if (this.ua) {
+        this.galleryRu.img = this.img
         this.galleryRu.ua = {
           id: this.selectedItem,
           img: this.img,
@@ -212,6 +213,7 @@ export default {
           video: this.video || '',
         }
       } else {
+        this.galleryUa.img = this.img
         this.galleryRu = {
           id: this.selectedItem,
           img: this.img,

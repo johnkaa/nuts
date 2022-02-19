@@ -134,6 +134,7 @@ export default {
         this.img = await this.$uploadImg(this.file, `news/${id}.${format}`)
       }
       if(this.ua) {
+        this.newsRu.img = this.img
         this.newsRu.ua = {
           id,
           date: this.date,
@@ -142,6 +143,7 @@ export default {
           text: this.text || '',
         }
       } else {
+        this.newsUa.img = this.img
         this.newsRu = {
           id,
           date: this.date,
