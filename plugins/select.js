@@ -3,9 +3,7 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 
 vSelect.props.components.default = () => ({
-  Deselect: {
-    render: null,
-  },
+  Deselect: null
 });
 
 Vue.component('VSelect', vSelect)

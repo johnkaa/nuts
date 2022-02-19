@@ -67,6 +67,10 @@ export default {
   color: #1a2f3f;
 }
 
+.select .vs__dropdown-toggle{
+  padding: 10px;
+}
+
 .select .vs__selected {
   color: #000;
   opacity: 1;
@@ -74,11 +78,6 @@ export default {
 
 .select .vs__search {
   cursor: pointer;
-}
-
-.select .vs__search,
-.select.vs--open .vs__search {
-  padding: 10px;
 }
 
 .select .vs__dropdown-toggle:hover {
