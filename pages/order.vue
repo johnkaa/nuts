@@ -458,7 +458,7 @@ export default {
       )
       const areas = res.data.data
       areas.forEach((area) => {
-        if (area.DescriptionRu === this.area) {
+        if ((this.$i18n.locale === 'ua' ? area.Description : area.DescriptionRu) === this.area) {
           this.areaRef = area.Ref
         }
       })
@@ -561,7 +561,7 @@ export default {
       const areas = res.data.data
       areas.forEach((area) => {
         if (area.DescriptionRu !== 'АРК') {
-          this.areas.push(area.DescriptionRu)
+          this.areas.push(this.$i18n.locale === 'ua' ? area.Description : area.DescriptionRu)
         }
       })
     },
@@ -581,7 +581,7 @@ export default {
       this.cities = []
       cities.forEach((city) => {
         if (!this.cities.includes(city.DescriptionRu)) {
-          this.cities.push(city.DescriptionRu)
+          this.cities.push(this.$i18n.locale === 'ua' ? city.Description : city.DescriptionRu)
         }
       })
     },
@@ -600,7 +600,7 @@ export default {
       const warehouses = res.data.data
       this.warehouses = []
       warehouses.forEach((warehouse) =>
-        this.warehouses.push(warehouse.DescriptionRu)
+        this.warehouses.push(this.$i18n.locale === 'ua' ? warehouse.Description : warehouse.DescriptionRu)
       )
     },
     incrementBasketItemValue(index) {
