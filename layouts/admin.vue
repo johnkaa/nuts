@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  middleware: 'admin',
   data() {
     return {
       sidebarActive: false
