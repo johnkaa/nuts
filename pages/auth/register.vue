@@ -2,11 +2,13 @@
   <div class="register">
     <div class="container">
       <div class="register__pos position">
-        <nuxt-link class="register__pos-link position-link" to="/"
-          >{{ $t('home.position') }}</nuxt-link
-        >
+        <nuxt-link class="register__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <img src="/images/icons/right-arrow.svg" alt="" />
-        <nuxt-link class="register__pos-link position-link" to="/auth/register"
+        <nuxt-link
+          class="register__pos-link position-link"
+          to="/auth/register"
           >{{ $t('register.title') }}</nuxt-link
         >
       </div>
@@ -19,14 +21,16 @@
       >
         <div class="register__person">
           <h2 class="register__title">{{ $t('register.title') }}</h2>
-          <div class="register__text">1. {{ $t('register.contactDetails') }}</div>
+          <div class="register__text">
+            1. {{ $t('register.contactDetails') }}
+          </div>
           <div class="register__type">
             <div
               class="register__type-item"
               :class="{ active: type === 'person' }"
               @click="type = 'person'"
             >
-             {{ $t('register.type.person') }}
+              {{ $t('register.type.person') }}
             </div>
             <div
               class="register__type-item"
@@ -67,7 +71,9 @@
               />
             </div>
           </validation-provider>
-          <div class="register__text address">2. {{ $t('register.address') }}</div>
+          <div class="register__text address">
+            2. {{ $t('register.address') }}
+          </div>
           <validation-provider name="country" rules="required">
             <div slot-scope="{ errors }" class="register__field">
               <my-select
@@ -106,7 +112,9 @@
             class="register__field"
             :placeholder="$t('register.address')"
           />
-          <div class="register__text password">3. {{ $t('register.password') }}</div>
+          <div class="register__text password">
+            3. {{ $t('register.password') }}
+          </div>
           <validation-provider name="password" rules="required|min:6">
             <div slot-scope="{ errors }" class="register__field">
               <my-input
@@ -132,20 +140,25 @@
               />
             </div>
           </validation-provider>
-          <validation-provider name="agree" rules="true">
-            <div slot-scope="{ errors }" class="register__field">
-              <my-checkbox
-                v-model="agree"
-                class="register__checkbox"
-                :errors="errors"
-                >{{ $t('register.agree.text') }} <span>{{ $t('register.agree.conditions') }}</span></my-checkbox
-              >
-            </div>
-          </validation-provider>
+          <div class="register__submit">
+            <validation-provider name="agree" rules="true">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-checkbox
+                  v-model="agree"
+                  class="register__checkbox"
+                  :errors="errors"
+                  >{{ $t('register.agree.text') }}
+                  <span>{{
+                    $t('register.agree.conditions')
+                  }}</span></my-checkbox
+                >
+              </div>
+            </validation-provider>
 
-          <my-button class="register__btn" :disabled="invalid"
-            >{{ $t('register.submit') }}</my-button
-          >
+            <my-button class="register__btn" :disabled="invalid">{{
+              $t('register.submit')
+            }}</my-button>
+          </div>
         </div>
         <div class="register__company">
           <my-file-input @getFile="getFileImg">
@@ -155,9 +168,9 @@
                 :src="img || '/images/placeholder-avatar.jpg'"
                 alt=""
               />
-              <span class="register__avatar-text" :class="{ show: !img }"
-                >{{ $t('register.photo') }}</span
-              >
+              <span class="register__avatar-text" :class="{ show: !img }">{{
+                $t('register.photo')
+              }}</span>
             </div>
           </my-file-input>
           <div v-if="type === 'company'" class="register__company-form">
@@ -168,7 +181,9 @@
               :select-value="companyType"
               name="companyType"
             />
-            <div class="register__text requisite">1. {{ $t('register.requisite') }}</div>
+            <div class="register__text requisite">
+              1. {{ $t('register.requisite') }}
+            </div>
             <validation-provider name="requisite" rules="required">
               <div slot-scope="{ errors }" class="register__field">
                 <my-input
@@ -225,6 +240,25 @@
               class="register__input"
               :placeholder="$t('register.address')"
             />
+          </div>
+          <div class="register__submit-mobile">
+            <validation-provider name="agree" rules="true">
+              <div slot-scope="{ errors }" class="register__field">
+                <my-checkbox
+                  v-model="agree"
+                  class="register__checkbox"
+                  :errors="errors"
+                  >{{ $t('register.agree.text') }}
+                  <span>{{
+                    $t('register.agree.conditions')
+                  }}</span></my-checkbox
+                >
+              </div>
+            </validation-provider>
+
+            <my-button class="register__btn" :disabled="invalid">{{
+              $t('register.submit')
+            }}</my-button>
           </div>
         </div>
       </validation-observer>
@@ -390,7 +424,9 @@ export default {
         this.$toasted.error(e)
       }
       this.$toasted.success(this.$t('register.success'))
-      this.$router.push((this.$i18n.locale === 'ua' ? '/ua' : '') + '/auth/login')
+      this.$router.push(
+        (this.$i18n.locale === 'ua' ? '/ua' : '') + '/auth/login'
+      )
     },
     getFileImg(file) {
       this.file = file
@@ -431,7 +467,8 @@ export default {
     gap: 260px;
   }
   &__person {
-    width: 470px;
+    max-width: 470px;
+    width: 100%;
   }
   &__type {
     display: flex;
@@ -516,7 +553,32 @@ export default {
     }
   }
   &__company {
-    width: 470px;
+    max-width: 470px;
+    width: 100%;
   }
 }
+@media (max-width: 950px) {
+  .register {
+    &__form {
+      flex-direction: column;
+      gap: 20px;
+    }
+    &__submit {
+      display: none;
+      &-mobile {
+        display: block;
+      }
+    }
+  }
+}
+// @media (max-width: 550px) {
+//   .register {
+//     &__form {
+//       width: 300px;
+//     }
+//     &__company {
+//       width: 300px;
+//     }
+//   }
+// }
 </style>

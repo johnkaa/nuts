@@ -2,13 +2,13 @@
   <div class="login">
     <div class="container">
       <div class="login__pos position">
-        <nuxt-link class="login__pos-link position-link" to="/"
-          >{{ $t('home.position') }}</nuxt-link
-        >
+        <nuxt-link class="login__pos-link position-link" to="/">{{
+          $t('home.position')
+        }}</nuxt-link>
         <img src="/images/icons/right-arrow.svg" alt="" />
-        <nuxt-link class="login__pos-link position-link" to="/auth/login"
-          >{{ $t('login.position') }}</nuxt-link
-        >
+        <nuxt-link class="login__pos-link position-link" to="/auth/login">{{
+          $t('login.position')
+        }}</nuxt-link>
       </div>
       <form class="login__form" @submit.prevent="submit">
         <h2 class="login__title">{{ $t('login.title') }}</h2>
@@ -25,9 +25,9 @@
           >{{ $t('login.forgot') }}</nuxt-link
         >
         <my-button class="login__btn">{{ $t('login.submit') }}</my-button>
-        <nuxt-link class="login__register login__link" to="/auth/register"
-          >{{ $t('login.register') }}</nuxt-link
-        >
+        <nuxt-link class="login__register login__link" to="/auth/register">{{
+          $t('login.register')
+        }}</nuxt-link>
       </form>
     </div>
   </div>
@@ -98,6 +98,16 @@ export default {
   }
   &__btn {
     margin: 18px 0;
+  }
+}
+@media (max-width: 500px) {
+  .login {
+    &__title {
+      font-size: 25px;
+    }
+    &__form {
+      width: 310px;
+    }
   }
 }
 </style>
