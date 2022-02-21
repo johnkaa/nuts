@@ -1,7 +1,10 @@
-export default function ({ app, redirect }) {
-  setTimeout(() => {
-    if (app.$fire.auth.currentUser) {
-      redirect('/')
-    }
-  }, 1000)
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+export default ({ redirect }) => {
+  const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if(!user) {
+        redirect('/')
+      }
+    })
 }
