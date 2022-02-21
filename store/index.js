@@ -1,11 +1,16 @@
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
 const actions = {
-  async getUserAction(context) {
-    if(this.$fire.auth.currentUser) {
-      const user = await this.$readData(`users/${this.$fire.auth.currentUser.uid}`)
-      context.commit('setUser', user)
-    } else {
-      context.commit('setUser', null)
-    }
+  getUserAction(context) {
+    const auth = getAuth()
+    onAuthStateChanged(auth, async (user) => {
+      if(user) {
+        const currentUser = await this.$readData(`users/${user.uid}`)
+        context.commit('setUser', currentUser)
+      } else {
+        context.commit('setUser', null)
+      }
+    })
   },
   addToBasketAction(context, item) {
     context.commit('addToBasket', item)

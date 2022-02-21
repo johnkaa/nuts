@@ -9,9 +9,7 @@
 <script>
 export default {
   mounted() {
-    setTimeout(() => {
-      this.$store.dispatch('getUserAction')
-    }, 1000)
+    this.$store.dispatch('getUserAction')
   },
 }
 </script>
