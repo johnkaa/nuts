@@ -40,6 +40,8 @@ export default {
 
 <style lang="scss" scoped>
   .file-input {
+    display: inline-block;
+    cursor: pointer;
     &__inner {
       display: flex;
       justify-content: space-between;
