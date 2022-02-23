@@ -356,7 +356,7 @@ export default {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (e) => {
-        this.topBanner.img = e.target.result
+        this.topBannerImg = e.target.result
       }
     },
     async topBannerSubmit() {
@@ -366,7 +366,7 @@ export default {
           this.topBannerFile.name.split('.')[
             this.topBannerFile.name.split('.').length - 1
           ]
-        this.topBanner.img = await this.$uploadImg(
+        this.topBannerImg = await this.$uploadImg(
           this.topBannerFile,
           `banners/top.${format}`
         )
@@ -401,7 +401,7 @@ export default {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (e) => {
-        this.factoryBanner.img = e.target.result
+        this.factoryBannerImg = e.target.result
       }
     },
     async factoryBannerSubmit() {
@@ -411,7 +411,7 @@ export default {
           this.factoryBannerFile.name.split('.')[
             this.factoryBannerFile.name.split('.').length - 1
           ]
-        this.factoryBanner.img = await this.$uploadImg(
+        this.factoryBannerImg = await this.$uploadImg(
           this.factoryBannerFile,
           `banners/factory.${format}`
         )
@@ -446,7 +446,7 @@ export default {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (e) => {
-        this.ecoBanner.img = e.target.result
+        this.ecoBannerImg = e.target.result
       }
     },
     async ecoBannerSubmit() {
@@ -456,7 +456,7 @@ export default {
           this.ecoBannerFile.name.split('.')[
             this.ecoBannerFile.name.split('.').length - 1
           ]
-        this.ecoBanner.img = await this.$uploadImg(
+        this.ecoBannerImg = await this.$uploadImg(
           this.ecoBannerFile,
           `banners/eco.${format}`
         )
