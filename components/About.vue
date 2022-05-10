@@ -66,7 +66,7 @@ export default {}
       gap: 50px;
     }
     &__title {
-      font-size: 38px;
+      font-size: 33px;
     }
     &__btn {
       max-width: 300px;
