@@ -556,6 +556,9 @@ export default {
     max-width: 470px;
     width: 100%;
   }
+  &__submit-mobile {
+    display: none;
+  }
 }
 @media (max-width: 950px) {
   .register {
@@ -571,14 +574,4 @@ export default {
     }
   }
 }
-// @media (max-width: 550px) {
-//   .register {
-//     &__form {
-//       width: 300px;
-//     }
-//     &__company {
-//       width: 300px;
-//     }
-//   }
-// }
 </style>
